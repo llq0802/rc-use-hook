@@ -3,6 +3,9 @@ import sidebar from './sidebar';
 
 export default defineConfig({
   outputPath: 'docs-dist',
+  resolve: {
+    atomDirs: [{ type: 'hooks', dir: 'src' }],
+  },
   themeConfig: {
     name: 'rc-use-hook',
     nav: [

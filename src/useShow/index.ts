@@ -1,35 +1,45 @@
-import { _cloneDeep } from 'rc-use-hook/utils';
-import { useCallback, useImperativeHandle, useRef } from 'react';
+import { cloneDeep } from 'lodash-es';
+import {
+  MutableRefObject,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
+/**useShow 的实例 (包含一些方法) */
 export declare type UseShowInstance<
   T extends Record<string, any> = Record<string, any>,
 > = {
-  /** 触发子组件的onShow方法并传值 */
-  onShow: (record: T) => void;
-  /** 触发子组件的onHide方法并传值 */
-  onHide: (data?: T) => void;
-  /** 获取子组件的数据 */
+  /** 触发子组件的 onShow 方法并传值 */
+  onShow(record: T): void;
+  /** 触发子组件的 onHide 方法并传值 */
+  onHide: (record?: T) => void;
+  /** 获取子组件的数据 ( 通过子组件 setParentData( ) 设置 )*/
   getChildData: () => any;
 };
 
-export declare type UseShowOptions<T extends Record<string, any>> = {
-  /** show触发事件 */
+/**useShow 的配置项 */
+export declare type UseShowOptions<
+  T extends Record<string, any> = Record<string, any>,
+> = {
+  /** show 触发事件 */
   onShow?(data: T): void;
-  /** hide触发事件 */
+  /** hide 触发事件 */
   onHide?: (data?: T) => void;
-  /** 格式化data */
+  /** 格式化 data */
   onFormart?: (data: T) => any;
 };
 
-export declare type UseShowInstanceRef = React.MutableRefObject<
-  UseShowInstance | undefined
->;
+/**用于在子组件 props 的 'funcRef' 的类型*/
+export declare type UseShowInstanceRef<
+  T extends Record<string, any> = Record<string, any>,
+> = MutableRefObject<UseShowInstance<T> | undefined>;
 
-export declare type UseShowResult = {
-  /** 父组件调用onShow传的参数值 */
-  parentData: Record<string, any> | undefined;
-  /** 向父组件传数据 （父组件调用 getChildData() ） */
-  setParentData: <T>(data: T) => void;
+export declare type UseShowResult<T extends Record<string, any>> = {
+  /** 父组件 useShow 实例调用 onShow 事件传入的参数 */
+  parentData: T | undefined;
+  /** 向父组件传数据 （父组件调用 getChildData( ) 获取 ） */
+  setParentData: (data: any) => void;
 };
 
 /**
@@ -38,10 +48,12 @@ export declare type UseShowResult = {
  * @param options { onShow, onFormart, onHide }
  * @returns T 传输的数据
  */
-export default function useShow(
-  funcRef: UseShowInstanceRef,
-  options: UseShowOptions<Record<string, any>>,
-): UseShowResult {
+export default function useShow<
+  T extends Record<string, any> = Record<string, any>,
+>(
+  funcRef: UseShowInstanceRef<T>,
+  options: UseShowOptions<T>,
+): UseShowResult<T> {
   const ref = useRef<any>();
   const childrenDataRef = useRef<any>();
   const opsOnShow = options.onShow,
@@ -51,12 +63,12 @@ export default function useShow(
   useImperativeHandle(funcRef, () => {
     return {
       onShow(data) {
-        ref.current = _cloneDeep(data);
+        ref.current = cloneDeep(data);
         if (opsOnShow) opsOnShow(ref.current);
       },
 
       onHide(data) {
-        if (opsOnHide) opsOnHide(_cloneDeep(data));
+        if (opsOnHide) opsOnHide(cloneDeep(data));
       },
 
       getChildData() {

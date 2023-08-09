@@ -1,28 +1,20 @@
+import { isEqual } from 'lodash-es';
+import type { DependencyList } from 'react';
+
 /**
- * 深克隆
- * @param obj
+ * 判断深度两个数据是否相等
+ * @param aDeps
+ * @param bDeps
  * @returns
  */
-export const _cloneDeep = (obj: any) => {
-  if (obj === null) return null;
-  let clone = Object.assign({}, obj);
-  Object.keys(clone).forEach(
-    (key) =>
-      (clone[key] =
-        typeof obj[key] === 'object' ? _cloneDeep(obj[key]) : obj[key]),
-  );
-  if (Array.isArray(obj)) {
-    clone.length = obj.length;
-    return Array.from(clone);
-  }
-  return clone;
-};
+export const depsEqual = (
+  aDeps: DependencyList = [],
+  bDeps: DependencyList = [],
+) => isEqual(aDeps, bDeps);
 
 /**
  * 判断是不是函数
- * @param fn
+ * @param fn{*} 需要判断的值
  * @returns
  */
-export function isFunction(fn: unknown) {
-  return typeof fn === 'function';
-}
+export const isFunction = (fn: unknown) => typeof fn === 'function';

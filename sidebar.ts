@@ -17,19 +17,31 @@ export default {
         },
         {
           title: 'useCallbackState-状态更新回调',
-          link: '/components/use-callback-state',
+          link: '/hooks/use-callback-state',
         },
         {
           title: 'useWorker-WebWorker',
-          link: '/components/use-worker',
+          link: '/hooks/use-worker',
         },
         {
           title: 'useDeepUpdateEffect-深度比较更新',
-          link: '/components/use-deep-update-effect',
+          link: '/hooks/use-deep-update-effect',
         },
         {
           title: 'useLazyLoadImage-懒加载图片',
-          link: '/components/use-lazy-load-image',
+          link: '/hooks/use-lazy-load-image',
+        },
+        {
+          title: 'useWindowSize',
+          link: '/hooks/use-Window-Size',
+        },
+        {
+          title: 'useBeforeUnload',
+          link: '/hooks/use-Before-Unload',
+        },
+        {
+          title: 'useGeolocation',
+          link: '/hooks/use-Geolocation',
         },
       ],
     },

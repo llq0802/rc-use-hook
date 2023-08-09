@@ -1,8 +1,11 @@
 import { Button, message, Space } from 'antd';
-import type { UseShowInstance } from 'lighting-design';
-import { useRef } from 'react';
+import type { UseShowInstance } from 'rc-use-hook';
+import React, { useRef } from 'react';
 import ChildModel from './ChildModel';
 
+/**
+ * 父组件
+ */
 export default function Parent() {
   const childModelRef = useRef<UseShowInstance>();
 
