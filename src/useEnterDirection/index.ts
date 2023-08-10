@@ -1,3 +1,4 @@
+import { isFunction } from 'rc-use-hook/utils';
 import { MutableRefObject, useEffect, useState } from 'react';
 const PI = Math.PI;
 
@@ -9,7 +10,7 @@ enum Direction {
 }
 
 export default function useEnterDirection(
-  target: MutableRefObject<HTMLDivElement | null> | (() => HTMLElement),
+  target: MutableRefObject<HTMLElement | null> | (() => HTMLElement),
 ) {
   const [direction, setDirection] = useState<Direction>();
 
@@ -18,10 +19,9 @@ export default function useEnterDirection(
       return;
     }
 
-    const dom =
-      typeof target === 'function'
-        ? target?.()
-        : (target?.current as HTMLElement);
+    const dom: HTMLElement = isFunction(target)
+      ? (target as () => HTMLElement)?.()
+      : (target as MutableRefObject<HTMLElement>)?.current;
 
     const rect = dom?.getBoundingClientRect();
     const theta = Math.atan2(rect.height / 2, rect.width / 2);
