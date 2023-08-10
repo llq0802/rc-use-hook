@@ -21,3 +21,9 @@ export { default as useWindowSize } from './useWindowSize';
 
 export * from './useGeolocation';
 export { default as useGeolocation } from './useGeolocation';
+
+export * from './useEnterDirection';
+export { default as useEnterDirection } from './useEnterDirection';
+
+export * from './useDefer';
+export { default as useDefer } from './useDefer';

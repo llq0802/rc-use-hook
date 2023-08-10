@@ -12,23 +12,23 @@ export default {
       title: 'Hooks',
       children: [
         {
-          title: 'useShow-父子组件传参',
+          title: 'useShow',
           link: '/hooks/use-Show',
         },
         {
-          title: 'useCallbackState-状态更新回调',
-          link: '/hooks/use-callback-state',
+          title: 'useDefer',
+          link: '/hooks/use-Defer',
         },
         {
-          title: 'useWorker-WebWorker',
+          title: 'useWorker',
           link: '/hooks/use-worker',
         },
         {
-          title: 'useDeepUpdateEffect-深度比较更新',
-          link: '/hooks/use-deep-update-effect',
+          title: 'useCallbackState',
+          link: '/hooks/use-callback-state',
         },
         {
-          title: 'useLazyLoadImage-懒加载图片',
+          title: 'useLazyLoadImage',
           link: '/hooks/use-lazy-load-image',
         },
         {
@@ -42,6 +42,14 @@ export default {
         {
           title: 'useGeolocation',
           link: '/hooks/use-Geolocation',
+        },
+        {
+          title: 'useDeepUpdateEffect',
+          link: '/hooks/use-deep-update-effect',
+        },
+        {
+          title: 'useEnterDirection',
+          link: '/hooks/use-Enter-Direction',
         },
       ],
     },

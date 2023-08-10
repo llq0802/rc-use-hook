@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { MutableRefObject, useEffect, useMemo } from 'react';
 
 function getCamelCase(str: string) {
   return str.replace(/-([a-z])/g, function (all, i) {
@@ -12,7 +12,7 @@ export type useLazyLoadImageParams = {
   /** querySelectorAll抓取页面上所有可延迟加载的图像 */
   imageAttribute?: `data-${string}`;
   /** 在哪个节点下查询 querySelectorAll */
-  target?: HTMLDivElement | Document;
+  target?: MutableRefObject<HTMLElement | null> | (() => HTMLElement);
   /** IntersectionObserver 的配置项*/
   options?: IntersectionObserverInit;
   /** 依赖项 如果配置会重新执行监听 */
@@ -23,7 +23,7 @@ export default function useLazyLoadImage(params: useLazyLoadImageParams = {}) {
   const outParams = useMemo(() => {
     return {
       imageAttribute: 'data-img-src',
-      target: document,
+      target: () => document,
       options: {},
       dependencies: [],
       ...params,
@@ -36,8 +36,9 @@ export default function useLazyLoadImage(params: useLazyLoadImageParams = {}) {
     options: outOptions,
     dependencies,
   } = outParams;
+
   const innerOptions = {
-    rootMargin: '100px 0px',
+    rootMargin: '200px 0px',
     threshold: 0.01,
     ...outOptions,
   };
@@ -62,7 +63,13 @@ export default function useLazyLoadImage(params: useLazyLoadImageParams = {}) {
     if (!target) {
       return;
     }
-    const images = target?.querySelectorAll(`[${imageAttribute}]`) ?? [];
+    const dom =
+      typeof target === 'function'
+        ? target?.()
+        : (target?.current as HTMLElement);
+
+    const images: (HTMLImageElement | any)[] =
+      dom?.querySelectorAll(`[${imageAttribute}]`) ?? [];
 
     if (!window.IntersectionObserver) {
       Array.from(images)?.forEach((image) => loadImage(image));

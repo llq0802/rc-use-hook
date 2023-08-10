@@ -7,14 +7,14 @@ const placehoderSrc =
 const baseImgSrc = `https://picsum.photos/300/300`;
 
 function Demo3() {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   useLazyLoadImage({
-    target: ref.current as HTMLDivElement,
-    dependencies: [ref.current],
+    target: ref,
+    // dependencies: [ref.current],
 
     options: {
       root: ref.current,
-      rootMargin: '10px 0px',
+      rootMargin: '80px 0px',
     },
   });
 
