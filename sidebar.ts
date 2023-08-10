@@ -28,8 +28,8 @@ export default {
           link: '/hooks/use-callback-state',
         },
         {
-          title: 'useLazyLoadImage',
-          link: '/hooks/use-lazy-load-image',
+          title: 'useLazyImage',
+          link: '/hooks/use-lazy-image',
         },
         {
           title: 'useWindowSize',

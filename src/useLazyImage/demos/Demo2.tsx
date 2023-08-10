@@ -1,5 +1,5 @@
 import { Image } from 'antd';
-import { useLazyLoadImage } from 'rc-use-hook';
+import { useLazyImage } from 'rc-use-hook';
 import React, { useRef } from 'react';
 
 const placehoderSrc =
@@ -9,7 +9,7 @@ const baseImgSrc = `https://picsum.photos/300/300`;
 
 function Demo2() {
   const ref = useRef(null);
-  useLazyLoadImage({
+  useLazyImage({
     options: {
       root: ref.current,
       rootMargin: '10px 0px',

@@ -18,3 +18,14 @@ export const depsEqual = (
  * @returns
  */
 export const isFunction = (fn: unknown) => typeof fn === 'function';
+
+/**
+ * 将驼峰字符串以-分割
+ * @param str
+ * @returns
+ */
+export function getCamelCase(str: string) {
+  return str.replace(/-([a-z])/g, function (all, i) {
+    return i.toUpperCase();
+  });
+}

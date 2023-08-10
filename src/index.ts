@@ -7,8 +7,8 @@ export { default as useCallbackState } from './useCallbackState';
 export * from './useWorker';
 export { default as useWorker } from './useWorker';
 
-export * from './useLazyLoadImage';
-export { default as useLazyLoadImage } from './useLazyLoadImage';
+export * from './useLazyImage';
+export { default as useLazyImage } from './useLazyImage';
 
 export * from './useDeepUpdateEffect';
 export { default as useDeepUpdateEffect } from './useDeepUpdateEffect';
