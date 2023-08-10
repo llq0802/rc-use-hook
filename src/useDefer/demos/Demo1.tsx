@@ -13,8 +13,9 @@ const Hello = ({ children }) => {
 const list = new Array(1000).fill(1);
 
 const Demo1 = () => {
-  const isRender = useDefer();
+  const isRender = useDefer(list.length);
 
+  console.log('isRender==');
   return (
     <div
       style={{
@@ -26,7 +27,7 @@ const Demo1 = () => {
       }}
     >
       {list.map((item, index) => {
-        return isRender(index + 1) && <Hello key={index}>{index + 1}</Hello>;
+        return isRender(index) && <Hello key={index}>{index}</Hello>;
       })}
     </div>
   );

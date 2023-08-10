@@ -11,8 +11,8 @@ function Demo2() {
   const ref = useRef(null);
   useLazyImage({
     options: {
-      root: ref.current,
-      rootMargin: '10px 0px',
+      root: ref,
+      rootMargin: `0px 0px 10px 0px`,
     },
   });
 

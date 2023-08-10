@@ -9,8 +9,10 @@ export type useLazyImageParams = {
   /** 在哪个节点下查询 querySelectorAll 默认为整个视口*/
   target?: MutableRefObject<HTMLElement | null> | (() => HTMLElement);
   /** IntersectionObserver 的配置项*/
-  options?: IntersectionObserverInit;
-  /** 依赖项 如果配置会重新执行监听 */
+  options?: Omit<IntersectionObserverInit, 'root'> & {
+    root?: MutableRefObject<HTMLElement | null> | (() => HTMLElement);
+  };
+  /** 依赖项 如果配置会在更新时重新执行监听 */
   dependencies?: any[];
 };
 
@@ -33,8 +35,9 @@ export default function useLazyImage(params: useLazyImageParams = {}) {
   } = outParams;
 
   const innerOptions = {
-    rootMargin: '200px 0px',
+    rootMargin: '0px 0px 200px 0px',
     threshold: 0.01,
+    root: () => null,
     ...outOptions,
   };
   const imageAttributeKey = useMemo(
@@ -68,14 +71,24 @@ export default function useLazyImage(params: useLazyImageParams = {}) {
     if (!window.IntersectionObserver) {
       Array.from(images)?.forEach((image) => loadImage(image));
     } else {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio > 0) {
-            observer.unobserve(entry.target);
-            loadImage(entry.target as HTMLElement);
-          }
-        });
-      }, innerOptions);
+      const root = isFunction(innerOptions.root)
+        ? innerOptions.root?.()
+        : innerOptions?.root?.current;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.intersectionRatio > 0) {
+              observer.unobserve(entry.target);
+              loadImage(entry.target as HTMLElement);
+            }
+          });
+        },
+        {
+          ...innerOptions,
+          root,
+        },
+      );
 
       images?.forEach((image) => observer.observe(image));
 

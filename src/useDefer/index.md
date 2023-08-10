@@ -5,7 +5,7 @@ toc: content
 
 # useDefer
 
-使用`IntersectionObserver`实现的懒加载图像，在组件卸载或者图像已经加载后不再监听
+分片渲染长列表，用于解决渲染时间过长导致白屏问题
 
 ## 代码演示
 
@@ -15,10 +15,19 @@ toc: content
 
 ## API
 
+```ts
+import { useDefer } from 'rc-use-hook';
+const isDeferRender = useDefer(10_000);
+```
+
 ### Params
 
-|   参数   |  说明  |           类型           |
-| :------: | :----: | :----------------------: |
-| paramObj | 配置项 | `useLazyLoadImageParams` |
+|     参数      |    说明    |   类型   | 默认值  |
+| :-----------: | :--------: | :------: | :-----: |
+| maxFrameCount | 列表的数量 | `number` | `10_00` |
 
-### useLazyLoadImageParams
+### Result
+
+|     参数      |          说明          |                  类型                   |
+| :-----------: | :--------------------: | :-------------------------------------: |
+| isDeferRender | 当前在哪一帧渲染的函数 | `(showInFrameCount: number) => boolean` |

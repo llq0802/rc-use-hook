@@ -1,24 +1,33 @@
-import { useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 
 /**
  * 分片渲染长列表
  * @description 用于解决渲染时间过长导致白屏问题
  * @param maxFrameCount {number} 最大列表的数量
  */
-const useDefer = (maxFrameCount = 10_000) => {
+const useDefer = (maxFrameCount: number = 10_00) => {
   const [frameCount, setFrameCount] = useState(0);
+  const frameCountRef = useRef(frameCount);
+  frameCountRef.current = frameCount;
+  const rafId = useRef(0);
 
-  const refreshFrameCount = () => {
-    window.requestAnimationFrame(() => {
-      setFrameCount(frameCount + 1);
-      if (frameCount < maxFrameCount) {
-        refreshFrameCount();
-      }
-    });
-  };
+  useEffect(() => {
+    const refreshFrameCount = () => {
+      rafId.current = window.requestAnimationFrame(() => {
+        if (frameCountRef.current < maxFrameCount) {
+          // 变为过渡更新,防止阻塞ui
+          startTransition(() => setFrameCount(frameCountRef.current + 1));
+          refreshFrameCount();
+        } else {
+          window.cancelAnimationFrame(rafId.current);
+        }
+      });
+    };
 
-  refreshFrameCount();
+    refreshFrameCount();
+  }, []);
 
-  return (showInFrameCount: number) => frameCount >= showInFrameCount;
+  return (showInFrameCount: number) =>
+    frameCountRef.current >= showInFrameCount;
 };
 export default useDefer;

@@ -10,11 +10,9 @@ function Demo3() {
   const ref = useRef<HTMLDivElement | null>(null);
   useLazyImage({
     target: ref,
-    // dependencies: [ref.current],
-
     options: {
-      root: ref.current,
-      rootMargin: '80px 0px',
+      root: ref,
+      rootMargin: `0px 0px 80px 0px`,
     },
   });
 
