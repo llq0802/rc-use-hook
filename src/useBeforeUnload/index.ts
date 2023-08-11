@@ -12,10 +12,8 @@ const useBeforeUnload = (enabled: boolean = true, message?: string) => {
     }
 
     const handler = (event: BeforeUnloadEvent) => {
-      // Cancel the event as stated by the standard.
       event.preventDefault();
       if (message) {
-        // Chrome requires returnValue to be set.
         event.returnValue = message;
       }
       return message;

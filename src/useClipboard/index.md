@@ -5,7 +5,7 @@ toc: content
 
 # useClipboard
 
-返回当前浏览器的经纬度 仅在在`HTTPS`才可用
+用于将文字剪切到用户的剪切板
 
 ## 代码演示
 
@@ -15,24 +15,16 @@ toc: content
 
 ## API
 
+### Params
+
+|      参数       |            说明            |   类型   |
+| :-------------: | :------------------------: | :------: |
+| successDuration | 复制成功后多久变回初始状态 | `number` |
+
 ### Result
 
-|  参数  |            说明            | 类型 |
-| :----: | :------------------------: | :--: |
-| coords | 地理信息 `(GPS-w84)经纬度` | `-`  |
+数组第一项表示是否点击了复制, 数组第二项表示复制的函数
 
-```
-coords.latitude 用户地理位置的十进制纬度
-
-coords.longitude 用户地理位置的十进制经度
-
-coords.accuracy 用户地理位置的 位置精度 以米为单位
-
-coords.altitudeAccuracy 用户地理位置的 位置海拔精度 以米为单位
-
-coords.heading 用户设备当前移动的角度方向，以正北方向顺时针计算。
-
-coords.speed 用户当前的 移动速度 以米为单位
-
-coords.timestamp 响应的时间戳
-```
+| 参数 |      说明      |                类型                |
+| :--: | :------------: | :--------------------------------: |
+| arr  | 类似于useState | `[boolean, (str: string) => void]` |

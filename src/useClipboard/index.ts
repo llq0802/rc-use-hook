@@ -1,215 +1,212 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+// import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
-interface Clipboard {
-  readText(): Promise<string>;
-  writeText(text: string): Promise<void>;
-}
+// interface ClipboardDataWindow extends Window {
+//   clipboardData: DataTransfer | null;
+// }
 
-interface ClipboardDataWindow extends Window {
-  clipboardData: DataTransfer | null;
-}
+// type ClipboardTuple = [string, (clipboard: string) => void];
 
-type ClipboardEventListener =
-  | EventListenerObject
-  | null
-  | ((event: ClipboardEvent) => void);
+// type VoidFunction = () => void;
 
-interface ClipboardEventTarget extends EventTarget {
-  addEventListener(type: 'copy', eventListener: ClipboardEventListener): void;
-  addEventListener(type: 'cut', eventListener: ClipboardEventListener): void;
-  addEventListener(type: 'paste', eventListener: ClipboardEventListener): void;
-  removeEventListener(
-    type: 'copy',
-    eventListener: ClipboardEventListener,
-  ): void;
-  removeEventListener(type: 'cut', eventListener: ClipboardEventListener): void;
-  removeEventListener(
-    type: 'paste',
-    eventListener: ClipboardEventListener,
-  ): void;
-}
+// const hasClipboardData = (w: Window): w is ClipboardDataWindow =>
+//   Object.prototype.hasOwnProperty.call(w, 'clipboardData');
 
-interface ClipboardNavigator extends Navigator {
-  clipboard: Clipboard & ClipboardEventTarget;
-}
+// const getClipboardData = (
+//   w: ClipboardDataWindow | Window,
+// ): DataTransfer | null => {
+//   if (hasClipboardData(w)) {
+//     return w.clipboardData;
+//   }
+//   return null;
+// };
 
-type ClipboardTuple = [string, (clipboard: string) => void];
+// const isClipboardApiEnabled = (navigator: Navigator) =>
+//   typeof navigator === 'object' && typeof navigator.clipboard === 'object';
 
-type VoidFunction = () => void;
+// const NOT_ALLOWED_ERROR = new Error('NotAllowed');
 
-const hasClipboardData = (w: Window): w is ClipboardDataWindow =>
-  Object.prototype.hasOwnProperty.call(w, 'clipboardData');
+// const zeroStyles = (element: HTMLElement, ...properties: string[]): void => {
+//   for (const property of properties) {
+//     element.style.setProperty(property, '0');
+//   }
+// };
 
-const getClipboardData = (
-  w: ClipboardDataWindow | Window,
-): DataTransfer | null => {
-  if (hasClipboardData(w)) {
-    return w.clipboardData;
-  }
-  return null;
-};
+// const createTextArea = (): HTMLTextAreaElement => {
+//   const textArea: HTMLTextAreaElement = document.createElement('textarea');
+//   textArea.setAttribute('cols', '0');
+//   textArea.setAttribute('rows', '0');
+//   zeroStyles(
+//     textArea,
+//     'border-width',
+//     'bottom',
+//     'margin-left',
+//     'margin-top',
+//     'outline-width',
+//     'padding-bottom',
+//     'padding-left',
+//     'padding-right',
+//     'padding-top',
+//     'right',
+//   );
+//   textArea.style.setProperty('box-sizing', 'border-box');
+//   textArea.style.setProperty('height', '1px');
+//   textArea.style.setProperty('margin-bottom', '-1px');
+//   textArea.style.setProperty('margin-right', '-1px');
+//   textArea.style.setProperty('max-height', '1px');
+//   textArea.style.setProperty('max-width', '1px');
+//   textArea.style.setProperty('min-height', '1px');
+//   textArea.style.setProperty('min-width', '1px');
+//   textArea.style.setProperty('outline-color', 'transparent');
+//   textArea.style.setProperty('position', 'absolute');
+//   textArea.style.setProperty('width', '1px');
+//   document.body.appendChild(textArea);
+//   return textArea;
+// };
 
-const isClipboardApiEnabled = (
-  navigator: Navigator,
-): navigator is ClipboardNavigator =>
-  typeof navigator === 'object' && typeof navigator.clipboard === 'object';
+// const removeElement = (element: HTMLElement): void => {
+//   element.parentNode!.removeChild(element);
+// };
 
-const NOT_ALLOWED_ERROR = new Error('NotAllowed');
+// const read = (): string => {
+//   const textArea: HTMLTextAreaElement = createTextArea();
+//   textArea.focus();
+//   const success = document.execCommand('paste');
+//   if (!success) {
+//     removeElement(textArea);
+//     throw NOT_ALLOWED_ERROR;
+//   }
+//   const value: string = textArea.value;
+//   removeElement(textArea);
+//   return value;
+// };
 
-const zeroStyles = (element: HTMLElement, ...properties: string[]): void => {
-  for (const property of properties) {
-    element.style.setProperty(property, '0');
-  }
-};
+// const write = (text: string): void => {
+//   const textArea: HTMLTextAreaElement = createTextArea();
+//   textArea.value = text;
+//   textArea.select();
+//   removeElement(textArea);
+//   const success: boolean = document.execCommand('copy');
+//   console.log('success', success);
+//   if (!success) {
+//     throw NOT_ALLOWED_ERROR;
+//   }
+// };
 
-const createTextArea = (): HTMLTextAreaElement => {
-  const textArea: HTMLTextAreaElement = document.createElement('textarea');
-  textArea.setAttribute('cols', '0');
-  textArea.setAttribute('rows', '0');
-  zeroStyles(
-    textArea,
-    'border-width',
-    'bottom',
-    'margin-left',
-    'margin-top',
-    'outline-width',
-    'padding-bottom',
-    'padding-left',
-    'padding-right',
-    'padding-top',
-    'right',
-  );
-  textArea.style.setProperty('box-sizing', 'border-box');
-  textArea.style.setProperty('height', '1px');
-  textArea.style.setProperty('margin-bottom', '-1px');
-  textArea.style.setProperty('margin-right', '-1px');
-  textArea.style.setProperty('max-height', '1px');
-  textArea.style.setProperty('max-width', '1px');
-  textArea.style.setProperty('min-height', '1px');
-  textArea.style.setProperty('min-width', '1px');
-  textArea.style.setProperty('outline-color', 'transparent');
-  textArea.style.setProperty('position', 'absolute');
-  textArea.style.setProperty('width', '1px');
-  document.body.appendChild(textArea);
-  return textArea;
-};
+// const useClipboard = () => {
+//   const [clipboard, setClipboard] = useState();
 
-const removeElement = (element: HTMLElement): void => {
-  element.parentNode!.removeChild(element);
-};
+//   useEffect((): void | VoidFunction => {
+//     if (isClipboardApiEnabled(navigator)) {
+//       const navigatorClipboardListener = ({ clipboardData }) => {
+//         const dataTransfer = clipboardData || getClipboardData(window) || null;
+//         console.log('dataTransfer', dataTransfer);
+//         if (dataTransfer) {
+//           const text = dataTransfer.getData('text/plain');
+//           if (clipboard !== text) {
+//             setClipboard(text);
+//           }
+//         }
+//       };
 
-const read = (): string => {
-  const textArea: HTMLTextAreaElement = createTextArea();
-  textArea.focus();
-  const success: boolean = document.execCommand('paste');
-  if (!success) {
-    removeElement(textArea);
-    throw NOT_ALLOWED_ERROR;
-  }
-  const value: string = textArea.value;
-  removeElement(textArea);
-  return value;
-};
+//       navigator.clipboard.addEventListener('copy', navigatorClipboardListener);
+//       navigator.clipboard.addEventListener('cut', navigatorClipboardListener);
 
-const write = (text: string): void => {
-  const textArea: HTMLTextAreaElement = createTextArea();
-  textArea.value = text;
-  textArea.select();
-  const success: boolean = document.execCommand('copy');
-  removeElement(textArea);
-  if (!success) {
-    throw NOT_ALLOWED_ERROR;
-  }
-};
+//       return () => {
+//         if (isClipboardApiEnabled(navigator)) {
+//           navigator.clipboard.removeEventListener(
+//             'copy',
+//             navigatorClipboardListener,
+//           );
+//           navigator.clipboard.removeEventListener(
+//             'cut',
+//             navigatorClipboardListener,
+//           );
+//         }
+//       };
+//     }
 
-const useClipboard = (val = ''): ClipboardTuple => {
-  const [clipboard, setClipboard] = useState(val);
+//     // function documentClipboardListener(e) {
+//     //   try {
+//     //     console.log('selection', e);
 
-  useEffect((): void | VoidFunction => {
-    if (isClipboardApiEnabled(navigator)) {
-      const navigatorClipboardListener = ({
-        clipboardData,
-      }: ClipboardEvent) => {
-        const dataTransfer: DataTransfer | null =
-          clipboardData || getClipboardData(window) || null;
-        if (dataTransfer) {
-          const text = dataTransfer.getData('text/plain');
-          if (clipboard !== text) {
-            setClipboard(text);
-          }
-        }
-      };
+//     //     const selection = document.getSelection();
 
-      navigator.clipboard.addEventListener('copy', navigatorClipboardListener);
-      navigator.clipboard.addEventListener('cut', navigatorClipboardListener);
+//     //     if (selection) {
+//     //       setClipboard(selection.toString());
+//     //     }
+//     //   } catch (_err) {}
+//     // }
+//     // document.addEventListener('copy', documentClipboardListener); //复制
+//     // document.addEventListener('cut', documentClipboardListener); //剪切
+
+//     // return () => {
+//     //   document.removeEventListener('copy', documentClipboardListener);
+//     //   document.removeEventListener('cut', documentClipboardListener);
+//     // };
+//   }, [clipboard]);
+
+//   useLayoutEffect((): void => {
+//     try {
+//       const text = read();
+//       if (clipboard !== text) {
+//         setClipboard(text);
+//       }
+//     } catch (_syncErr) {
+//       if (isClipboardApiEnabled(navigator)) {
+//         (async (): Promise<void> => {
+//           try {
+//             const text: string = await navigator.clipboard.readText();
+//             if (clipboard !== text) {
+//               setClipboard(text);
+//             }
+//           } catch (_asyncErr) {}
+//         })();
+//       }
+//     }
+//   }, [clipboard]);
+
+//   const syncClipboard = useCallback(async (text: string): Promise<void> => {
+//     try {
+//       write(text);
+//       setClipboard(text);
+//     } catch (e) {
+//       if (isClipboardApiEnabled(navigator)) {
+//         try {
+//           await navigator.clipboard.writeText(text);
+//           setClipboard(text);
+//         } catch (_err) {}
+//       }
+//     }
+//   }, []);
+//   return [clipboard, syncClipboard];
+// };
+
+// export default useClipboard;
+
+import copy from 'copy-to-clipboard';
+import { useCallback, useEffect, useState } from 'react';
+
+export default function useClipboard(
+  successDuration: number = 0,
+): [boolean, (str: string) => void] {
+  const [isCopied, setIsCopied] = useState(false);
+
+  useEffect(() => {
+    if (isCopied && !!successDuration) {
+      const id = setTimeout(() => {
+        setIsCopied(false);
+      }, successDuration);
 
       return () => {
-        if (isClipboardApiEnabled(navigator)) {
-          navigator.clipboard.removeEventListener(
-            'copy',
-            navigatorClipboardListener,
-          );
-          navigator.clipboard.removeEventListener(
-            'cut',
-            navigatorClipboardListener,
-          );
-        }
+        clearTimeout(id);
       };
     }
+  }, [isCopied, successDuration]);
 
-    function documentClipboardListener(): void {
-      try {
-        const selection: null | Selection = document.getSelection();
-        if (selection) {
-          setClipboard(selection.toString());
-        }
-      } catch (_err) {}
-    }
-
-    document.addEventListener('copy', documentClipboardListener);
-    document.addEventListener('cut', documentClipboardListener);
-
-    return () => {
-      document.removeEventListener('copy', documentClipboardListener);
-      document.removeEventListener('cut', documentClipboardListener);
-    };
-  }, [clipboard]);
-
-  const syncClipboard = useCallback(async (text: string): Promise<void> => {
-    try {
-      write(text);
-      setClipboard(text);
-    } catch (e) {
-      if (isClipboardApiEnabled(navigator)) {
-        try {
-          await navigator.clipboard.writeText(text);
-          setClipboard(text);
-        } catch (_err) {}
-      }
-    }
+  const setText = useCallback((str: string) => {
+    const didCopy = copy(str);
+    setIsCopied(didCopy);
   }, []);
 
-  useLayoutEffect((): void => {
-    try {
-      const text: string = read();
-      if (clipboard !== text) {
-        setClipboard(text);
-      }
-    } catch (_syncErr) {
-      if (isClipboardApiEnabled(navigator)) {
-        (async (): Promise<void> => {
-          try {
-            const text: string = await navigator.clipboard.readText();
-            if (clipboard !== text) {
-              setClipboard(text);
-            }
-          } catch (_asyncErr) {}
-        })();
-      }
-    }
-  }, [clipboard]);
-
-  return [clipboard, syncClipboard];
-};
-
-export default useClipboard;
+  return [isCopied, setText];
+}
