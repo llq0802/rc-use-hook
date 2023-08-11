@@ -52,7 +52,10 @@ export type useLazyLoadImageParams = {
   /** querySelectorAll抓取在 `target` 所有可延迟加载的图像的自定义属性 */
   imageAttribute?: `data-${string}`; // 默认为 data-img-src
   /** IntersectionObserver 的配置项*/
-  options?: IntersectionObserverInit; // 默认为 { rootMargin: '200px 0px' , threshold: 0.01, };
+  options?: Omit<IntersectionObserverInit, 'root'> & {
+    root: MutableRefObject<HTMLElement | null> | (() => HTMLElement);
+  }; // 默认为 { rootMargin: '0px 0px 200px 0px' , threshold: 0.01, };
+
   /** 依赖项 如果配置会重新执行监听 */
   dependencies?: any[]; // 默认为 []
 };

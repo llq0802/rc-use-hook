@@ -11,9 +11,10 @@ function getSize() {
 }
 
 /**
- * 实时返回窗口的宽高
+ * 返回窗口的宽高
+ * @param waitTime 延迟时间
  */
-export default function useWindowSize(waitTime = 200) {
+export default function useWindowSize(waitTime: number = 200) {
   const [windowSize, setWindowSize] = useState(getSize());
 
   useEffect(() => {

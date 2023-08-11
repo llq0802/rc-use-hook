@@ -11,11 +11,11 @@ const useGeolocation = () => {
     speed: null,
     timestamp: Date.now(),
   });
-  let mounted = true;
   let watchId: number | undefined;
 
-  const onEvent = (event) => {
-    if (mounted) {
+  useEffect(() => {
+    const onEvent = (event) => {
+      console.log('event', event);
       setState({
         accuracy: event.coords.accuracy,
         altitude: event.coords.altitude,
@@ -26,21 +26,17 @@ const useGeolocation = () => {
         speed: event.coords.speed,
         timestamp: event.timestamp,
       });
-    }
-  };
-  const onError = (error) => {
-    setState(error);
-  };
+    };
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onEvent, onError);
-    watchId = navigator.geolocation.watchPosition(onEvent, onError);
+    const onError = (error) => setState(error);
+
+    navigator?.geolocation?.getCurrentPosition(onEvent, onError);
+    watchId = navigator?.geolocation?.watchPosition(onEvent, onError);
 
     return () => {
-      mounted = false;
-      navigator.geolocation.clearWatch(watchId as number);
+      navigator?.geolocation?.clearWatch(watchId as number);
     };
-  }, [0]);
+  }, []);
 
   return state;
 };

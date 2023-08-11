@@ -7,7 +7,7 @@ const Demo1 = () => {
   return (
     <>
       <p>缩放窗口试试</p>
-      <pre>{JSON.stringify(windowSize, null, 2)}</pre>
+      <pre>{JSON.stringify(windowSize, null, 4)}</pre>
     </>
   );
 };

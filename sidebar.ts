@@ -32,6 +32,10 @@ export default {
           link: '/hooks/use-lazy-image',
         },
         {
+          title: 'useClipboard',
+          link: '/hooks/use-Clipboard',
+        },
+        {
           title: 'useWindowSize',
           link: '/hooks/use-Window-Size',
         },

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 interface Clipboard {
   readText(): Promise<string>;
@@ -102,9 +102,6 @@ const read = (): string => {
   const textArea: HTMLTextAreaElement = createTextArea();
   textArea.focus();
   const success: boolean = document.execCommand('paste');
-
-  // If we don't have permission to read the clipboard,
-  //   cleanup and throw an error.
   if (!success) {
     removeElement(textArea);
     throw NOT_ALLOWED_ERROR;
@@ -125,14 +122,14 @@ const write = (text: string): void => {
   }
 };
 
-const useClippy = (): ClipboardTuple => {
-  const [clipboard, setClipboard] = React.useState('');
+const useClipboard = (val = ''): ClipboardTuple => {
+  const [clipboard, setClipboard] = useState(val);
 
-  // If the user manually updates their clipboard,
-  //   re-render with the new value.
-  React.useEffect((): void | VoidFunction => {
+  useEffect((): void | VoidFunction => {
     if (isClipboardApiEnabled(navigator)) {
-      const clipboardListener = ({ clipboardData }: ClipboardEvent): void => {
+      const navigatorClipboardListener = ({
+        clipboardData,
+      }: ClipboardEvent) => {
         const dataTransfer: DataTransfer | null =
           clipboardData || getClipboardData(window) || null;
         if (dataTransfer) {
@@ -142,59 +139,63 @@ const useClippy = (): ClipboardTuple => {
           }
         }
       };
-      navigator.clipboard.addEventListener('copy', clipboardListener);
-      navigator.clipboard.addEventListener('cut', clipboardListener);
-      return (): void => {
+
+      navigator.clipboard.addEventListener('copy', navigatorClipboardListener);
+      navigator.clipboard.addEventListener('cut', navigatorClipboardListener);
+
+      return () => {
         if (isClipboardApiEnabled(navigator)) {
-          navigator.clipboard.removeEventListener('copy', clipboardListener);
-          navigator.clipboard.removeEventListener('cut', clipboardListener);
+          navigator.clipboard.removeEventListener(
+            'copy',
+            navigatorClipboardListener,
+          );
+          navigator.clipboard.removeEventListener(
+            'cut',
+            navigatorClipboardListener,
+          );
         }
       };
     }
 
-    // Fallback to reading document.getSelection
-    const clipboardListener = (): void => {
+    function documentClipboardListener(): void {
       try {
         const selection: null | Selection = document.getSelection();
         if (selection) {
           setClipboard(selection.toString());
         }
       } catch (_err) {}
-    };
-    document.addEventListener('copy', clipboardListener);
-    document.addEventListener('cut', clipboardListener);
-    return (): void => {
-      document.removeEventListener('copy', clipboardListener);
-      document.removeEventListener('cut', clipboardListener);
+    }
+
+    document.addEventListener('copy', documentClipboardListener);
+    document.addEventListener('cut', documentClipboardListener);
+
+    return () => {
+      document.removeEventListener('copy', documentClipboardListener);
+      document.removeEventListener('cut', documentClipboardListener);
     };
   }, [clipboard]);
 
-  const syncClipboard = React.useCallback(
-    async (text: string): Promise<void> => {
-      try {
-        write(text);
-        setClipboard(text);
-      } catch (e) {
-        if (isClipboardApiEnabled(navigator)) {
-          try {
-            await navigator.clipboard.writeText(text);
-            setClipboard(text);
-          } catch (_err) {}
-        }
+  const syncClipboard = useCallback(async (text: string): Promise<void> => {
+    try {
+      write(text);
+      setClipboard(text);
+    } catch (e) {
+      if (isClipboardApiEnabled(navigator)) {
+        try {
+          await navigator.clipboard.writeText(text);
+          setClipboard(text);
+        } catch (_err) {}
       }
-    },
-    [],
-  );
+    }
+  }, []);
 
-  // Try to read synchronously.
-  React.useLayoutEffect((): void => {
+  useLayoutEffect((): void => {
     try {
       const text: string = read();
       if (clipboard !== text) {
         setClipboard(text);
       }
     } catch (_syncErr) {
-      // If synchronous reading is disabled, try to read asynchronously.
       if (isClipboardApiEnabled(navigator)) {
         (async (): Promise<void> => {
           try {
@@ -211,4 +212,4 @@ const useClippy = (): ClipboardTuple => {
   return [clipboard, syncClipboard];
 };
 
-export default useClippy;
+export default useClipboard;

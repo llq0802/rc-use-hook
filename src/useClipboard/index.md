@@ -1,9 +1,9 @@
 ---
-title: useGeolocation
+title: useClipboard
 toc: content
 ---
 
-# useGeolocation
+# useClipboard
 
 返回当前浏览器的经纬度 仅在在`HTTPS`才可用
 

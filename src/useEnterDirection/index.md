@@ -5,7 +5,7 @@ toc: content
 
 # useEnterDirection
 
-使用`IntersectionObserver`实现的懒加载图像，在组件卸载或者图像已经加载后不再监听
+精准返回鼠标进入盒子的方向 `top` `right` `bottom` `left`
 
 ## 代码演示
 
@@ -15,10 +15,18 @@ toc: content
 
 ## API
 
+```ts
+import { useEnterDirection } from 'rc-use-hook';
+```
+
 ### Params
 
-|   参数   |  说明  |           类型           |
-| :------: | :----: | :----------------------: |
-| paramObj | 配置项 | `useLazyLoadImageParams` |
+|  参数  |  说明   |                              类型                              | 默认值 |
+| :----: | :-----: | :------------------------------------------------------------: | :----: |
+| target | dom节点 | `MutableRefObject<HTMLElement \| null> \| (() => HTMLElement)` |  `-`   |
 
-### useLazyLoadImageParams
+### Result
+
+|   参数    |      说明      |                   类型                    |   默认值    |
+| :-------: | :------------: | :---------------------------------------: | :---------: |
+| direction | 鼠标进入的方向 | `top` `right` `bottom` `left` `undefined` | `undefined` |

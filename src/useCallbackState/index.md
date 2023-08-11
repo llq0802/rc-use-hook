@@ -28,6 +28,6 @@ const [state, setState] = useCallbackState(initialState);
 
 ### setState
 
-|   参数   |                               说明                                |                                           类型                                            |
-| :------: | :---------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| setState | 第一个参数传入新的 state,第二个参数为回调函数接受最新传入的 state | `(newState: SetStateAction<T>, callback?: (newState: SetStateAction<T>) => void) => void` |
+|   参数   |                             说明                              |                                        类型                                         |
+| :------: | :-----------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| setState | 第一个参数传入新的 state,第二个参数为函数接受最新传入的 state | `(newState: SetStateAction<T>, cb?: (newState: SetStateAction<T>) => void) => void` |

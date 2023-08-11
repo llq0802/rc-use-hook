@@ -17,7 +17,7 @@ toc: content
 
 ```ts
 import { useDefer } from 'rc-use-hook';
-const isDeferRender = useDefer(10_000);
+const isDeferRender = useDefer(10_00);
 ```
 
 ### Params

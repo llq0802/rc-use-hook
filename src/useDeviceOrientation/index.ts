@@ -8,16 +8,15 @@ const useDeviceOrientation = () => {
     absolute: false,
   });
 
-  const handle = (e) => {
-    setOrientation({
-      beta: e.beta,
-      alpha: e.alpha,
-      gamma: e.gamma,
-      absolute: e.absolute,
-    });
-  };
-
   useEffect(() => {
+    const handle = (e) => {
+      setOrientation({
+        beta: e.beta,
+        alpha: e.alpha,
+        gamma: e.gamma,
+        absolute: e.absolute,
+      });
+    };
     window.addEventListener('deviceorientation', handle);
 
     return () => {

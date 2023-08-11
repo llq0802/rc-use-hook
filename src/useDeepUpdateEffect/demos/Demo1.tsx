@@ -4,20 +4,23 @@ import React, { useState } from 'react';
 
 export default () => {
   const [updateEffectCount, setUpdateEffectCount] = useState([0, 1, 2]);
+  const [count, setCount] = useState(99);
 
   useDeepUpdateEffect(() => {
     console.log(' updateEffectCount-执行了');
+    setCount((c) => c + 1);
   }, [updateEffectCount]);
 
   return (
     <div>
-      <p>打开控制台查看执行</p>
-      <p>updateEffectCount: {JSON.stringify(updateEffectCount, null, 2)}</p>
+      <p>时间戳: {Date.now()}</p>
+      <h3>打开控制台查看</h3>
+      <p>updateEffectCount: {JSON.stringify(count, null, 4)}</p>
       <p>
         <Button
           type="primary"
           onClick={() => {
-            setUpdateEffectCount([1, 2, 3]);
+            setUpdateEffectCount([...updateEffectCount]);
           }}
         >
           渲染组件
