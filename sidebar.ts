@@ -32,6 +32,14 @@ export default {
           link: '/hooks/use-lazy-image',
         },
         {
+          title: 'useEnterDirection',
+          link: '/hooks/use-Enter-Direction',
+        },
+        {
+          title: 'useDeepUpdateEffect',
+          link: '/hooks/use-deep-update-effect',
+        },
+        {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
         },
@@ -46,14 +54,6 @@ export default {
         {
           title: 'useGeolocation',
           link: '/hooks/use-Geolocation',
-        },
-        {
-          title: 'useDeepUpdateEffect',
-          link: '/hooks/use-deep-update-effect',
-        },
-        {
-          title: 'useEnterDirection',
-          link: '/hooks/use-Enter-Direction',
         },
       ],
     },
