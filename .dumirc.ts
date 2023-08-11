@@ -13,8 +13,12 @@ export default defineConfig({
       { title: '指南', link: '/guide' },
       { title: 'hooks', link: '/hooks' },
       {
+        title: 'Lighting Design',
+        link: 'https://llq0802.github.io/lighting-design/latest/',
+      },
+      {
         title: 'GitHub',
-        link: 'https://github.com/llq0802/lighting-design/tree/v2',
+        link: 'https://github.com/llq0802/rc-use-hook',
       },
     ],
     sidebar,

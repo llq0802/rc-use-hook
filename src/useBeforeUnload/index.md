@@ -17,17 +17,12 @@ nav:
 
 ```ts
 import { useBeforeUnload } from 'rc-use-hook';
-const [state, setState] = useBeforeUnload(initialState);
+useBeforeUnload(enabled:boolean, message?:string);
 ```
 
-### state
+### Params
 
-| 参数  | 说明       | 类型                |
-| ----- | ---------- | ------------------- |
-| state | state 的值 | `SetStateAction<T>` |
-
-### setState
-
-|   参数   |                               说明                                |                                           类型                                            |
-| :------: | :---------------------------------------------------------------: | :---------------------------------------------------------------------------------------: |
-| setState | 第一个参数传入新的 state,第二个参数为回调函数接受最新传入的 state | `(newState: SetStateAction<T>, callback?: (newState: SetStateAction<T>) => void) => void` |
+| 参数    | 说明                          | 类型      | 默认值 |
+| ------- | ----------------------------- | --------- | ------ |
+| enabled | 是否启用                      | `boolean` | `true` |
+| message | 自定义提示信息 部分浏览器无效 | `string`  | `-`    |
