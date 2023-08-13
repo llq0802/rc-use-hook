@@ -30,3 +30,5 @@ export { default as useDefer } from './useDefer';
 
 export * from './useClipboard';
 export { default as useClipboard } from './useClipboard';
+export * from './useLockScroll';
+export { default as useLockScroll } from './useLockScroll';

@@ -44,6 +44,10 @@ export default {
           link: '/hooks/use-Clipboard',
         },
         {
+          title: 'useLockScroll',
+          link: '/hooks/use-Lock-Scroll',
+        },
+        {
           title: 'useWindowSize',
           link: '/hooks/use-Window-Size',
         },
