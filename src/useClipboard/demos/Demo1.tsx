@@ -3,7 +3,7 @@ import { useClipboard } from 'rc-use-hook';
 import React from 'react';
 
 export default function () {
-  const [isCopied, setCopied] = useClipboard(1000);
+  const [isCopied, setCopied] = useClipboard(2000);
 
   return (
     <>

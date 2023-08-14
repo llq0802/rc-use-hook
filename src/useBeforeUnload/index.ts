@@ -10,9 +10,13 @@ const useBeforeUnload = (
   message: string = '真的要离开吗?',
 ) => {
   useEffect(() => {
+    const prevOnbeforeunload = window.onbeforeunload;
+
     if (!enabled) {
+      window.onbeforeunload = prevOnbeforeunload;
       return;
     }
+
     // const handler = (event: BeforeUnloadEvent) => {
     //   event.preventDefault();
     //   if (message) {
@@ -23,13 +27,11 @@ const useBeforeUnload = (
     // window.addEventListener('beforeunload', handler);
     // return () => window.removeEventListener('beforeunload', handler);
 
-    const prevOnbeforeunload = window.onbeforeunload;
     window.onbeforeunload = function (event: BeforeUnloadEvent) {
       event.preventDefault();
       if (prevOnbeforeunload) {
         prevOnbeforeunload?.(event);
       }
-      console.log('event', event);
       event.returnValue = message;
       return message;
     };

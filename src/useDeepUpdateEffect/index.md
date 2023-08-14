@@ -25,6 +25,6 @@ API 与 `React.useEffect` 完全一致。
 ```ts
 useDeepUpdateEffect(
   effect: React.EffectCallback,
-  deps?: React.DependencyList,
+  deps: React.DependencyList,
 )
 ```

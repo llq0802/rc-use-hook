@@ -5,7 +5,7 @@ toc: content
 
 # useLockScroll
 
-使用`IntersectionObserver`实现的懒加载图像，在组件卸载或者图像已经加载后不再监听
+设置锁定元素的滚动, 常用于弹窗 抽屉等组件
 
 ## 代码演示
 
@@ -13,42 +13,24 @@ toc: content
 
 <code src="./demos/Demo1.tsx" ></code>
 
+### 自定义锁定元素
+
+<code src="./demos/Demo2.tsx" ></code>
+
 ## API
 
-IntersectionObserver API: [IntersectionObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver)
-
-> - `imageAttribute` 必须以`data-`开头的字符串并且只能是小写字母
-> - `img` 的 `src` 属性推荐设置为默认占位的图片地址
-
 ```ts
-import { useLazyLoadImage } from 'rc-use-hook';
-useLazyLoadImage();
-// or
-useLazyLoadImage({
-  // ...配置项
-});
+import { useLockScroll } from 'rc-use-hook';
+const [lock, setLock] = useLockScroll(initLock, target);
 ```
 
 ### Params
 
-|   参数   |  说明  |           类型           |
-| :------: | :----: | :----------------------: |
-| paramObj | 配置项 | `useLazyLoadImageParams` |
+| 参数     | 说明         | 类型                                                           | 默认值          |
+| -------- | ------------ | -------------------------------------------------------------- | --------------- |
+| initLock | 初始是否锁定 | `boolean`                                                      | `false`         |
+| target   | 被锁定的元素 | `MutableRefObject<HTMLElement \| null> \| (() => HTMLElement)` | `document.body` |
 
-### useLazyLoadImageParams
+### Result
 
-```ts
-export type useLazyLoadImageParams = {
-  /** 在哪个节点下查询 querySelectorAll */
-  target?: MutableRefObject<HTMLElement | null> | (() => HTMLElement); //  默认为 document
-  /** querySelectorAll抓取在 `target` 所有可延迟加载的图像的自定义属性 */
-  imageAttribute?: `data-${string}`; // 默认为 data-img-src
-  /** IntersectionObserver 的配置项*/
-  options?: Omit<IntersectionObserverInit, 'root'> & {
-    root: MutableRefObject<HTMLElement | null> | (() => HTMLElement);
-  }; // 默认为 { rootMargin: '0px 0px 200px 0px' , threshold: 0.01, };
-
-  /** 依赖项 如果配置会重新执行监听 */
-  dependencies?: any[]; // 默认为 []
-};
-```
+与`React.useState`的返回值一致

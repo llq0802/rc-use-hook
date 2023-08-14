@@ -10,23 +10,22 @@ const useLockScroll = (
 ): [boolean, (bool: boolean) => void] => {
   const [locked, setLocked] = useState<boolean>(lock);
 
-  const dom: Element = isFunction(target) ? target?.() : target?.current;
-
-  const lockFn = useCallback(() => {
+  const lockFn = useCallback((dom) => {
     originalOverflow = window.getComputedStyle(dom).overflow;
-    document.body.style.overflow = 'hidden';
+    dom.style.overflow = 'hidden';
   }, []);
 
-  const unlockFn = useCallback(() => {
-    document.body.style.overflow = originalOverflow as string;
+  const unlockFn = useCallback((dom) => {
+    dom.style.overflow = originalOverflow as string;
     originalOverflow = null;
   }, []);
 
   useEffect(() => {
+    const dom: Element = isFunction(target) ? target?.() : target?.current;
     if (locked) {
-      lockFn();
+      lockFn(dom);
     } else {
-      unlockFn();
+      unlockFn(dom);
     }
   }, [locked]);
 
@@ -34,9 +33,9 @@ const useLockScroll = (
     return () => setLocked(lock);
   }, []);
 
-  const set = useCallback((bool: boolean) => setLocked(bool), []);
+  const updateLocked = useCallback((bool: boolean) => setLocked(bool), []);
 
-  return [locked, set];
+  return [locked, updateLocked];
 };
 
 export default useLockScroll;

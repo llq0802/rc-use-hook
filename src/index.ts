@@ -32,3 +32,15 @@ export * from './useClipboard';
 export { default as useClipboard } from './useClipboard';
 export * from './useLockScroll';
 export { default as useLockScroll } from './useLockScroll';
+
+export * from './useDelayedState';
+export { default as useDelayedState } from './useDelayedState';
+
+export * from './useMedia';
+export { default as useMedia } from './useMedia';
+
+export * from './useRequestAnimationFrame';
+export { default as useRequestAnimationFrame } from './useRequestAnimationFrame';
+
+export * from './usePortal';
+export { default as usePortal } from './usePortal';
