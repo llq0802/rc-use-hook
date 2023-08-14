@@ -29,3 +29,33 @@ export function getCamelCase(str: string) {
     return i.toUpperCase();
   });
 }
+
+/**
+ * 判断元素是否可滚动
+ * @param  HTMLElement dom元素
+ * @return boolean
+ */
+export const isScrollable = function (ele: HTMLElement) {
+  const hasScrollableContent = ele?.scrollHeight > ele?.clientHeight;
+
+  const overflowYStyle = window.getComputedStyle(ele).overflowY;
+
+  const isOverflowHidden = overflowYStyle.indexOf('hidden') !== -1;
+
+  return hasScrollableContent && !isOverflowHidden;
+};
+
+/**
+ * 查找当前元素以及父元素直到body 可以滚动的元素
+ * @param HTMLElement 元素
+ * @returns HTMLElement
+ */
+export const getScrollableParent = function (ele: HTMLElement): HTMLElement {
+  if (!ele || ele === document.body) {
+    return document.body;
+  } else if (isScrollable(ele)) {
+    return ele;
+  } else {
+    return getScrollableParent(ele?.parentNode);
+  }
+};

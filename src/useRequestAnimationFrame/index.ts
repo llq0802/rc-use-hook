@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 /**
  * 运行一个函数，在每次重绘之前调用它。
- * @param callback
+ * @params {(deltaTime: number) => void )} callback
  */
 const useRequestAnimationFrame = (callback: (deltaTime: number) => void) => {
   const requestRef = useRef<number>();
