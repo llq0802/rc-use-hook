@@ -44,3 +44,6 @@ export { default as useRequestAnimationFrame } from './useRequestAnimationFrame'
 
 export * from './usePortal';
 export { default as usePortal } from './usePortal';
+
+export * from './useParentScroll';
+export { default as useParentScroll } from './useParentScroll';

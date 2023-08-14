@@ -32,6 +32,14 @@ export default {
           link: '/hooks/use-worker',
         },
         {
+          title: 'useClipboard',
+          link: '/hooks/use-Clipboard',
+        },
+        {
+          title: 'useLazyImage',
+          link: '/hooks/use-lazy-image',
+        },
+        {
           title: 'useDelayedState',
           link: '/hooks/use-Delayed-State',
         },
@@ -40,8 +48,24 @@ export default {
           link: '/hooks/use-callback-state',
         },
         {
-          title: 'useLazyImage',
-          link: '/hooks/use-lazy-image',
+          title: 'useLockScroll',
+          link: '/hooks/use-Lock-Scroll',
+        },
+        {
+          title: 'useParentScroll',
+          link: '/hooks/use-Parent-Scroll',
+        },
+        {
+          title: 'useWindowSize',
+          link: '/hooks/use-Window-Size',
+        },
+        {
+          title: 'useGeolocation',
+          link: '/hooks/use-Geolocation',
+        },
+        {
+          title: 'useBeforeUnload',
+          link: '/hooks/use-Before-Unload',
         },
         {
           title: 'useEnterDirection',
@@ -52,28 +76,8 @@ export default {
           link: '/hooks/use-deep-update-effect',
         },
         {
-          title: 'useClipboard',
-          link: '/hooks/use-Clipboard',
-        },
-        {
-          title: 'useLockScroll',
-          link: '/hooks/use-Lock-Scroll',
-        },
-        {
-          title: 'useWindowSize',
-          link: '/hooks/use-Window-Size',
-        },
-        {
-          title: 'useBeforeUnload',
-          link: '/hooks/use-Before-Unload',
-        },
-        {
           title: 'useRequestAnimationFrame',
           link: '/hooks/use-Request-Animation-Frame',
-        },
-        {
-          title: 'useGeolocation',
-          link: '/hooks/use-Geolocation',
         },
       ],
     },

@@ -8,7 +8,7 @@ function Demo1() {
     setCount((prevCount) => (prevCount + deltaTime * 0.01) % 100);
   });
 
-  return <p>{Math.round(count)}</p>;
+  return <h3>{Math.round(count)}</h3>;
 }
 
 export default Demo1;
