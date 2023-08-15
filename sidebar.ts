@@ -36,6 +36,10 @@ export default {
           link: '/hooks/use-Clipboard',
         },
         {
+          title: 'useImageSize',
+          link: '/hooks/use-Image-Size',
+        },
+        {
           title: 'useLazyImage',
           link: '/hooks/use-lazy-image',
         },
@@ -70,6 +74,10 @@ export default {
         {
           title: 'useEnterDirection',
           link: '/hooks/use-Enter-Direction',
+        },
+        {
+          title: 'useDeviceOrientation',
+          link: '/hooks/use-Device-Orientation',
         },
         {
           title: 'useDeepUpdateEffect',
