@@ -1,5 +1,5 @@
 {
-  "name": "rc-use-hookss",
+  "name": "rc-use-hooks",
   "version": "2.0.0",
   "description": "A react library developed with dumi",
   "module": "dist/index.js",

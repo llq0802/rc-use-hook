@@ -2,7 +2,7 @@ import { defineConfig } from 'dumi';
 import sidebar from './sidebar';
 const isDev = process.env.NODE_ENV === 'development';
 
-const publicPath = !isDev ? `/rc-use-hooks/` : '/';
+const publicPath = !isDev ? `/rc-use-hook/` : '/';
 const logo = `${publicPath}logo.png`;
 const favicons = [`${publicPath}logo.png`];
 
@@ -17,8 +17,8 @@ export default defineConfig({
     atomDirs: [{ type: 'hooks', dir: 'src' }],
   },
   themeConfig: {
-    sidebar,
     name: 'rc-use-hooks',
+    sidebar,
     footer:
       'Open-source MIT Licensed | Copyright © 2020-present Powered by llq0802',
     socialLinks: {
