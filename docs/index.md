@@ -1,12 +1,12 @@
 ---
 hero:
-  title: library
-  description: A react library developed with dumi
+  title: rc-use-hook
+  description: 一个对 ahook 补充的 React Hook库
   actions:
-    - text: Hello
-      link: /
-    - text: World
-      link: /
+    - text: 快速开始
+      link: /guide
+    - text: GitHub
+      link: https://github.com/llq0802/rc-use-hook
 features:
   - title: Hello
     emoji: 💎
@@ -18,5 +18,3 @@ features:
     emoji: 🚀
     description: Put ! description here
 ---
-
-rc-use-hook
