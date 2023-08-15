@@ -28,6 +28,8 @@ const useBeforeUnload = (
     // return () => window.removeEventListener('beforeunload', handler);
 
     window.onbeforeunload = function (event: BeforeUnloadEvent) {
+      console.log('event', event);
+
       event.preventDefault();
       if (prevOnbeforeunload) {
         prevOnbeforeunload?.(event);

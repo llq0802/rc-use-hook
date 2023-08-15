@@ -22,7 +22,7 @@ toc: content
 - [useLockScroll] - 锁定元素的滚动
 - [useParentScroll] - 获取可滚动节点
 - [useWindowSize] - 窗口的宽高
-- [useGeolocation] - 窗口的宽高
+- [useGeolocation] - 浏览器定位
 - [useBeforeUnload] - 窗口关闭或刷新的提示
 - [useEnterDirection] - 鼠标进入盒子的方向
 - [useDeviceOrientation] - 屏幕方向
