@@ -1,4 +1,4 @@
-import { useParentScroll } from 'rc-use-hook';
+import { useParentScroll } from 'rc-use-hooks';
 import React, { useRef } from 'react';
 
 function Demo() {

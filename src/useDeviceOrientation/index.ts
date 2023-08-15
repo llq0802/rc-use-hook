@@ -1,5 +1,5 @@
 // import { useEffect, useState } from 'react';
-import { useMedia } from 'rc-use-hook';
+import { useMedia } from 'rc-use-hooks';
 
 // const useDeviceOrientation = () => {
 //   const [orientation, setOrientation] = useState({

@@ -16,7 +16,7 @@ nav:
 ### API
 
 ```ts
-import { useCallbackState } from 'rc-use-hook';
+import { useCallbackState } from 'rc-use-hooks';
 const [state, setState] = useCallbackState(initialState);
 ```
 

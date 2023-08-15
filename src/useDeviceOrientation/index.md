@@ -15,8 +15,10 @@ toc: content
 
 ## API
 
+> `portrait` 为竖屏, `landscape`为横屏
+
 ```ts
-import { useDeviceOrientation } from 'rc-use-hook';
+import { useDeviceOrientation } from 'rc-use-hooks';
 ```
 
 ### Result

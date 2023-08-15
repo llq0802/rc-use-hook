@@ -53,3 +53,6 @@ export { default as useImageSize } from './useImageSize';
 
 export * from './useDeviceOrientation';
 export { default as useDeviceOrientation } from './useDeviceOrientation';
+
+export * from './useFocus';
+export { default as useFocus } from './useFocus';

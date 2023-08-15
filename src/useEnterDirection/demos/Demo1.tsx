@@ -1,4 +1,4 @@
-import { useEnterDirection } from 'rc-use-hook';
+import { useEnterDirection } from 'rc-use-hooks';
 import React, { useRef } from 'react';
 
 const style: React.CSSProperties = {

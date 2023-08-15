@@ -7,7 +7,7 @@ nav:
 
 # useBeforeUnload
 
-与 useState 效果一致，可在 setState 的第二个参数回调函数中接受最新的 state ，可像类组件的 this.state 的回调函数。
+窗口关闭或刷新的提示
 
 ## 代码演示
 
@@ -16,7 +16,7 @@ nav:
 ### API
 
 ```ts
-import { useBeforeUnload } from 'rc-use-hook';
+import { useBeforeUnload } from 'rc-use-hooks';
 useBeforeUnload(enabled:boolean, message?:string);
 ```
 

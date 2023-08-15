@@ -1,4 +1,4 @@
-import { usePortal } from 'rc-use-hook';
+import { usePortal } from 'rc-use-hooks';
 import React from 'react';
 
 function Child() {

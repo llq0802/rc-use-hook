@@ -1,4 +1,4 @@
-import { isFunction } from 'rc-use-hook/utils';
+import { isFunction } from 'rc-use-hooks/utils';
 import { SetStateAction, useEffect, useState } from 'react';
 
 /**
@@ -30,7 +30,10 @@ const useDelayedState = <T = any>(
 
     if (isFunction(newState)) {
       setState((prev) => {
-        return newState?.(prev.state);
+        return {
+          state: newState?.(prev.state),
+          loaded: true,
+        };
       });
     } else {
       setState({ state: newState, loaded });

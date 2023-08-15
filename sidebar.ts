@@ -28,9 +28,15 @@ export default {
           link: '/hooks/use-Portal',
         },
         {
+          title: 'useFocus',
+          link: '/hooks/use-Focus',
+        },
+
+        {
           title: 'useWorker',
           link: '/hooks/use-worker',
         },
+
         {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',

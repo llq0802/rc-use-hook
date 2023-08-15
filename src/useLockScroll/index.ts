@@ -1,4 +1,4 @@
-import { isFunction } from 'rc-use-hook/utils';
+import { isFunction } from 'rc-use-hooks/utils';
 import { MutableRefObject, useCallback, useEffect, useState } from 'react';
 
 let originalOverflow: string | null = null;

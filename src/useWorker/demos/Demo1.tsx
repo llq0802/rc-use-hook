@@ -1,5 +1,5 @@
 import { Button, message } from 'antd';
-import { useWorker } from 'rc-use-hook';
+import { useWorker } from 'rc-use-hooks';
 import React, { useState } from 'react';
 
 const numbers = [...Array(5000000)].map((e) => ~~(Math.random() * 1000000));

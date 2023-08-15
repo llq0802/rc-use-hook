@@ -1,7 +1,7 @@
-# rc-use-hook
+# rc-use-hooks
 
-[![NPM version](https://img.shields.io/npm/v/rc-use-hook.svg?style=flat)](https://npmjs.org/package/rc-use-hook)
-[![NPM downloads](http://img.shields.io/npm/dm/rc-use-hook.svg?style=flat)](https://npmjs.org/package/rc-use-hook)
+[![NPM version](https://img.shields.io/npm/v/rc-use-hooks.svg?style=flat)](https://npmjs.org/package/rc-use-hooks)
+[![NPM downloads](http://img.shields.io/npm/dm/rc-use-hooks.svg?style=flat)](https://npmjs.org/package/rc-use-hooks)
 
 A react library developed with dumi
 

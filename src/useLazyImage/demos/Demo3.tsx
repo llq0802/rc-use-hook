@@ -1,4 +1,4 @@
-import { useLazyImage } from 'rc-use-hook';
+import { useLazyImage } from 'rc-use-hooks';
 import React, { useRef } from 'react';
 
 const placehoderSrc =

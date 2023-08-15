@@ -1,4 +1,4 @@
-import { useWindowSize } from 'rc-use-hook';
+import { useWindowSize } from 'rc-use-hooks';
 import React from 'react';
 
 const Demo1 = () => {

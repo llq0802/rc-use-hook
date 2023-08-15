@@ -6,7 +6,7 @@ toc: content
 # useDeepUpdateEffect
 
 `useDeepUpdateEffect` 用法等同于 `useEffect`
-会忽略首次执行，只在依赖更新时并且**深度**比较依赖项后执行
+会忽略首次执行，只在依赖更新时并且`深度`比较依赖项后执行
 
 ## 代码演示
 
@@ -17,7 +17,7 @@ toc: content
 ## API
 
 ```ts
-import { useDeepUpdateEffect } from 'rc-use-hook';
+import { useDeepUpdateEffect } from 'rc-use-hooks';
 ```
 
 API 与 `React.useEffect` 完全一致。
@@ -25,6 +25,6 @@ API 与 `React.useEffect` 完全一致。
 ```ts
 useDeepUpdateEffect(
   effect: React.EffectCallback,
-  deps: React.DependencyList,
+  deps: React.DependencyList, // deps依赖项必须传
 )
 ```

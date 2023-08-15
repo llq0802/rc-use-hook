@@ -1,1 +1,24 @@
-This is a guide example.
+### 介绍
+
+一个对 ahook 补充的 React Hook 库
+
+### 安装
+
+```shell
+npm i rc-use-hooks
+
+#or
+
+yarn add rc-use-hooks
+
+#or
+
+pnpm add rc-use-hooks
+
+```
+
+### 使用
+
+```ts
+import { useShow } from 'rc-use-hooks';
+```

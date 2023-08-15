@@ -1,5 +1,5 @@
 {
-  "name": "rc-use-hook",
+  "name": "rc-use-hookss",
   "version": "2.0.0",
   "description": "A react library developed with dumi",
   "module": "dist/index.js",
@@ -16,7 +16,8 @@
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepublishOnly": "father doctor && npm run build",
-    "deploy": "gh-pages -d docs-dist"
+    "docs:deploy": "gh-pages -d docs-dist",
+    "deploy": "npm run docs:build && npm run docs:deploy"
   },
   "authors": [],
   "license": "MIT",

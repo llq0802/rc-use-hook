@@ -2,7 +2,7 @@ import { defineConfig } from 'dumi';
 import sidebar from './sidebar';
 const isDev = process.env.NODE_ENV === 'development';
 
-const publicPath = !isDev ? `/rc-use-hook/` : '/';
+const publicPath = !isDev ? `/rc-use-hooks/` : '/';
 const logo = `${publicPath}logo.png`;
 const favicons = [`${publicPath}logo.png`];
 
@@ -18,7 +18,7 @@ export default defineConfig({
   },
   themeConfig: {
     sidebar,
-    name: 'rc-use-hook',
+    name: 'rc-use-hooks',
     footer:
       'Open-source MIT Licensed | Copyright © 2020-present Powered by llq0802',
     socialLinks: {
@@ -33,14 +33,14 @@ export default defineConfig({
       },
       {
         title: 'GitHub',
-        link: 'https://github.com/llq0802/rc-use-hook',
+        link: 'https://github.com/llq0802/rc-use-hooks',
       },
     ],
   },
   metas: [
     {
       name: 'keywords',
-      content: 'hook, use-hook, rc-use-hook, hooks, react-hook',
+      content: 'hook, use-hook, rc-use-hooks, hooks, react-hook',
     },
     {
       name: 'description',

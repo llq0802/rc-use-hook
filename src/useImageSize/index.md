@@ -16,7 +16,7 @@ toc: content
 ## API
 
 ```ts
-import { useImageSize } from 'rc-use-hook';
+import { useImageSize } from 'rc-use-hooks';
 ```
 
 ### Params
@@ -27,6 +27,6 @@ import { useImageSize } from 'rc-use-hook';
 
 ### Result
 
-| 参数 |      说明      |       类型       | 默认值  |
-| :--: | :------------: | :--------------: | :-----: |
-| size | 返回的原始宽高 | `[width,height]` | `[0,0]` |
+| 参数 |          说明          |       类型       | 默认值  |
+| :--: | :--------------------: | :--------------: | :-----: |
+| size | 返回的原始图片宽高数组 | `[width,height]` | `[0,0]` |

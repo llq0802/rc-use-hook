@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 /**
  * 获取图像原始宽高
  */
-export default (url: string) => {
+export default function useImageSize(url: string) {
   const [size, setSize] = useState([0, 0]);
 
   useEffect(() => {
@@ -18,4 +18,4 @@ export default (url: string) => {
   }, [url]);
 
   return size;
-};
+}

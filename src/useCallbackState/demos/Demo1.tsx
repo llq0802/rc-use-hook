@@ -1,5 +1,5 @@
 import { Button, message } from 'antd';
-import { useCallbackState } from 'rc-use-hook';
+import { useCallbackState } from 'rc-use-hooks';
 import type { FC } from 'react';
 import React from 'react';
 

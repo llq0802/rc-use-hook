@@ -1,4 +1,4 @@
-import { useImageSize } from 'rc-use-hook';
+import { useImageSize } from 'rc-use-hooks';
 import React from 'react';
 const url = `https://picsum.photos/200`;
 function Demo1() {
