@@ -1,9 +1,17 @@
 {
   "name": "rc-use-hooks",
   "version": "2.0.0",
-  "description": "A react library developed with dumi",
+  "description": "一个对 ahook 补充的 React Hook 库",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "author": "llq0802 <958614130@qq.com>",
+  "keywords": [
+    "rc-use-hooks",
+    "rc-use-hook",
+    "use-hoos",
+    "react-hooks",
+    "react"
+  ],
   "scripts": {
     "start": "npm run dev",
     "dev": "dumi dev",
@@ -19,10 +27,16 @@
     "docs:deploy": "gh-pages -d docs-dist",
     "deploy": "npm run docs:build && npm run docs:deploy"
   },
-  "authors": [],
+  "homepage": "https://github.com/llq0802/rc-use-hook",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/llq0802/rc-use-hook"
+  },
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "commitlint": {
     "extends": [
