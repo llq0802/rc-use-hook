@@ -27,7 +27,8 @@ toc: content
 - [useEnterDirection] - 鼠标进入盒子的方向
 - [useDeviceOrientation] - 屏幕方向
 - [useDeepUpdateEffect] - 深度比较依赖项更新时的副作用
-- [useRequestAnimationFrame] - 浏览器重绘的回调。
+- [useConcurrentRequest] - 并发请求异步函数
+- [useRequestAnimationFrame] - 浏览器重绘的回调
 
 [useShow]: /hooks/use-Show
 [useDefer]: /hooks/use-Defer
@@ -48,4 +49,5 @@ toc: content
 [useEnterDirection]: /hooks/use-Enter-Direction
 [useDeviceOrientation]: /hooks/use-Device-Orientation
 [useDeepUpdateEffect]: /hooks/use-deep-update-effect
+[useConcurrentRequest]: /hooks/use-Concurrent-Request
 [useRequestAnimationFrame]: /hooks/use-Request-Animation-Frame

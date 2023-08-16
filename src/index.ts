@@ -56,3 +56,6 @@ export { default as useDeviceOrientation } from './useDeviceOrientation';
 
 export * from './useFocus';
 export { default as useFocus } from './useFocus';
+
+export * from './useConcurrentRequest';
+export { default as useConcurrentRequest } from './useConcurrentRequest';

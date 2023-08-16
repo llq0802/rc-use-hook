@@ -18,6 +18,7 @@ export default defineConfig({
   },
   themeConfig: {
     name: 'rc-use-hooks',
+    rtl: true,
     sidebar,
     footer:
       'Open-source MIT Licensed | Copyright © 2020-present Powered by llq0802',

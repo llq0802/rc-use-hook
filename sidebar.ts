@@ -90,6 +90,10 @@ export default {
           link: '/hooks/use-deep-update-effect',
         },
         {
+          title: 'useConcurrentRequest',
+          link: '/hooks/use-Concurrent-Request',
+        },
+        {
           title: 'useRequestAnimationFrame',
           link: '/hooks/use-Request-Animation-Frame',
         },
