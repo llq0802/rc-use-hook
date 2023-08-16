@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { useLockScroll } from 'rc-use-hook';
+import { useLockScroll } from 'rc-use-hooks';
 import React from 'react';
 
 function Demo1() {

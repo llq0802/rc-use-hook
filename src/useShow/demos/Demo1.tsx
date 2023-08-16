@@ -1,5 +1,5 @@
 import { Button, message, Space } from 'antd';
-import type { UseShowInstance } from 'rc-use-hook';
+import type { UseShowInstance } from 'rc-use-hooks';
 import React, { useRef } from 'react';
 import ChildModel from './ChildModel';
 

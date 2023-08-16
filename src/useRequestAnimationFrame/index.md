@@ -18,7 +18,7 @@ toc: content
 > - 不要在回调函数中执行大量耗时任务 , 否则会阻塞 UI 的渲染
 
 ```ts
-import { useLazyLoadImage } from 'rc-use-hook';
+import { useLazyLoadImage } from 'rc-use-hooks';
 useRequestAnimationFrame((deltaTime) => {});
 ```
 

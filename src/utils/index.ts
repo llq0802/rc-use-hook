@@ -59,3 +59,20 @@ export const getScrollableParent = function (ele: HTMLElement): HTMLElement {
     return getScrollableParent(ele?.parentNode);
   }
 };
+
+/**
+ * 判断是不是苹果Safari浏览器
+ */
+export const isSafari = () =>
+  /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+
+/**
+ * 判断苹果Safari屏幕的方向
+ */
+export function getScreenOrientation(): 'portrait' | 'landscape' {
+  if (window.innerHeight > window.innerWidth) {
+    return 'portrait'; // 竖屏
+  } else {
+    return 'landscape'; // 横屏
+  }
+}

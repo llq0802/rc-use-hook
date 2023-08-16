@@ -1,4 +1,4 @@
-import { useGeolocation } from 'rc-use-hook';
+import { useGeolocation } from 'rc-use-hooks';
 import React from 'react';
 
 const Demo1 = () => {

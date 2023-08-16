@@ -16,7 +16,7 @@ nav:
 ### API
 
 ```ts
-import { useDelayedState } from 'rc-use-hook';
+import { useDelayedState } from 'rc-use-hooks';
 const [state, setState] = useDelayedState(initState, condition);
 ```
 
@@ -25,7 +25,7 @@ const [state, setState] = useDelayedState(initState, condition);
 | 参数      | 说明                                | 类型      | 默认值 |
 | --------- | ----------------------------------- | --------- | ------ |
 | initState | 初始状态数据                        | `any`     | `-`    |
-| condition | 状态创建的条件 为`true`才有创建有值 | `boolean` | `-`    |
+| condition | 状态创建的条件 为`true`才会创建状态 | `boolean` | `-`    |
 
 ### Result
 

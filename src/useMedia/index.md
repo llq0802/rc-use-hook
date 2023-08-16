@@ -16,7 +16,7 @@ toc: content
 ## API
 
 ```ts
-import { useMedia } from 'rc-use-hook';
+import { useMedia } from 'rc-use-hooks';
 ```
 
 ### Params

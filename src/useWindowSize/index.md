@@ -19,14 +19,14 @@ toc: content
 > - window.outerHeight包括浏览器的 `地址栏` `收藏栏`
 
 ```ts
-import { useWindowSize } from 'rc-use-hook';
+import { useWindowSize } from 'rc-use-hooks';
 ```
 
 ### Params
 
-|   参数   |   说明   |   类型   | 类型  |
-| :------: | :------: | :------: | :---: |
-| waitTime | 延迟时间 | `number` | `200` |
+|   参数   |      说明      |   类型   | 类型  |
+| :------: | :------------: | :------: | :---: |
+| waitTime | 防抖的延迟时间 | `number` | `200` |
 
 ### Result
 

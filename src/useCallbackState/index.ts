@@ -1,4 +1,4 @@
-import { isFunction } from 'rc-use-hook/utils';
+import { isFunction } from 'rc-use-hooks/utils';
 import type { SetStateAction } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 

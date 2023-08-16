@@ -1,10 +1,11 @@
-import { useMedia } from 'rc-use-hook';
+import { useMedia } from 'rc-use-hooks';
 import React from 'react';
 
 function Demo1() {
   const isMatch = useMedia('(min-width: 1200px)');
 
   console.log('isMatch', isMatch);
+
   return (
     <>
       <h3>缩放窗口试试!</h3>

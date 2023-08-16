@@ -28,12 +28,22 @@ export default {
           link: '/hooks/use-Portal',
         },
         {
+          title: 'useFocus',
+          link: '/hooks/use-Focus',
+        },
+
+        {
           title: 'useWorker',
           link: '/hooks/use-worker',
         },
+
         {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
+        },
+        {
+          title: 'useImageSize',
+          link: '/hooks/use-Image-Size',
         },
         {
           title: 'useLazyImage',
@@ -72,8 +82,16 @@ export default {
           link: '/hooks/use-Enter-Direction',
         },
         {
+          title: 'useDeviceOrientation',
+          link: '/hooks/use-Device-Orientation',
+        },
+        {
           title: 'useDeepUpdateEffect',
           link: '/hooks/use-deep-update-effect',
+        },
+        {
+          title: 'useConcurrentRequest',
+          link: '/hooks/use-Concurrent-Request',
         },
         {
           title: 'useRequestAnimationFrame',

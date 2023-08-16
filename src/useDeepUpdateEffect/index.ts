@@ -1,4 +1,4 @@
-import { depsEqual } from 'rc-use-hook/utils';
+import { depsEqual } from 'rc-use-hooks/utils';
 import {
   useEffect,
   useRef,

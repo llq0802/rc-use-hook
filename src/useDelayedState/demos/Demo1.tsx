@@ -1,5 +1,5 @@
 import { Select } from 'antd';
-import { useDelayedState } from 'rc-use-hook';
+import { useDelayedState } from 'rc-use-hooks';
 import React, { Key, ReactNode, useEffect, useState } from 'react';
 
 type TypeValue = {

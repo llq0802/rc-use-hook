@@ -1,6 +1,6 @@
 import { Checkbox, Form, Input, message, Modal } from 'antd';
-import type { UseShowInstanceRef } from 'rc-use-hook';
-import { useShow } from 'rc-use-hook';
+import type { UseShowInstanceRef } from 'rc-use-hooks';
+import { useShow } from 'rc-use-hooks';
 import React, { useState } from 'react';
 
 type ChildModelProps = {

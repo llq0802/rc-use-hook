@@ -16,7 +16,7 @@ toc: content
 ## API
 
 ```ts
-import { useParentScroll } from 'rc-use-hook';
+import { useParentScroll } from 'rc-use-hooks';
 ```
 
 ### Params

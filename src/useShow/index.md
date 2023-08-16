@@ -34,7 +34,7 @@ funRef.current?.getChildData(); // 获取子组件数据
 ### 子组件调用
 
 ```ts
-import { useShow } from 'rc-use-hook';
+import { useShow } from 'rc-use-hooks';
 
 // <ChildModel funcRef={funRef} />;
 /**

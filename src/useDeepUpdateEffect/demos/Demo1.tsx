@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { useDeepUpdateEffect } from 'rc-use-hook';
+import { useDeepUpdateEffect } from 'rc-use-hooks';
 import React, { useState } from 'react';
 
 export default () => {

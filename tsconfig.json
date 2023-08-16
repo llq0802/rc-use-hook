@@ -8,8 +8,8 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "rc-use-hook": ["src"],
-      "rc-use-hook/*": ["src/*", "*"]
+      "rc-use-hooks": ["src"],
+      "rc-use-hooks/*": ["src/*", "*"]
     }
   },
   "include": [".dumi/**/*", ".dumirc.ts", "src/**/*"]

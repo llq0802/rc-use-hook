@@ -1,4 +1,4 @@
-import { useDefer } from 'rc-use-hook';
+import { useDefer } from 'rc-use-hooks';
 import React from 'react';
 
 const style: React.CSSProperties = {

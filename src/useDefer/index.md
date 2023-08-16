@@ -16,7 +16,7 @@ toc: content
 ## API
 
 ```ts
-import { useDefer } from 'rc-use-hook';
+import { useDefer } from 'rc-use-hooks';
 ```
 
 ### Params
