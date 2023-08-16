@@ -9,21 +9,23 @@ const usePortal = (el: null | HTMLElement = document.body) => {
     remove: () => null,
   });
 
-  const createPortal = useCallback((el) => {
+  const createPortalFn = useCallback((el) => {
     const Portal = ({ children }) =>
       ReactDOM.createPortal(children, el || document.body);
 
-    const remove = () => ReactDOM.unmountComponentAtNode(el || document.body);
+    // React 将从此节点移除已挂载的 React 组件(children)。
+    const remove = () =>
+      ReactDOM?.unmountComponentAtNode?.(el || document.body);
 
     return { render: Portal, remove };
   }, []);
 
   useEffect(() => {
     if (el) portal.remove();
-    const newPortal = createPortal(el);
-    setPortal(newPortal);
+    const newPortal = createPortalFn(el);
+    setPortal(newPortal as any);
     return () => {
-      newPortal.remove(el);
+      newPortal.remove();
     };
   }, [el]);
 

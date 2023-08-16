@@ -9,13 +9,13 @@ hero:
     - text: GitHub
       link: https://github.com/llq0802/rc-use-hooks
 features:
-  - title: rc-use-hooks
+  - title: 运行稳定
     emoji: 💎
-    description: 稳定
-  - title: rc-use-hooks
+    description: 运行稳定
+  - title: 性能高效
     emoji: 🌈
-    description: 高效
-  - title: 'rc-use-hooks'
+    description: 性能高效
+  - title: 简单方便
     emoji: 🚀
-    description: 简单
+    description: 简单方便
 ---
