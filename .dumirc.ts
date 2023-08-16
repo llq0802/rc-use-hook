@@ -34,7 +34,7 @@ export default defineConfig({
       },
       {
         title: 'GitHub',
-        link: 'https://github.com/llq0802/rc-use-hooks',
+        link: 'https://github.com/llq0802/rc-use-hook',
       },
     ],
   },
