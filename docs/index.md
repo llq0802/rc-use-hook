@@ -2,7 +2,7 @@
 title: rc-use-hooks 让 React 开发更简单
 hero:
   title: rc-use-hooks
-  description: 一个对 ahook 补充的 React Hook 库
+  description: 🍙 一个对 ahook 补充的 React Hook 库
   actions:
     - text: 快速开始
       link: /guide
