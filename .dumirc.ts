@@ -36,6 +36,10 @@ export default defineConfig({
         title: 'GitHub',
         link: 'https://github.com/llq0802/rc-use-hook',
       },
+      {
+        title: 'ahooks',
+        link: 'https://ahooks.js.org/zh-CN/hooks/use-request/index',
+      },
     ],
   },
   metas: [
