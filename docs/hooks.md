@@ -14,6 +14,7 @@ toc: content
 - [usePortal] - 自定义挂载元素
 - [useFocus] - 是否聚焦
 - [useWorker] - WebWorker
+- [useDeepMemo] - 深度比较的useMemo
 - [useClipboard] - 复制剪切
 - [useImageSize] - 获取图像原始宽高
 - [useLazyImage] - 性能更好的懒加载图片
@@ -30,6 +31,7 @@ toc: content
 - [useConcurrentRequest] - 并发请求异步函数
 - [useRequestAnimationFrame] - 浏览器重绘的回调
 
+[useDeepMemo]: /hooks/use-Deep-Memo
 [useShow]: /hooks/use-Show
 [useDefer]: /hooks/use-Defer
 [useMedia]: /hooks/use-Media
