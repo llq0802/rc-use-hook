@@ -33,6 +33,8 @@ import { useMedia } from 'rc-use-hooks';
 export type ScreenOrientation = 'portrait' | 'landscape';
 /**
  * 使用CSS3的'orientation' media-query来检查屏幕方向 并对Safari做了降级处理
+ * @author 李岚清 <https://github.com/llq0802>
+ * @return 'portrait' | 'landscape'  `portrait` 为竖屏, `landscape`为横屏
  */
 export default function useDeviceOrientation(): ScreenOrientation | undefined {
   const matches = useMedia('(orientation: portrait)');

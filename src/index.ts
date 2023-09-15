@@ -59,3 +59,6 @@ export { default as useFocus } from './useFocus';
 
 export * from './useConcurrentRequest';
 export { default as useConcurrentRequest } from './useConcurrentRequest';
+
+export * from './useDeepMemo';
+export { default as useDeepMemo } from './useDeepMemo';

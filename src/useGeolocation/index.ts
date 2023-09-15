@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * 实用原生Web Api 获取定位信息
+ * @author 李岚清 <https://github.com/llq0802>
+ */
 const useGeolocation = () => {
   const [state, setState] = useState({
     accuracy: null,

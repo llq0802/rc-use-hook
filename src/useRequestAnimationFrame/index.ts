@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 
 /**
  * 运行一个函数，在每次重绘之前调用它。
- * @params {(deltaTime: number) => void )} callback
+ * @author 李岚清 <https://github.com/llq0802>
+ * @params {(deltaTime: number) => void )} deltaTime为每一次函数运行的间隔大多数为16.7ms
  */
 const useRequestAnimationFrame = (callback: (deltaTime: number) => void) => {
   const requestRef = useRef<number>();

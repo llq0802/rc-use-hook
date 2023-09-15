@@ -86,6 +86,10 @@ export default {
           link: '/hooks/use-Device-Orientation',
         },
         {
+          title: 'useDeepMemo',
+          link: '/hooks/use-Deep-Memo',
+        },
+        {
           title: 'useDeepUpdateEffect',
           link: '/hooks/use-deep-update-effect',
         },

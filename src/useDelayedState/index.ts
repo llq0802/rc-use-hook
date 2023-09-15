@@ -3,8 +3,9 @@ import { SetStateAction, useEffect, useState } from 'react';
 
 /**
  * 延迟创建状态，直到满足某些条件。
- * @param initialState
- * @param condition
+ * @author 李岚清 <https://github.com/llq0802>
+ * @param initialState 初始的state
+ * @param condition 是否满足穿创建初始值的条件
  * @return
  */
 const useDelayedState = <T = any>(

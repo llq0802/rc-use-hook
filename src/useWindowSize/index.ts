@@ -12,7 +12,9 @@ function getSize() {
 
 /**
  * 返回窗口的宽高
+ * @author 李岚清 <https://github.com/llq0802>
  * @param waitTime 延迟时间
+ * @return 窗口的宽高
  */
 export default function useWindowSize(waitTime: number = 200) {
   const [windowSize, setWindowSize] = useState(getSize());
