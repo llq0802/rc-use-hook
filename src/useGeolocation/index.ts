@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
 
-/**
- * 实用原生Web Api 获取定位信息
- * @author 李岚清 <https://github.com/llq0802>
- */
 const useGeolocation = () => {
   const [state, setState] = useState({
     accuracy: null,
@@ -15,11 +11,9 @@ const useGeolocation = () => {
     speed: null,
     timestamp: Date.now(),
   });
-  let watchId: number | undefined;
 
   useEffect(() => {
     const onEvent = (event) => {
-      console.log('event', event);
       setState({
         accuracy: event.coords.accuracy,
         altitude: event.coords.altitude,
@@ -31,18 +25,24 @@ const useGeolocation = () => {
         timestamp: event.timestamp,
       });
     };
-
-    const onError = (error) => setState(error);
+    const onError = (error) => {
+      console.warn(error);
+      setState(error);
+    };
 
     navigator?.geolocation?.getCurrentPosition(onEvent, onError);
-    watchId = navigator?.geolocation?.watchPosition(onEvent, onError);
+
+    const watchId = navigator?.geolocation?.watchPosition(onEvent, onError);
 
     return () => {
-      navigator?.geolocation?.clearWatch(watchId as number);
+      navigator?.geolocation?.clearWatch(watchId);
     };
   }, []);
 
   return state;
 };
-
+/**
+ * 实用原生Web Api 获取定位信息
+ * @author 李岚清 <https://github.com/llq0802>
+ */
 export default useGeolocation;
