@@ -3,9 +3,10 @@ import { MutableRefObject, useEffect, useState } from 'react';
 
 /**
  * 判断输入组件是否聚焦
- *@param string target - 元素
- * @param boolean defaultState - 初始值
- * @returns
+ * @author 李岚清 <https://github.com/llq0802>
+ *@param {string} target - 元素
+ * @param {boolean} defaultState - 初始值
+ * @returns 是否聚焦的状态
  */
 const useFocus = (
   target: MutableRefObject<HTMLElement | null> | (() => HTMLElement),

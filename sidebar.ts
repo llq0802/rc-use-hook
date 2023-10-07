@@ -38,9 +38,14 @@ export default {
         },
 
         {
+          title: 'useBusEvent',
+          link: '/hooks/use-Bus-Event',
+        },
+        {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
         },
+
         {
           title: 'useImageSize',
           link: '/hooks/use-Image-Size',
@@ -48,6 +53,10 @@ export default {
         {
           title: 'useLazyImage',
           link: '/hooks/use-lazy-image',
+        },
+        {
+          title: 'useDeepMemo',
+          link: '/hooks/use-Deep-Memo',
         },
         {
           title: 'useDelayedState',
@@ -78,21 +87,27 @@ export default {
           link: '/hooks/use-Before-Unload',
         },
         {
+          title: 'useAnimateNumber',
+          link: '/hooks/use-Animate-Number',
+        },
+        {
           title: 'useEnterDirection',
           link: '/hooks/use-Enter-Direction',
-        },
-        {
-          title: 'useDeviceOrientation',
-          link: '/hooks/use-Device-Orientation',
-        },
-        {
-          title: 'useDeepUpdateEffect',
-          link: '/hooks/use-deep-update-effect',
         },
         {
           title: 'useConcurrentRequest',
           link: '/hooks/use-Concurrent-Request',
         },
+        {
+          title: 'useDeviceOrientation',
+          link: '/hooks/use-Device-Orientation',
+        },
+
+        {
+          title: 'useDeepUpdateEffect',
+          link: '/hooks/use-deep-update-effect',
+        },
+
         {
           title: 'useRequestAnimationFrame',
           link: '/hooks/use-Request-Animation-Frame',

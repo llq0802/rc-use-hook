@@ -10,7 +10,8 @@ enum Direction {
   bottom = 'bottom',
 }
 /**
- * 获取鼠标进入元素的方向
+ * 精确的获取鼠标进入元素的方向
+ * @author 李岚清 <https://github.com/llq0802>
  * @param target dom 节点
  * @return {Direction} 鼠标进入元素的方向
  */

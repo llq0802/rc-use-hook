@@ -14,8 +14,11 @@ toc: content
 - [usePortal] - 自定义挂载元素
 - [useFocus] - 是否聚焦
 - [useWorker] - WebWorker
+- [useBusEvent] - 事件总线
+- [useDeepMemo] - 深度比较的useMemo
 - [useClipboard] - 复制剪切
 - [useImageSize] - 获取图像原始宽高
+- [useAnimateNumber] - 平滑数字更新
 - [useLazyImage] - 性能更好的懒加载图片
 - [useDelayedState] - 延迟创建状态
 - [useCallbackState] - 更新状态后的回调
@@ -30,6 +33,9 @@ toc: content
 - [useConcurrentRequest] - 并发请求异步函数
 - [useRequestAnimationFrame] - 浏览器重绘的回调
 
+[useAnimateNumber]: /hooks/use-Animate-Number
+[useBusEvent]: /hooks/use-Bus-Event
+[useDeepMemo]: /hooks/use-Deep-Memo
 [useShow]: /hooks/use-Show
 [useDefer]: /hooks/use-Defer
 [useMedia]: /hooks/use-Media

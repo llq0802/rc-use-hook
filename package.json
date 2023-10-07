@@ -1,6 +1,6 @@
 {
   "name": "rc-use-hooks",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "一个对 ahook 补充的 React Hook 库",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -64,6 +64,7 @@
     "@types/react-dom": "^18.2.7",
     "@umijs/lint": "^4.0.72",
     "antd": "^5.8.2",
+    "better-mock": "^0.3.6",
     "dumi": "^2.2.1",
     "eslint": "^8.45.0",
     "father": "^4.3.0",
@@ -81,6 +82,7 @@
     "@koale/useworker": "^4.0.2",
     "ahooks": "^3.7.8",
     "copy-to-clipboard": "^3.3.3",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "use-animate-number": "^1.0.5"
   }
 }

@@ -29,7 +29,7 @@ export default defineConfig({
       { title: '指南', link: '/guide' },
       { title: 'HOOKS', link: '/hooks' },
       {
-        title: '组件库',
+        title: 'lighting-design',
         link: 'https://llq0802.github.io/lighting-design/latest/',
       },
       {

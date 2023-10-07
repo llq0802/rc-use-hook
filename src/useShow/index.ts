@@ -44,9 +44,10 @@ export declare type UseShowResult<T extends Record<string, any>> = {
 
 /**
  * 父调用子组件方法，并传值更新状态
+ * @author 李岚清 <https://github.com/llq0802>
  * @param funcRef ref对象
- * @param options { onShow, onFormart, onHide }
- * @returns T 传输的数据
+ * @param options  配置项
+ * @returns 父组件调用onShow穿过来的值与传给父组件值的方法
  */
 export default function useShow<
   T extends Record<string, any> = Record<string, any>,
