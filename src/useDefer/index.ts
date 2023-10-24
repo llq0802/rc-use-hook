@@ -29,6 +29,8 @@ const useDefer = (maxFrameCount: number = 10_00) => {
     };
 
     refreshFrameCount();
+
+    return () => window.cancelAnimationFrame(rafId.current);
   }, []);
 
   return (showInFrameCount: number) =>
