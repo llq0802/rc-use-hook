@@ -26,7 +26,7 @@ function Demo3() {
     <div>
       {loading ? '加载中...' : '加载完成!'}
 
-      <p>{data ? <pre>{JSON.stringify(data, null, 4)}</pre> : '没有数据'}</p>
+      <h3>{data ? <pre>{JSON.stringify(data, null, 4)}</pre> : '没有数据'}</h3>
 
       <Space>
         <Button type="primary" onClick={() => run([11, 22], [33, 44], [5])}>

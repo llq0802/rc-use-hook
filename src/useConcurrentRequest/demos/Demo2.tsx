@@ -12,7 +12,7 @@ function mockRequest() {
       } else {
         reject(`失败了`);
       }
-    }, 2000);
+    }, 600);
   });
 }
 
@@ -21,23 +21,30 @@ for (let i = 0; i < 3; i++) {
 }
 
 function Demo2() {
-  const { data, loading, run } = useConcurrentRequest(arrFns, {
+  const { data, loading, run, runAsync } = useConcurrentRequest(arrFns, {
     allSettled: false, //只要有一项异步函数被拒绝则不返回数据
-    manual: true,
+    // manual: true,
     onError(e, params) {
-      console.log('===e ', e);
-      console.log('===params ', params);
+      console.log('Demo2===onError ', e);
+    },
+    onSuccess(data, params) {
+      console.log('Demo2===onSuccess ', data);
     },
   });
-
+  console.log('Demo2-data', data);
   return (
     <div>
       {loading ? '加载中...' : '加载完成!'}
 
-      <p>{data ? <pre>{JSON.stringify(data, null, 4)}</pre> : '没有数据'}</p>
+      <h3>{data ? <pre>{JSON.stringify(data, null, 4)}</pre> : '没有数据'}</h3>
 
       <Space>
-        <Button type="primary" onClick={() => run([11, 22], [33, 44], [5])}>
+        <Button
+          type="primary"
+          onClick={async () => {
+            run([11, 22], [33, 44], [5]);
+          }}
+        >
           点击请求
         </Button>
       </Space>

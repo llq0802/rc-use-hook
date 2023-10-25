@@ -139,15 +139,20 @@ export default function useConcurrentRequest(
           const ret = await curFn(...curFnParams);
           result[i] = ret;
         } catch (err) {
+          // 会到useRequest的onError中
           result[i] = err;
-          reject(err);
+          // 只要有一项异步函数被拒绝则不返回数据
+          if (!allSettled) {
+            reject(err);
+          }
         } finally {
           count++;
+          // 最后完成并发
           if (count === asyncFns.length) {
             resolve(result);
-            if (allSettled) {
+            if (!allSettled) {
               // eslint-disable-next-line @typescript-eslint/no-use-before-define
-              res?.mutate(result);
+              res?.mutate(void 0);
             }
           }
           _request();
@@ -161,7 +166,6 @@ export default function useConcurrentRequest(
       }
     });
   }
-
   const res = useRequest(runRequest, { ...requestOpt });
 
   return res;

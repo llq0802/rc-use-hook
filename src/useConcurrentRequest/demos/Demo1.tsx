@@ -12,6 +12,7 @@ function mockRequest(a, b) {
       } else {
         reject('失败了');
       }
+      // resolve(`成功了`);
     }, 2000);
   });
 }
@@ -25,6 +26,7 @@ function Demo1() {
     data,
     loading,
     run,
+    runAsync,
     mutate: seData,
   } = useConcurrentRequest(arrFns, {
     defaultParams: [
@@ -33,13 +35,13 @@ function Demo1() {
       // ...后面同理
     ],
     onBefore(params) {
-      console.log('onBefore===');
+      // console.log('onBefore===');
     },
     onError(e, params) {
       console.log('onError==');
     },
     onSuccess(data, params) {
-      console.log('onSuccess===');
+      console.log('onSuccess===', data);
     },
     onFinally(params, data, e) {
       console.log('onFinally===');
@@ -51,10 +53,17 @@ function Demo1() {
     <div>
       {loading ? '加载中...' : '加载完成!'}
 
-      <pre>{JSON.stringify(data, null, 4)}</pre>
+      <h3>
+        <pre>{JSON.stringify(data, null, 4)}</pre>
+      </h3>
 
       <Space>
-        <Button type="primary" onClick={() => run([11, 22])}>
+        <Button
+          type="primary"
+          onClick={() => {
+            run([11, 22]);
+          }}
+        >
           重新请求
         </Button>
 

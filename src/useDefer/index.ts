@@ -13,7 +13,7 @@ const useDefer = (maxFrameCount: number = 10_00) => {
   // 防止闭包 获取到最新的 frameCount
   frameCountRef.current = frameCount;
 
-  const rafId = useRef(0);
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
     const refreshFrameCount = () => {
