@@ -1,5 +1,10 @@
-import { isFunction } from 'rc-use-hooks/utils';
-import { MutableRefObject, useCallback, useEffect, useState } from 'react';
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 
 let originalOverflow: string | null = null;
 
@@ -14,21 +19,45 @@ const useLockScroll = (
   lock = false,
   target: MutableRefObject<HTMLElement | null> | (() => Element) = () =>
     document.body,
+  scrollW = 17,
 ): [boolean, (bool: boolean) => void] => {
   const [locked, setLocked] = useState<boolean>(lock);
 
   const lockFn = useCallback((dom) => {
+    if (dom === document.body) {
+      const styleDom = document.createElement('style');
+      styleDom.dataset.useLockScrollState = 'true';
+      styleDom.innerHTML = `
+       html body {
+          width: calc(100% - ${scrollW}px);
+          overflow: hidden;
+        }
+      `;
+      document.head.appendChild(styleDom);
+      return;
+    }
     originalOverflow = window.getComputedStyle(dom).overflow;
     dom.style.overflow = 'hidden';
   }, []);
 
   const unlockFn = useCallback((dom) => {
+    if (dom === document.body) {
+      const styleDom = document.head.querySelector(
+        'style[data-use-lock-scroll-state="true"]',
+      );
+      if (styleDom) {
+        styleDom.remove();
+      }
+      return;
+    }
     dom.style.overflow = originalOverflow as string;
     originalOverflow = null;
   }, []);
 
-  useEffect(() => {
-    const dom: Element = isFunction(target) ? target?.() : target?.current;
+  useLayoutEffect(() => {
+    const dom: Element =
+      typeof target === 'function' ? target?.() : target?.current;
+
     if (locked) {
       lockFn(dom);
     } else {

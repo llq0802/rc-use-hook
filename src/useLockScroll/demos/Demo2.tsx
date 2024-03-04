@@ -12,6 +12,7 @@ function Demo2() {
       style={{
         height: 300,
         overflow: 'auto',
+        border: '1px solid',
       }}
     >
       <Button onClick={() => setLock(!lock)}>切换锁定</Button>
