@@ -31,7 +31,6 @@ function Demo2() {
       console.log('Demo2===onSuccess ', data);
     },
   });
-  console.log('Demo2-data', data);
   return (
     <div>
       {loading ? '加载中...' : '加载完成!'}

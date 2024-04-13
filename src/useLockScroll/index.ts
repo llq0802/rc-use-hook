@@ -63,6 +63,10 @@ const useLockScroll = (
     } else {
       unlockFn(dom);
     }
+
+    return () => {
+      originalOverflow = null;
+    };
   }, [locked]);
 
   useEffect(() => {
