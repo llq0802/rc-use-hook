@@ -49,7 +49,7 @@ export declare type UseShowResult<T extends Record<string, any>> = {
   open: boolean;
   /**更新 open  */
   updateOpen: (b: boolean) => void;
-  /** 配合 Modal 或 Drawer 触发 onClose 事件 */
+  /**设置 open 为 false,  配合 Modal 或 Drawer 触发 onClose 事件 */
   close: () => void;
   /**清空传值的数据 */
   clear: () => void;
@@ -66,7 +66,7 @@ export default function useShow<
   T extends Record<string, any> = Record<string, any>,
 >(
   funcRef: UseShowInstanceRef<T>,
-  options: UseShowOptions<T>,
+  options: UseShowOptions<T> = {},
 ): UseShowResult<T> {
   const [open, setOpen] = useState(false);
   const childrenDataRef = useRef<any>();
