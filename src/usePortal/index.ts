@@ -2,7 +2,6 @@ import { ReactNode, useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 /**
  * 允许在父组件之外呈现子组件。
- * @author 李岚清 <https://github.com/llq0802>
  * @param {HTMLElement} el 要挂载到哪个元素下面 默认body
  */
 const usePortal = (el: null | HTMLElement = document.body) => {

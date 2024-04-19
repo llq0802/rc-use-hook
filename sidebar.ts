@@ -78,9 +78,13 @@ export default {
           title: 'useWindowSize',
           link: '/hooks/use-Window-Size',
         },
+        // {
+        //   title: 'useGeolocation',
+        //   link: '/hooks/use-Geolocation',
+        // },
         {
-          title: 'useGeolocation',
-          link: '/hooks/use-Geolocation',
+          title: 'useWillMount',
+          link: '/hooks/use-will-mount',
         },
         {
           title: 'useBeforeUnload',

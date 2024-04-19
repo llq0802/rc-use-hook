@@ -4,7 +4,6 @@ import { useRef } from 'react';
 
 /**
  * useDeepMemo 用法等同于 useMemo，会深度比较依赖项的值，如果深度比较后的值一样，则会返回用一个引用地址。
- * @author 李岚清 <https://github.com/llq0802>
  * @param {() => T} fn 执行函数返回的值
  * @param {DependencyList} deps 依赖项
  * @return {*} 对于引用类型深度比较后的值一样，则会返回用一个引用地址, 反之是新的引用地址

@@ -10,7 +10,6 @@ let originalOverflow: string | null = null;
 
 /**
  * 设置锁定元素的滚动, 常用于弹窗 抽屉等组件
- * @author 李岚清 <https://github.com/llq0802>
  * @param lock 初始是否锁定 默认为fasle
  * @param target  要锁定额度元素 默认为body
  * @return 返回锁定的状态和修改锁定的方法数组

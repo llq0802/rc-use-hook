@@ -24,7 +24,7 @@ const busEvent = useBusEvent<K = string , T = any>();
 
 ### Result
 
-| 参数         | 说明             | 类型                                                |
-| ------------ | ---------------- | --------------------------------------------------- |
-| emit         | 发布一个事件通知 | `(key:string , val: T) => void`                     |
-| subscription | 订阅对应事件通知 | `(key:string , callback: (val: T) => void) => void` |
+| 参数         | 说明             | 类型                                                        |
+| ------------ | ---------------- | ----------------------------------------------------------- |
+| emit         | 发布一个事件通知 | `(key:string\|symbol , val: T) => void`                     |
+| subscription | 订阅对应事件通知 | `(key:string\|symbol , callback: (val: T) => void) => void` |

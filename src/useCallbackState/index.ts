@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * useState的回调 setState第二个参数(回调函数)获取最新的state并执行一些操作
- * @author 李岚清 <https://github.com/llq0802>
  * @param {T} state
  * @return {*}  { [T,  (val: SetStateAction<T>, cb: (newVal: T) => void) => void}
  */
