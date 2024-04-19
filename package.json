@@ -1,6 +1,6 @@
 {
   "name": "rc-use-hooks",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "一个对 ahook 补充的 React Hook 库",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
