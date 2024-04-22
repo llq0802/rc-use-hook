@@ -25,7 +25,7 @@ toc: content
 - [useLockScroll] - 锁定元素的滚动
 - [useParentScroll] - 获取可滚动节点
 - [useWindowSize] - 窗口的宽高
-- [useGeolocation] - 浏览器定位
+- [useWillMount] - 组件将要挂载的回调
 - [useBeforeUnload] - 窗口关闭或刷新的提示
 - [useEnterDirection] - 鼠标进入盒子的方向
 - [useDeviceOrientation] - 屏幕方向
@@ -50,7 +50,7 @@ toc: content
 [useLockScroll]: /hooks/use-Lock-Scroll
 [useParentScroll]: /hooks/use-Parent-Scroll
 [useWindowSize]: /hooks/use-Window-Size
-[useGeolocation]: /hooks/use-Geolocation
+[useWillMount]: /hooks/use-Will-Mount
 [useBeforeUnload]: /hooks/use-Before-Unload
 [useEnterDirection]: /hooks/use-Enter-Direction
 [useDeviceOrientation]: /hooks/use-Device-Orientation
