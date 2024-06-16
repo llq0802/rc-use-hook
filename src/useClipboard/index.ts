@@ -188,7 +188,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 /**
  * 用于将文字剪切到用户的剪切板
- * @author 李岚清 <https://github.com/llq0802>
  * @param {number} successDuration  复制成功后多久变回初始状态
  * @return {[boolean, (str: string) => void]}  [ boolean, (str: string) => void ]
  */

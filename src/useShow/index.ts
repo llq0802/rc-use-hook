@@ -12,7 +12,7 @@ export declare type UseShowInstance<
   T extends Record<string, any> = Record<string, any>,
 > = {
   /** 触发 useShow 的 onShow 配置项方法并传值 */
-  onShow(record: T): void;
+  onShow(record?: T): void;
   /** 触发 useShow 的 onHide 配置项方法并传值 */
   onHide: (record?: T) => void;
   /** 获取 useShow 的 setParentData() 设置的值 */
@@ -59,7 +59,7 @@ export declare type UseShowResult<T extends Record<string, any>> = {
  * 父调用子组件方法，并传值更新状态
  *  - ( 通常用于 Modal 或 Drawer 中 )
  * @param funcRef 任意名称的 useShow 的实例  `( ref 对象 )`
- * @param options  配置项
+ * @param [ options ]  配置项
  * @returns 父组件调用onShow穿过来的值与传给父组件值的方法
  */
 export default function useShow<

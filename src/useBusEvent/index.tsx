@@ -52,7 +52,10 @@ export class BusEvent<K, T> {
  * @description 多用于兄弟组件 (特别是大屏) 之间的传递数据
  * @return {BusEvent<K, T>}
  */
-export default function useBusEvent<K = string, T = any>(): BusEvent<K, T> {
+export default function useBusEvent<K = string | symbol, T = any>(): BusEvent<
+  K,
+  T
+> {
   const ref = useRef<BusEvent<K, T>>();
   if (!ref.current) {
     ref.current = new BusEvent<K, T>();

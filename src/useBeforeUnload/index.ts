@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 /**
  * 关闭页面时 , 提示用户
- * @author 李岚清 <https://github.com/llq0802>
  * @param enabled {boolean} 是否开启
  * @param message {string} 自定义退出信息 部分浏览器不能改变
  */

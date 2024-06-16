@@ -33,12 +33,16 @@ export default defineConfig({
         link: 'https://llq0802.github.io/lighting-design/latest/',
       },
       {
-        title: 'GitHub',
-        link: 'https://github.com/llq0802/rc-use-hook',
-      },
-      {
         title: 'ahooks',
         link: 'https://ahooks.js.org/zh-CN/hooks/use-request/index',
+      },
+      {
+        title: 'react-use',
+        link: 'https://github.com/streamich/react-use',
+      },
+      {
+        title: 'GitHub',
+        link: 'https://github.com/llq0802/rc-use-hook',
       },
     ],
   },

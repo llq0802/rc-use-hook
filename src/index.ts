@@ -64,3 +64,6 @@ export { default as useDeepMemo } from './useDeepMemo';
 
 export * from './useAnimateNumber';
 export { default as useAnimateNumber } from './useAnimateNumber';
+
+export * from './useWillMount';
+export { default as useWillMount } from './useWillMount';

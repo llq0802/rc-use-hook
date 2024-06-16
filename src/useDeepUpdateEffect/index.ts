@@ -27,7 +27,6 @@ import {
 
 /**
  * 只在更新时调用并且会深度比较依赖项
- * @author 李岚清 <https://github.com/llq0802>
  * @param effect{EffectCallback} 更新时所需要调用的函数
  * @param deps{DependencyList}  更新的依赖 (深度比较依赖项)
  */

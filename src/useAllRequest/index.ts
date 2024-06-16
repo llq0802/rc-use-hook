@@ -97,7 +97,6 @@ export interface AllRequestOptions
 
 /**
  * 对 ahooks 的 useRequest 实现的异步并发请求函数,
- * @author 李岚清 <https://github.com/llq0802>
  * @param {Service<any, any[]>[]} [asyncFns=[]] 异步请求函数数组
  * @param {AllRequestOptions} [options={}] ahooks 的 useRequest 的配置项 增加了 max 与 allSettled
  * @return {*} ahooks 的 useRequest 的返回值
