@@ -1,5 +1,5 @@
 import { Button, Space } from 'antd';
-import { useConcurrentRequest } from 'rc-use-hooks';
+import { useAllRequest } from 'rc-use-hooks';
 import React from 'react';
 
 const arrFns: ((...args: any[]) => Promise<any>)[] = [];
@@ -28,7 +28,7 @@ function Demo1() {
     run,
     runAsync,
     mutate: seData,
-  } = useConcurrentRequest(arrFns, {
+  } = useAllRequest(arrFns, {
     defaultParams: [
       [10, 20], // 第一个异步函数的参数列表
       [30, 40], // 第二个异步函数的参数列表

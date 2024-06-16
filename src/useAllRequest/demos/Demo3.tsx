@@ -1,5 +1,5 @@
 import { Button, Space } from 'antd';
-import { useConcurrentRequest } from 'rc-use-hooks';
+import { useAllRequest } from 'rc-use-hooks';
 import React from 'react';
 
 const arrFns: ((...args: any[]) => Promise<any>)[] = [];
@@ -17,7 +17,7 @@ for (let i = 0; i < 8; i++) {
 }
 
 function Demo3() {
-  const { data, loading, run } = useConcurrentRequest(arrFns, {
+  const { data, loading, run } = useAllRequest(arrFns, {
     max: 3, //设置最大并发数量
     defaultParams: [[1]],
   });

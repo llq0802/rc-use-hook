@@ -1,5 +1,5 @@
 import { Button, Space } from 'antd';
-import { useConcurrentRequest } from 'rc-use-hooks';
+import { useAllRequest } from 'rc-use-hooks';
 import React from 'react';
 
 const arrFns: ((...args: any[]) => Promise<any>)[] = [];
@@ -21,7 +21,7 @@ for (let i = 0; i < 3; i++) {
 }
 
 function Demo2() {
-  const { data, loading, run, runAsync } = useConcurrentRequest(arrFns, {
+  const { data, loading, run, runAsync } = useAllRequest(arrFns, {
     allSettled: false, //只要有一项异步函数被拒绝则不返回数据
     // manual: true,
     onError(e, params) {

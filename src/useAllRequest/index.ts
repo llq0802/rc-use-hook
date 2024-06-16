@@ -85,7 +85,7 @@
 import { useRequest } from 'ahooks';
 import { Options, Service } from 'ahooks/lib/useRequest/src/types';
 
-export interface ConcurrentRequestOptions
+export interface AllRequestOptions
   extends Omit<Options<any, any[]>, 'defaultParams'> {
   /**最大并发请求数量 */
   max?: number;
@@ -99,12 +99,12 @@ export interface ConcurrentRequestOptions
  * 对 ahooks 的 useRequest 实现的异步并发请求函数,
  * @author 李岚清 <https://github.com/llq0802>
  * @param {Service<any, any[]>[]} [asyncFns=[]] 异步请求函数数组
- * @param {ConcurrentRequestOptions} [options={}] ahooks 的 useRequest 的配置项 增加了 max 与 allSettled
+ * @param {AllRequestOptions} [options={}] ahooks 的 useRequest 的配置项 增加了 max 与 allSettled
  * @return {*} ahooks 的 useRequest 的返回值
  */
-export default function useConcurrentRequest(
+export default function useAllRequest(
   asyncFns: Service<any, any[]>[] = [],
-  options: ConcurrentRequestOptions = {},
+  options: AllRequestOptions = {},
 ) {
   const {
     max = asyncFns?.length || 3,

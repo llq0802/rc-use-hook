@@ -42,6 +42,10 @@ export default {
           link: '/hooks/use-Bus-Event',
         },
         {
+          title: 'useAllRequest',
+          link: '/hooks/use-All-Request',
+        },
+        {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
         },
@@ -79,10 +83,6 @@ export default {
           link: '/hooks/use-Window-Size',
         },
         {
-          title: 'useGeolocation',
-          link: '/hooks/use-Geolocation',
-        },
-        {
           title: 'useBeforeUnload',
           link: '/hooks/use-Before-Unload',
         },
@@ -94,10 +94,7 @@ export default {
           title: 'useEnterDirection',
           link: '/hooks/use-Enter-Direction',
         },
-        {
-          title: 'useConcurrentRequest',
-          link: '/hooks/use-Concurrent-Request',
-        },
+
         {
           title: 'useDeviceOrientation',
           link: '/hooks/use-Device-Orientation',

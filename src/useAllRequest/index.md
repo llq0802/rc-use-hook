@@ -1,9 +1,9 @@
 ---
-title: useConcurrentRequest
+title: useAllRequest
 toc: content
 ---
 
-# useConcurrentRequest
+# useAllRequest
 
 并发请求函数
 
@@ -25,6 +25,10 @@ toc: content
 
 <code src="./demos/Demo2.tsx" ></code>
 
+### useRequest 配合 Promise.all (allSettled) 使用
+
+<code src="./demos/Demo4.tsx" ></code>
+
 ## API
 
 :::warning{title=提示}
@@ -45,7 +49,7 @@ toc: content
   :::
 
 ```ts
-import { useConcurrentRequest } from 'rc-use-hooks';
+import { useAllRequest } from 'rc-use-hooks';
 ```
 
 ### Params
@@ -53,16 +57,16 @@ import { useConcurrentRequest } from 'rc-use-hooks';
 |   参数   |       说明       |                  类型                  | 默认值 |
 | :------: | :--------------: | :------------------------------------: | :----: |
 | services | 异步请求函数数组 | `((...args: any[]) => Promise<any>)[]` |  `[]`  |
-| options  |      配置项      |       `ConcurrentRequestOptions`       |  `-`   |
+| options  |      配置项      |          `AllRequestOptions`           |  `-`   |
 
 ### Result
 
 与 `ahooks` 的 `useRequest` 返回值完全一致
 
-### ConcurrentRequestOptions
+### AllRequestOptions
 
 ```ts
-export interface ConcurrentRequestOptions extends Options<any, any[]> {
+export interface AllRequestOptions extends Options<any, any[]> {
   /**最大并发请求数量 */
   max?: number; // 默认为异步请求函数数组的大小
   /**是否与 Promise.allSettled 效果一样  为false时只要有一项异步函数被拒绝则不返回数据 但还是会触发onError事件*/

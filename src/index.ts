@@ -19,9 +19,6 @@ export { default as useBeforeUnload } from './useBeforeUnload';
 export * from './useWindowSize';
 export { default as useWindowSize } from './useWindowSize';
 
-export * from './useGeolocation';
-export { default as useGeolocation } from './useGeolocation';
-
 export * from './useEnterDirection';
 export { default as useEnterDirection } from './useEnterDirection';
 
@@ -57,8 +54,8 @@ export { default as useDeviceOrientation } from './useDeviceOrientation';
 export * from './useFocus';
 export { default as useFocus } from './useFocus';
 
-export * from './useConcurrentRequest';
-export { default as useConcurrentRequest } from './useConcurrentRequest';
+export * from './useAllRequest';
+export { default as useAllRequest } from './useAllRequest';
 
 export * from './useBusEvent';
 export { default as useBusEvent } from './useBusEvent';

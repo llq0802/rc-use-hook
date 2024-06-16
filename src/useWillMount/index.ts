@@ -8,7 +8,7 @@ export function useWillMount(fn: () => void) {
   if (flag.current) {
     flag.current = false;
     try {
-      fn();
+      fn?.();
     } catch (error) {
       console.error(error);
     }
