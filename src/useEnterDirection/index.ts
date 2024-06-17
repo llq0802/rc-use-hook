@@ -29,6 +29,7 @@ export default function useEnterDirection(
     const mouseenter = (e: MouseEvent) => {
       const x = e.offsetX - rect.width / 2;
       const y = rect.height / 2 - e.offsetY;
+
       const d = Math.atan2(y, x);
       if (d < theta && d >= -theta) {
         setDirection(Direction.right);

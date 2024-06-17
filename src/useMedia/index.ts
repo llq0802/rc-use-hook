@@ -18,6 +18,7 @@ export default function useMedia(query: string): boolean {
     };
 
     media.addListener(listener);
+
     return () => media.removeListener(listener);
   }, [matches, query]);
 

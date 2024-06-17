@@ -13,6 +13,14 @@ toc: content
 
 <code src="./demos/Demo1.tsx" ></code>
 
+### 判断屏幕横屏还是竖屏
+
+<code src="./demos/Demo2.tsx" ></code>
+
+### 暗色主题颜色监听
+
+<code src="./demos/Demo3.tsx" ></code>
+
 ## API
 
 ```ts

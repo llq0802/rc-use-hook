@@ -96,11 +96,6 @@ export default {
         },
 
         {
-          title: 'useDeviceOrientation',
-          link: '/hooks/use-Device-Orientation',
-        },
-
-        {
           title: 'useDeepUpdateEffect',
           link: '/hooks/use-deep-update-effect',
         },
