@@ -5,7 +5,7 @@ import React, { useRef } from 'react';
 export default function Demo1() {
   const ref = useRef(null);
   const { moveX, reset } = useSlideVerify(ref, {
-    maxMoveX: 400,
+    maxMoveX: 400, // 最大移动距离
     onMouseUp(moveX) {
       console.log('==onMouseUp===>', moveX);
     },
@@ -21,7 +21,6 @@ export default function Demo1() {
           width: 100,
           height: 100,
           background: 'red',
-          cursor: 'move',
         }}
       >
         box

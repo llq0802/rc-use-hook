@@ -20,7 +20,7 @@ toc: content
 ```ts
 import { useSlideVerify } from 'rc-use-hooks';
 
-const {moveX,reset} =useSlideVerify(
+const {moveX,moveing,reset} =useSlideVerify(
   el: (() => HTMLElement) | React.RefObject<HTMLElement>,
   {
     maxMoveX = 400,

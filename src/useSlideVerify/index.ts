@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect } from 'react';
 
 /**
  *用于滑块验证滑动距离的hook
- *支持PC端 移动端 以及触摸笔
+ *支持 PC端 移动端 触摸笔
  * @param {((() => HTMLElement) | React.RefObject<HTMLElement>)} el 验证滑块的dom
  * @param {{ maxMoveX?: number; onMouseUp?: (moveX: number) => void }} [{
  *     maxMoveX = 400,
@@ -13,14 +13,20 @@ import { useEffect, useLayoutEffect } from 'react';
 export default function useSlideVerify(
   el: (() => HTMLElement) | React.RefObject<HTMLElement>,
   {
+    initX = 0,
     maxMoveX = 400,
     onMouseUp,
-  }: { maxMoveX?: number; onMouseUp?: (moveX: number) => void } = {},
+  }: {
+    initX?: number;
+    maxMoveX?: number;
+    onMouseUp?: (moveX: number) => void;
+  } = {},
 ) {
-  const [dx, setDx] = useRafState(0);
+  const [dx, setDx] = useRafState(initX);
   const [moveing, setMoveing] = useRafState(false);
   const dxRef = useLatest(dx);
-  const reset = () => setDx(0);
+  const moveingRef = useLatest(moveing);
+  const reset = () => setDx(initX);
 
   useLayoutEffect(() => {
     const dom = typeof el === 'function' ? el() : (el.current as HTMLElement);
@@ -30,15 +36,19 @@ export default function useSlideVerify(
 
   useEffect(() => {
     const dom = typeof el === 'function' ? el() : (el.current as HTMLElement);
-    const handlePointerDown = (e) => {
-      setMoveing(true);
+    dom.style.touchAction = 'none';
+    dom.style.userSelect = 'none';
+    dom.style.cursor = 'move';
 
+    const handlePointerDown = (e: PointerEvent) => {
       e.preventDefault();
       dom.setPointerCapture(e.pointerId);
       const startX = e.pageX - dx;
+      setMoveing(true);
 
-      const handlePointerMove = (ev) => {
+      const handlePointerMove = (ev: PointerEvent) => {
         ev.preventDefault();
+        if (!moveingRef.current) return;
         let newDx = ev.pageX - startX;
         if (newDx < 0) {
           newDx = 0;
@@ -46,14 +56,15 @@ export default function useSlideVerify(
         if (newDx > maxMoveX) {
           newDx = maxMoveX;
         }
-
         setDx(newDx);
       };
 
-      const handlePointerUp = () => {
+      const handlePointerUp = (evo: PointerEvent) => {
+        evo.preventDefault();
         setMoveing(false);
         onMouseUp?.(dxRef.current);
         dom.removeEventListener('pointermove', handlePointerMove);
+        dom.removeEventListener('pointerup', handlePointerUp);
       };
 
       dom.addEventListener('pointermove', handlePointerMove);
@@ -61,13 +72,12 @@ export default function useSlideVerify(
     };
 
     dom.addEventListener('pointerdown', handlePointerDown);
-
     return () => {
       dom.removeEventListener('pointerdown', handlePointerDown);
     };
-  }, [dx]);
+  }, []);
 
-  return { moveX: dx, reset };
+  return { moveX: dx, reset, moveing };
 }
 
 // export default function useDraggable(el) {
