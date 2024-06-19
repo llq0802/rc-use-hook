@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 
 export default function Demo1() {
   const ref = useRef(null);
-  const { moveX, reset } = useSlideVerify(ref, {
+  const { moveX, reset, moveing } = useSlideVerify(ref, {
     maxMoveX: 400, // 最大移动距离
     onMouseUp(moveX) {
       console.log('==onMouseUp===>', moveX);
