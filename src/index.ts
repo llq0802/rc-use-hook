@@ -38,6 +38,8 @@ export * from './useRequestAnimationFrame';
 export { default as useRequestAnimationFrame } from './useRequestAnimationFrame';
 export * from './useShow';
 export { default as useShow } from './useShow';
+export * from './useSlideVerify';
+export { default as useSlideVerify } from './useSlideVerify';
 export * from './useWillMount';
 export { default as useWillMount } from './useWillMount';
 export * from './useWindowSize';

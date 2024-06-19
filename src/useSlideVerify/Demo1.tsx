@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import useSlideVerify from 'rc-use-hooks/useSlideVerify';
+import { useSlideVerify } from 'rc-use-hooks';
 import React, { useRef } from 'react';
 
 export default function Demo1() {
