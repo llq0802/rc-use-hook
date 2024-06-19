@@ -1,5 +1,5 @@
 import { useLatest, useRafState } from 'ahooks';
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 
 /**
  *用于滑块验证滑动距离的hook
@@ -26,7 +26,11 @@ export default function useSlideVerify(
   const [moveing, setMoveing] = useRafState(false);
   const dxRef = useLatest(dx);
   const moveingRef = useLatest(moveing);
-  const reset = () => setDx(initX);
+  const initXRef = useRef(initX);
+  const reset = () => {
+    setDx(initX);
+    initXRef.current = initX;
+  };
 
   useLayoutEffect(() => {
     const dom = typeof el === 'function' ? el() : (el.current as HTMLElement);
@@ -43,7 +47,7 @@ export default function useSlideVerify(
     const handlePointerDown = (e: PointerEvent) => {
       e.preventDefault();
       dom.setPointerCapture(e.pointerId);
-      const startX = e.pageX - dx;
+      const startX = e.pageX - initXRef.current;
       setMoveing(true);
 
       const handlePointerMove = (ev: PointerEvent) => {
@@ -61,6 +65,7 @@ export default function useSlideVerify(
 
       const handlePointerUp = (evo: PointerEvent) => {
         evo.preventDefault();
+        initXRef.current = dxRef.current;
         setMoveing(false);
         onMouseUp?.(dxRef.current);
         dom.removeEventListener('pointermove', handlePointerMove);

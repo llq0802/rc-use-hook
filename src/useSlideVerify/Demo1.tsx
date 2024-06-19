@@ -15,14 +15,7 @@ export default function Demo1() {
     <h3>
       <Button onClick={reset}>reset</Button>
       <hr />
-      <div
-        ref={ref}
-        style={{
-          width: 100,
-          height: 100,
-          background: 'red',
-        }}
-      >
+      <div ref={ref} style={{ width: 100, height: 100, background: 'red' }}>
         box
       </div>
     </h3>
