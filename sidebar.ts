@@ -83,8 +83,16 @@ export default {
           link: '/hooks/use-Window-Size',
         },
         {
+          title: 'useWillMount',
+          link: '/hooks/use-Will-Mount',
+        },
+        {
           title: 'useBeforeUnload',
           link: '/hooks/use-Before-Unload',
+        },
+        {
+          title: 'useSlideVerify',
+          link: '/hooks/use-Slide-Verify',
         },
         {
           title: 'useAnimateNumber',

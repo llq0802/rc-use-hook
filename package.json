@@ -1,6 +1,6 @@
 {
   "name": "rc-use-hooks",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "一个对 ahook 补充的 React Hook 库",
   "keywords": [
     "rc-use-hooks",
