@@ -38,12 +38,14 @@ export default function useSlideVerify(
 
   useLayoutEffect(() => {
     const dom = typeof el === 'function' ? el() : (el.current as HTMLElement);
+    if (!dom) return;
     dom.style.transform = `translate3d(${dx}px, 0, 0)`;
     dom.style.transition = moveing ? 'none' : 'transform 0.3s';
   }, [dx, moveing]);
 
   useEffect(() => {
     const dom = typeof el === 'function' ? el() : (el.current as HTMLElement);
+    if (!dom) return;
     dom.style.touchAction = 'none';
     dom.style.userSelect = 'none';
     dom.style.cursor = 'move';
