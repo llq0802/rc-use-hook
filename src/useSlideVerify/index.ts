@@ -15,10 +15,14 @@ export default function useSlideVerify(
   {
     initX = 0,
     maxMoveX = 400,
+    onMouseDown,
     onMouseUp,
+    onMouseMove,
   }: {
     initX?: number;
     maxMoveX?: number;
+    onMouseDown?: (moveX: number) => void;
+    onMouseMove?: (moveX: number) => void;
     onMouseUp?: (moveX: number) => void;
   } = {},
 ) {
@@ -48,6 +52,7 @@ export default function useSlideVerify(
       e.preventDefault();
       dom.setPointerCapture(e.pointerId);
       const startX = e.pageX - initXRef.current;
+      onMouseDown?.(startX);
       setMoveing(true);
 
       const handlePointerMove = (ev: PointerEvent) => {
@@ -60,6 +65,7 @@ export default function useSlideVerify(
         if (newDx > maxMoveX) {
           newDx = maxMoveX;
         }
+        onMouseMove?.(newDx);
         setDx(newDx);
       };
 
