@@ -13,7 +13,7 @@ toc: content
 
 ### 基础用法
 
-<code src="./Demo1.tsx" ></code>
+<code src="./demos/Demo1.tsx" ></code>
 
 ## API
 
