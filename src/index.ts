@@ -36,6 +36,8 @@ export * from './usePortal';
 export { default as usePortal } from './usePortal';
 export * from './useRequestAnimationFrame';
 export { default as useRequestAnimationFrame } from './useRequestAnimationFrame';
+export * from './useRequestPro';
+export { default as useRequestPro } from './useRequestPro';
 export * from './useShow';
 export { default as useShow } from './useShow';
 export * from './useSlideVerify';

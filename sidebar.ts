@@ -46,6 +46,10 @@ export default {
           link: '/hooks/use-All-Request',
         },
         {
+          title: 'useRequestPro',
+          link: '/hooks/use-Request-Pro',
+        },
+        {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
         },
