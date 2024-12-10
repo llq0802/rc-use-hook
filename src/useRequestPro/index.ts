@@ -25,12 +25,18 @@ export default function useRequestPro<
   TData = any,
   TParams extends any[] = any[],
 >(fn: ServicePro<TData, TParams>, opts: OptionsPro<TData, TParams> = {}) {
+  const isRollbackRef = useRef(false) 
   const isFirstRequestRef = useRef(true);
   const [initData, setInitData] = useState<TData>();
   const [initLoading, setInitLoading] = useState(false);
   const [noInitLoading, setNoInitLoading] = useState(false);
   const { dataKeyName, formatResult, onInitSuccess, onNoInitSuccess, ...rest } =
     opts;
+
+  
+
+
+
 
   const res = useRequest<TData, TParams>(
     async (...pars) => {
@@ -68,14 +74,38 @@ export default function useRequestPro<
       },
       onError(err, params) {
         if (initLoading) setInitLoading(false);
-        if (noInitLoading) setNoInitLoading(false);
+        if (noInitLoading) setNoInitLoading(false)
+
+        isRollbackRef.current = true
+        if(isRollbackRef.current){
+          res?.mutate(previousData)
+          // 回退
+          isRollbackRef.current = false
+        }
+
         rest.onError?.(err, params);
       },
     },
   );
 
+  const previousData = usePrevious(res?.data); 
+
+
+
+  // 并不是所有操作都适合使用乐观更新的交互方式。它需要一些明确的前提条件
+// 1、请求成功的概率非常大，几乎不会失败
+// 2、不涉及到频繁的，密集的 UI 变化
+// 3、可撤回的 UI 变化
+// 4、与服务端的反馈时间短，不是一个长期的持续的响应过程
+  const optimisticUpdate = useMemoizedFn((newData,...args)=>{
+    res?.mutate(newData)
+    res?.run(...args)
+  })
+
+
   return {
     ...res,
+    optimisticUpdate,
     initData,
     initLoading,
     noInitLoading,
