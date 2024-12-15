@@ -1,13 +1,13 @@
-import { useUpdateLayoutEffect } from 'ahooks';
+import { useUpdateEffect } from 'ahooks';
 
 /**
- * 自动滚动在底部
+ * 自动滚动到底部
  */
 export const useAutoScrollToBottom = (
   container: HTMLDivElement,
   { effect = [], patch }: { effect?: any[]; patch?: () => boolean },
 ) => {
-  useUpdateLayoutEffect(() => {
+  useUpdateEffect(() => {
     if (!container) return;
     if (typeof patch === 'function' && !patch()) {
       return;
