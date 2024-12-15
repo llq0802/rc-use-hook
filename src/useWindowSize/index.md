@@ -30,6 +30,6 @@ import { useWindowSize } from 'rc-use-hooks';
 
 ### Result
 
-|    参数    |    说明    |                                       类型                                        |
-| :--------: | :--------: | :-------------------------------------------------------------------------------: |
-| windowSize | 窗口的宽高 | `{  innerHeight:number,innerWidth: number,outerHeight:number,outerWidth: number}` |
+|    参数    |      说明       |                                             类型                                             |
+| :--------: | :-------------: | :------------------------------------------------------------------------------------------: |
+| windowSize | 窗口的宽高和dpr | `{  innerHeight:number,innerWidth: number,outerHeight:number,outerWidth: number,dpr:number}` |

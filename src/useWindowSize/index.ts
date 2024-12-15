@@ -7,14 +7,16 @@ function getSize() {
     innerWidth: window.innerWidth,
     outerHeight: window.outerHeight,
     outerWidth: window.outerWidth,
+    dpr: window.devicePixelRatio,
   };
 }
+
 /**
- * 使用窗口大小的自定义 Hook
+ * 使用窗口大小变化的 Hook
  *
- * @param fn 窗口大小变化时执行的回调函数，参数为窗口大小对象
- * @param waitTime 防抖延时，默认为200毫秒
- * @returns 返回当前窗口大小对象
+ * @param fn 窗口大小变化时的回调函数，可选参数
+ * @param waitTime 防抖的等待时间，默认为 200 毫秒
+ * @returns 当前窗口的大小
  */
 export default function useWindowSize(
   fn?: (size: ReturnType<typeof getSize>) => void,
