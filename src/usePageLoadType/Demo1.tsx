@@ -11,5 +11,5 @@ export default () => {
       alert('页面通过链接正常加载');
     }
   });
-  return <div>usePageLoadType</div>;
+  return <div>刷新页面试试</div>;
 };

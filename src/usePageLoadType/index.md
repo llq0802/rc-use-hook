@@ -5,9 +5,9 @@ toc: content
 
 # usePageLoadType
 
-在组件 **将要挂载** 时触发
+用于在页面加载时获取页面加载类型
 
-此时将访问不到组件的 DOM
+可判断页面是否刷新
 
 ## 代码演示
 
@@ -17,10 +17,15 @@ toc: content
 
 ## API
 
-> 此时将访问不到组件的 DOM
-
 ```ts
-import { useWillMount } from 'rc-use-hooks';
+import { usePageLoadType } from 'rc-use-hooks';
 
-useWillMount(fn: () => void);
+usePageLoadType(cb: (type: PageLoadEnum) => void);
+
+enum PageLoadEnum {
+  BACK_FORWAR = 'back_forward',
+  NAVIGATE = 'navigate',
+  RELOAD = 'reload',
+}
+
 ```
