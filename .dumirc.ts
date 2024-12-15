@@ -5,7 +5,6 @@ const isDev = process.env.NODE_ENV === 'development';
 const publicPath = !isDev ? `/rc-use-hook/` : '/';
 const logo = `${publicPath}logo.png`;
 const favicons = [`${publicPath}logo.png`];
-
 export default defineConfig({
   // https: {},
   outputPath: 'docs-dist',

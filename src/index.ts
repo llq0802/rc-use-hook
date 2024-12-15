@@ -32,8 +32,6 @@ export * from './useMedia';
 export { default as useMedia } from './useMedia';
 export * from './useParentScroll';
 export { default as useParentScroll } from './useParentScroll';
-export * from './usePortal';
-export { default as usePortal } from './usePortal';
 export * from './useRequestAnimationFrame';
 export { default as useRequestAnimationFrame } from './useRequestAnimationFrame';
 export * from './useRequestPro';

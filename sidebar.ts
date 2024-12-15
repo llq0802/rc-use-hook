@@ -24,10 +24,6 @@ export default {
           link: '/hooks/use-Media',
         },
         {
-          title: 'usePortal',
-          link: '/hooks/use-Portal',
-        },
-        {
           title: 'useFocus',
           link: '/hooks/use-Focus',
         },
