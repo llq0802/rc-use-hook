@@ -42,6 +42,10 @@ export default {
           link: '/hooks/use-All-Request',
         },
         {
+          title: 'usePageLoadType',
+          link: '/hooks/use-Page-Load-Type',
+        },
+        {
           title: 'useRequestPro',
           link: '/hooks/use-Request-Pro',
         },
@@ -107,7 +111,6 @@ export default {
           title: 'useDeepUpdateEffect',
           link: '/hooks/use-deep-update-effect',
         },
-
         {
           title: 'useRequestAnimationFrame',
           link: '/hooks/use-Request-Animation-Frame',

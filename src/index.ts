@@ -30,6 +30,8 @@ export * from './useLockScroll';
 export { default as useLockScroll } from './useLockScroll';
 export * from './useMedia';
 export { default as useMedia } from './useMedia';
+export * from './usePageLoadType';
+export { default as usePageLoadType } from './usePageLoadType';
 export * from './useParentScroll';
 export { default as useParentScroll } from './useParentScroll';
 export * from './useRequestAnimationFrame';
