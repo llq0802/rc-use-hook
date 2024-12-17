@@ -2,7 +2,6 @@ import { useEventListener } from 'ahooks';
 import { useState } from 'react';
 /**
  * 监听页面离开事件，当鼠标移出页面或页面失去焦点时返回 true。
- *
  * @returns 返回页面是否已离开，如果鼠标移出页面或页面失去焦点则返回 true，否则返回 false。
  */
 export function usePageLeave(): boolean {
