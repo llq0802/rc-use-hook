@@ -1,4 +1,4 @@
-import { useRequest } from 'ahooks';
+import { useLockFn, usePrevious, useRequest } from 'ahooks';
 import type { Options } from 'ahooks/lib/useRequest/src/types';
 import { isPlainObject } from 'lodash-es';
 import { useRef, useState } from 'react';
@@ -9,6 +9,8 @@ type ServicePro<TData = any, TParams extends any[] = any[]> = (
 
 type OptionsPro<TData, TParams extends any[]> = {
   dataKeyName?: string;
+  /**是否启用`run`或者`runAsync`函数增加竞态锁，防止并发执行。 */
+  isLockRun?: boolean;
   formatResult?: (result: TData, params: TParams) => any;
   onInitSuccess?: (ret: TData, params: TParams) => void;
   onNoInitSuccess?: (ret: TData, params: TParams) => void;
@@ -25,13 +27,18 @@ export default function useRequestPro<
   TData = any,
   TParams extends any[] = any[],
 >(fn: ServicePro<TData, TParams>, opts: OptionsPro<TData, TParams> = {}) {
-  const isRollbackRef = useRef(false);
   const isFirstRequestRef = useRef(true);
   const [initData, setInitData] = useState<TData>();
   const [initLoading, setInitLoading] = useState(false);
   const [noInitLoading, setNoInitLoading] = useState(false);
-  const { dataKeyName, formatResult, onInitSuccess, onNoInitSuccess, ...rest } =
-    opts;
+  const {
+    isLockRun,
+    dataKeyName,
+    formatResult,
+    onInitSuccess,
+    onNoInitSuccess,
+    ...rest
+  } = opts;
 
   const res = useRequest<TData, TParams>(
     async (...pars) => {
@@ -70,14 +77,6 @@ export default function useRequestPro<
       onError(err, params) {
         if (initLoading) setInitLoading(false);
         if (noInitLoading) setNoInitLoading(false);
-
-        isRollbackRef.current = true;
-        if (isRollbackRef.current) {
-          res?.mutate(previousData);
-          // 回退
-          isRollbackRef.current = false;
-        }
-
         rest.onError?.(err, params);
       },
     },
@@ -85,21 +84,25 @@ export default function useRequestPro<
 
   const previousData = usePrevious(res?.data);
 
-  // 并不是所有操作都适合使用乐观更新的交互方式。它需要一些明确的前提条件
-  // 1、请求成功的概率非常大，几乎不会失败
-  // 2、不涉及到频繁的，密集的 UI 变化
-  // 3、可撤回的 UI 变化
-  // 4、与服务端的反馈时间短，不是一个长期的持续的响应过程
-  const optimisticUpdate = useMemoizedFn((newData, ...args) => {
-    res?.mutate(newData);
-    res?.run(...args);
-  });
+  const lockRun = useLockFn(async (...args: Parameters<typeof res.run>) =>
+    res.run(...args),
+  );
+  const lockRunAsync = useLockFn(res.runAsync);
+
+  const run = isLockRun ? lockRun : res.run;
+  const runAsync = isLockRun ? lockRunAsync : res.runAsync;
 
   return {
     ...res,
-    optimisticUpdate,
+    run,
+    runAsync,
+    /**上一次的 data 值  */
+    previousData,
+    /**第一次请求时的初始数据 */
     initData,
+    /**第一次请求时的 loading */
     initLoading,
+    /**非第一次请求时的 loading */
     noInitLoading,
   };
 }
