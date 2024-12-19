@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react';
  * @template T 继承自Element的类型，用于指定返回的活跃元素的类型
  * @returns 返回当前活跃的元素，如果类型不匹配则返回null
  */
-export const useActiveElement = <T extends Element>(): T | null => {
+export const useActiveElement = <T extends HTMLElement>(): T | null => {
   const [active, setActive] = useState<T | null>(null);
 
   const listener = useCallback(() => {

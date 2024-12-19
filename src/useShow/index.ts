@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 // 定义一个通用的记录类型
-type RecordType<T = Record<string, any>> = T;
+export type RecordType<T = Record<string, any>> = T;
 
 // 定义 UseShow 的实例类型
 export interface UseShowInstance<T extends RecordType = RecordType> {
