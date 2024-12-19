@@ -1,5 +1,5 @@
-import { isFunction } from 'rc-use-hooks/utils';
-import { MutableRefObject, useEffect, useState } from 'react';
+import { getTargetElement } from 'rc-use-hooks/utils';
+import { useEffect, useState } from 'react';
 
 const PI = Math.PI;
 /**方向 */
@@ -15,15 +15,13 @@ enum Direction {
  * @return {Direction} 鼠标进入元素的方向
  */
 export default function useEnterDirection(
-  target: MutableRefObject<HTMLElement | null> | (() => HTMLElement),
+  target: Parameters<typeof getTargetElement>[0],
 ): Direction | undefined {
   const [direction, setDirection] = useState<Direction>();
 
   useEffect(() => {
     if (!target) return;
-    const dom: HTMLElement = isFunction(target)
-      ? (target as () => HTMLElement)?.()
-      : (target as MutableRefObject<HTMLElement>)?.current;
+    const dom = getTargetElement(target);
     const rect = dom?.getBoundingClientRect();
     const theta = Math.atan2(rect.height, rect.width);
     const mouseenter = (e: MouseEvent) => {

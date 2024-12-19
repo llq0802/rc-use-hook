@@ -15,7 +15,6 @@ export default function useImageSize(url: string) {
       const { naturalWidth, naturalHeight } = e.target;
       setSize([naturalWidth, naturalHeight]);
     });
-
     img.src = url;
   }, [url]);
 

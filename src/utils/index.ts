@@ -1,5 +1,5 @@
 import { isEqual } from 'lodash-es';
-import type { DependencyList } from 'react';
+import type { DependencyList, MutableRefObject } from 'react';
 
 /**
  * 判断深度两个数据是否相等
@@ -37,11 +37,8 @@ export function getCamelCase(str: string) {
  */
 export const isScrollable = function (ele: HTMLElement) {
   const hasScrollableContent = ele?.scrollHeight > ele?.clientHeight;
-
   const overflowYStyle = window.getComputedStyle(ele).overflowY;
-
   const isOverflowHidden = overflowYStyle.indexOf('hidden') !== -1;
-
   return hasScrollableContent && !isOverflowHidden;
 };
 
@@ -50,13 +47,15 @@ export const isScrollable = function (ele: HTMLElement) {
  * @param HTMLElement 元素
  * @returns HTMLElement
  */
-export const getScrollableParent = function (ele: HTMLElement): HTMLElement {
+export const getScrollableParent = (
+  ele: HTMLElement | null,
+): HTMLElement | null => {
   if (!ele || ele === document.body) {
     return document.body;
   } else if (isScrollable(ele)) {
     return ele;
   } else {
-    return getScrollableParent(ele?.parentNode);
+    return getScrollableParent(ele?.parentElement);
   }
 };
 
@@ -75,4 +74,13 @@ export function getScreenOrientation(): 'portrait' | 'landscape' {
   } else {
     return 'landscape'; // 横屏
   }
+}
+
+export function getTargetElement(
+  target: MutableRefObject<HTMLElement | null> | (() => HTMLElement),
+) {
+  const dom: HTMLElement = isFunction(target)
+    ? (target as () => HTMLElement)?.()
+    : (target as unknown as MutableRefObject<HTMLElement>)?.current;
+  return dom;
 }

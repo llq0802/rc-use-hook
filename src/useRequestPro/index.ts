@@ -17,7 +17,7 @@ type OptionsPro<TData, TParams extends any[]> = {
 } & Options<TData, TParams>;
 
 /**
- * 二次封装 useRequest
+ * 二次封装 useRequest 更加简化 ahooks 的  useRequest
  *
  * @param fn 请求函数，类型为ServicePro，接收两个泛型参数TData和TParams，分别表示返回数据类型和参数类型
  * @param opts 请求选项，类型为OptionsPro，包含请求的各种配置，默认值为空对象
