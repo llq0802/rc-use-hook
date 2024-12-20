@@ -8,7 +8,13 @@ type Options = {
   disabled?: boolean;
   decimals?: number;
 };
-
+/**
+ * 使用数字动画的自定义钩子.
+ *
+ * @param state 初始数值状态，默认为0.
+ * @param options 动画的配置选项.
+ * @returns 返回一个包含当前数值和更新数值函数的数组.
+ */
 export default function useAnimateNumber<T = number>(
   state = 0,
   options: Options = {},

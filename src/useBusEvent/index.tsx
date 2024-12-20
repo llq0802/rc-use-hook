@@ -49,7 +49,7 @@ export class BusEvent<K, T> {
 
 /**
  * 基于发布订阅模式的事件总线
- * @description 多用于兄弟组件 (特别是大屏) 之间的传递数据
+ * @description 多用于兄弟组件 ( 特别是大屏 ) 之间的传递数据
  * @return {BusEvent<K, T>}
  */
 export default function useBusEvent<K = string | symbol, T = any>(): BusEvent<

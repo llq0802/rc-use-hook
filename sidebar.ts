@@ -115,6 +115,14 @@ export default {
           title: 'useRequestAnimationFrame',
           link: '/hooks/use-Request-Animation-Frame',
         },
+        {
+          title: 'useActiveElement',
+          link: '/hooks/use-Active-Element',
+        },
+        {
+          title: 'useDraggable',
+          link: '/hooks/use-Draggable',
+        },
       ],
     },
   ],

@@ -9,18 +9,18 @@ import { SetStateAction, useEffect, useState } from 'react';
 const useDelayedState = <T = any>(
   initialState: T,
   condition: boolean,
-): [T, (newState: T) => void] => {
+): [T | undefined, (newState: T | SetStateAction<T>) => void] => {
   const [{ state, loaded }, setState] = useState<{
-    state: T;
+    state: T | undefined;
     loaded: boolean;
   }>({
-    state: void 0,
+    state: undefined, // 使用 undefined 作为初始值
     loaded: false,
   });
 
   useEffect(() => {
     if (!loaded && condition) {
-      setState({ state: initialState as unknown, loaded: true });
+      setState({ state: initialState, loaded: true });
     }
   }, [condition, loaded]);
 
@@ -28,12 +28,11 @@ const useDelayedState = <T = any>(
     if (!loaded) return;
 
     if (isFunction(newState)) {
-      setState((prev) => {
-        return {
-          state: newState?.(prev.state),
-          loaded: true,
-        };
-      });
+      setState((prev) => ({
+        //@ts-ignore
+        state: typeof newState === 'function' ? newState(prev.state) : newState,
+        loaded: true,
+      }));
     } else {
       setState({ state: newState, loaded });
     }

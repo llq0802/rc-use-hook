@@ -1,12 +1,14 @@
-import { useLatest } from 'ahooks';
-import { useEffect, useState, type MutableRefObject } from 'react';
+import { useLatest, useRafState } from 'ahooks';
+import { getTargetElement } from 'rc-use-hooks/utils';
+import { useEffect } from 'react';
 
-type Draggable = {
+export type Draggable = {
   x: number;
   y: number;
 };
 
 type Options = {
+  defaultPosition?: Draggable;
   bounding?:
     | 'viewport'
     | 'parent'
@@ -16,82 +18,119 @@ type Options = {
         width: number;
         height: number;
       };
-  onStart?: () => void;
-  onMove?: () => void;
-  onEnd?: () => void;
+  onStart?: (position: Draggable) => void;
+  onMove?: (position: Draggable) => void;
+  onEnd?: (position: Draggable) => void;
 };
 
+function getBounding(ele: HTMLElement, val: Options['bounding']) {
+  const bounding = {
+    x: 0,
+    y: 0,
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  };
+  if (val === 'parent' && ele.parentElement) {
+    const { top, left, width, height } =
+      ele.parentElement.getBoundingClientRect();
+    bounding.x = left;
+    bounding.y = top;
+    bounding.width = width;
+    bounding.height = height;
+  } else if (val && typeof val === 'object') {
+    bounding.x = val.x;
+    bounding.y = val.y;
+    bounding.width = val.width;
+    bounding.height = val.height;
+  }
+  return bounding;
+}
+
+/**
+ * 可拖动组件的钩子函数
+ * 该函数使指定的元素具有拖动功能，并可根据配置限制拖动范围
+ *
+ * @param ele 要拖动的元素或其选择器
+ * @param opts 配置选项，包括拖动范围等
+ */
 export default function useDraggable(
-  ele: MutableRefObject<HTMLElement | null> | (() => HTMLElement),
-  opts: Options,
+  ele: Parameters<typeof getTargetElement>[0],
+  opts?: Options,
 ) {
-  const [{ x, y }, setXY] = useState({ x: 0, y: 0 });
-  const [moveing, setMoveing] = useState(false);
+  const [{ x, y }, setXY] = useRafState(
+    () => opts?.defaultPosition || { x: 0, y: 0 },
+  );
+
+  const [moveing, setMoveing] = useRafState(false);
   const moveingRef = useLatest(moveing);
 
-  const bounding = opts?.bounding || 'viewport';
-
   useEffect(() => {
-    let startX = 0;
-    let startY = 0;
-    const handlePointerDown = function (e) {
+    const el = getTargetElement(ele);
+    if (!el) return;
+
+    el.style.touchAction = 'none';
+    let startX = opts?.defaultPosition?.x || 0;
+    let startY = opts?.defaultPosition?.y || 0;
+    el.style.transform = `translate(${startX}px, ${startY}px)`;
+
+    const {
+      x: boundingX,
+      y: boundingY,
+      width: boundingWidth,
+      height: boundingHeight,
+    } = getBounding(el, opts?.bounding || 'viewport');
+
+    const handleDown = (e: PointerEvent) => {
+      e.preventDefault();
       el.setPointerCapture(e.pointerId);
       el.style.cursor = 'move';
-      startX = e.pageX - startX;
-      startY = e.pageY - startY;
-      const handleMove = (e) => {
-        const diffX = e.pageX - startX;
-        const diffY = e.pageY - startY;
-        const { top, left, width, height } = el.getBoundingClientRect();
-        // 计算新的位置
-        let newLeft = diffX;
-        let newTop = diffY;
-        // 限制在视口内
-        // newLeft 小于  el.parentElement.getBoundingClientRect().left 可限制在父元素内移动
-        if (newLeft < 0) {
-          newLeft = 0;
-        }
-        // window.innerWidth 替换成  el.parentElement.offsetWidth 可限制在父级元素内移动
-        if (newLeft > window.innerWidth - el.offsetWidth) {
-          newLeft = window.innerWidth - el.offsetWidth;
-        }
-        // newLeft 小于  el.parentElement.getBoundingClientRect().top 可限制在父元素内移动
-        if (newTop < 0) {
-          newTop = 0;
-        }
-        // window.innerHeight 替换成 el.parentElement.offsetHeight 可限制在父级元素内移动
-        if (newTop > window.innerHeight - el.offsetHeight) {
-          newTop = window.innerHeight - el.offsetHeight;
-        }
+
+      const { width: elWidth, height: elHeight } = el.getBoundingClientRect();
+      startX = e.clientX - startX;
+      startY = e.clientY - startY;
+
+      const handleMove = (e: PointerEvent) => {
+        const diffX = e.clientX - startX;
+        const diffY = e.clientY - startY;
+        // 计算新的位置并应用边界检查
+        let newLeft = Math.max(
+          boundingX,
+          Math.min(diffX, boundingWidth - elWidth),
+        );
+        let newTop = Math.max(
+          boundingY,
+          Math.min(diffY, boundingHeight - elHeight),
+        );
         el.style.transform = `translate(${newLeft}px, ${newTop}px)`;
+
         setXY({ x: newLeft, y: newTop });
         if (!moveingRef.current) setMoveing(true);
+        opts?.onMove?.({ x: newLeft, y: newTop });
       };
-      const handleUp = (e) => {
-        startX = e.pageX - e.offsetX;
-        startY = e.pageY - e.offsetY;
+
+      const handleUp = (e: PointerEvent) => {
+        el.releasePointerCapture(e.pointerId);
         el.style.cursor = 'auto';
+        startX = e.clientX - e.offsetX;
+        startY = e.clientY - e.offsetY;
+        setMoveing(false);
+        opts?.onEnd?.({ x, y });
         el.removeEventListener('pointermove', handleMove);
         el.removeEventListener('pointerup', handleUp);
-        setMoveing(false);
       };
 
       el.addEventListener('pointermove', handleMove);
       el.addEventListener('pointerup', handleUp);
+
+      opts?.onStart?.({ x, y });
     };
 
-    const el = typeof ele === 'function' ? ele() : ele.current!;
-    el.style.touchAction = 'none';
-    el.addEventListener('pointerdown', handlePointerDown);
+    el.addEventListener('pointerdown', handleDown);
 
     return () => {
-      el.removeEventListener('pointerdown', handlePointerDown);
+      el.removeEventListener('pointerdown', handleDown);
     };
   }, []);
 
-  return {
-    x,
-    y,
-    moveing,
-  };
+  return { x, y, moveing };
 }
