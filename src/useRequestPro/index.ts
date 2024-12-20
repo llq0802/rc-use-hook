@@ -1,7 +1,7 @@
-import { useLockFn, usePrevious, useRequest } from 'ahooks';
+import { useLockFn, usePrevious, useRafState, useRequest } from 'ahooks';
 import type { Options } from 'ahooks/lib/useRequest/src/types';
 import { isPlainObject } from 'lodash-es';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 type ServicePro<TData = any, TParams extends any[] = any[]> = (
   ...args: TParams
@@ -28,9 +28,9 @@ export default function useRequestPro<
   TParams extends any[] = any[],
 >(fn: ServicePro<TData, TParams>, opts: OptionsPro<TData, TParams> = {}) {
   const isFirstRequestRef = useRef(true);
-  const [initData, setInitData] = useState<TData>();
-  const [initLoading, setInitLoading] = useState(false);
-  const [noInitLoading, setNoInitLoading] = useState(false);
+  const [initData, setInitData] = useRafState<TData>();
+  const [initLoading, setInitLoading] = useRafState(false);
+  const [noInitLoading, setNoInitLoading] = useRafState(false);
   const {
     isLockRun,
     dataKeyName,
