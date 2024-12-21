@@ -3,7 +3,10 @@ import React, { useRef } from 'react';
 
 const Demo1 = () => {
   const ref = useRef<HTMLDivElement>(null!);
-  const { moving, x, y } = useDraggable(ref);
+  const { moving, x, y } = useDraggable(ref, {
+    bounding: 'parent',
+    defaultPosition: { x: 100, y: 100 },
+  });
 
   return (
     <div
@@ -21,6 +24,7 @@ const Demo1 = () => {
           zIndex: 9999,
           width: 100,
           height: 100,
+          position: 'absolute',
           background: 'red',
           userSelect: 'none',
           touchAction: 'none',
@@ -28,7 +32,7 @@ const Demo1 = () => {
           placeItems: 'center',
         }}
       >
-        drag me
+        有初始值
       </div>
     </div>
   );

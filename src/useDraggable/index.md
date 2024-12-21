@@ -11,7 +11,19 @@ nav:
 
 ## 代码演示
 
+### 基础用法
+
+默认限制在视口内的拖拽
+
 <code src='./demos/Demo1.tsx'></code>
+
+### 限制在父级元素
+
+<code src='./demos/Demo2.tsx'></code>
+
+### 初始位置
+
+<code src='./demos/Demo3.tsx'></code>
 
 ### API
 

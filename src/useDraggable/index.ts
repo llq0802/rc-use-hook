@@ -1,18 +1,18 @@
 import { useLatest, useRafState } from 'ahooks';
 import { getTargetElement } from 'rc-use-hooks/utils';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
-export type Draggable = {
+export type Position = {
   x: number;
   y: number;
 };
 
 type Options = {
-  defaultPosition?: Draggable;
+  defaultPosition?: Position;
   bounding?: 'viewport' | 'parent' | HTMLElement;
-  onStart?: (position: Draggable, e: PointerEvent) => void;
-  onMove?: (position: Draggable, e: PointerEvent) => void;
-  onEnd?: (position: Draggable, e: PointerEvent) => void;
+  onStart?: (position: Position, e: PointerEvent) => void;
+  onMove?: (position: Position, e: PointerEvent) => void;
+  onEnd?: (position: Position, e: PointerEvent) => void;
 };
 
 function getBounding(ele: HTMLElement, val: Options['bounding']) {
@@ -22,13 +22,18 @@ function getBounding(ele: HTMLElement, val: Options['bounding']) {
     maxY: document.documentElement.clientHeight - elHeight,
   };
   if (val === 'parent' && ele.parentElement) {
-    ele.style.position = 'absolute';
     const { width, height } = ele.parentElement.getBoundingClientRect();
+    ele.parentElement.style.position = 'relative';
+    ele.style.position = 'absolute';
     bounding.maxX = width - elWidth;
     bounding.maxY = height - elHeight;
-  } else if (val && typeof val === 'object' && val.getBoundingClientRect) {
-    ele.style.position = 'absolute';
+  } else if (
+    val &&
+    typeof val === 'object' &&
+    typeof val.getBoundingClientRect === 'function'
+  ) {
     const { width, height } = val.getBoundingClientRect();
+    ele.style.position = 'absolute';
     bounding.maxX = width - elWidth;
     bounding.maxY = height - elHeight;
   } else {
@@ -38,8 +43,11 @@ function getBounding(ele: HTMLElement, val: Options['bounding']) {
 }
 
 /**
- * 可拖动组件的钩子函数
- * 该函数使指定的元素具有拖动功能，并可根据配置限制拖动范围
+ * 高性能的可拖动组件的钩子函数
+ *
+ * 支持 PC端  移动端  触控笔
+ *
+ * 该函数使指定的元素具有拖动功能，并可根据配置限制拖动范围和初始位置
  *
  * @param ele 要拖动的元素或其选择器
  * @param opts 配置选项，包括拖动范围等
@@ -47,36 +55,37 @@ function getBounding(ele: HTMLElement, val: Options['bounding']) {
 export default function useDraggable(
   ele: Parameters<typeof getTargetElement>[0],
   opts?: Options,
-) {
-  const [xy, setXY] = useRafState<Draggable>(
+): Position & { moving: boolean } {
+  const [xy, setXY] = useRafState<Position>(
     () => opts?.defaultPosition || { x: 0, y: 0 },
   );
-  const offsetRef = useRef<Draggable>({ x: 0, y: 0 });
+  // 使用最新的 x, y
+  const xyRef = useLatest(xy);
   const [moving, setMoving] = useRafState(false);
   const movingRef = useLatest(moving);
-  const xyRef = useLatest<Draggable>(xy);
+  const offsetRef = useRef<Position>(opts?.defaultPosition || { x: 0, y: 0 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = getTargetElement(ele);
     if (!el) return;
+    el.style.cursor = 'grab';
+    el.style.userSelect = 'none';
     el.style.touchAction = 'none';
-    el.style.transform = `translate(${x}px, ${y}px)`;
-
+    el.style.transform = `translate(${xy.x}px, ${xy.y}px)`;
     const { maxX, maxY } = getBounding(el, opts?.bounding || 'viewport');
 
     const handleDown = (e: PointerEvent) => {
       e.preventDefault();
       el.setPointerCapture(e.pointerId);
-      el.style.cursor = 'move';
+      el.style.cursor = 'grabbing';
       offsetRef.current.x = e.clientX - offsetRef.current.x;
       offsetRef.current.y = e.clientY - offsetRef.current.y;
+      opts?.onStart?.({ x: xyRef.current.x, y: xyRef.current.y }, e);
 
       const handleMove = (e: PointerEvent) => {
-        const diffX = e.clientX - offsetRef.current.x;
-        const diffY = e.clientY - offsetRef.current.y;
-        let newLeft = diffX;
-        let newTop = diffY;
-
+        e.preventDefault();
+        let newLeft = e.clientX - offsetRef.current.x;
+        let newTop = e.clientY - offsetRef.current.y;
         // 计算新的位置并应用边界检查
         if (newLeft < 0) {
           newLeft = 0;
@@ -90,37 +99,36 @@ export default function useDraggable(
         if (newTop > maxY) {
           newTop = maxY;
         }
-
         el.style.transform = `translate(${newLeft}px, ${newTop}px)`;
-        setXY({ x: newLeft, y: newTop });
-        if (!movingRef.current) setMoving(true);
         opts?.onMove?.({ x: newLeft, y: newTop }, e);
+        setXY({ x: newLeft, y: newTop });
+        if (!movingRef.current) {
+          setMoving(true);
+        }
       };
 
       const handleUp = (e: PointerEvent) => {
+        e.preventDefault();
         el.releasePointerCapture(e.pointerId);
-        el.style.cursor = 'auto';
+        el.style.cursor = 'grab';
         offsetRef.current.x = xyRef.current.x;
         offsetRef.current.y = xyRef.current.y;
         setMoving(false);
-        opts?.onEnd?.({ x: xyRef.current.x, y: xyRef.current.y }, e); // 使用最新的 x, y
+        opts?.onEnd?.({ x: xyRef.current.x, y: xyRef.current.y }, e);
         el.removeEventListener('pointermove', handleMove);
         el.removeEventListener('pointerup', handleUp);
       };
 
-      el.addEventListener('pointermove', handleMove);
-      el.addEventListener('pointerup', handleUp);
-
-      opts?.onStart?.({ x: xyRef.current.x, y: xyRef.current.y }, e);
+      el.addEventListener('pointermove', handleMove, false);
+      el.addEventListener('pointerup', handleUp, false);
     };
 
-    el.addEventListener('pointerdown', handleDown);
+    el.addEventListener('pointerdown', handleDown, false);
 
     return () => {
       el.removeEventListener('pointerdown', handleDown);
     };
-  }, [xy]);
+  }, [opts?.bounding]);
 
-  const { x, y } = xy;
-  return { x, y, moving };
+  return { ...xy, moving };
 }
