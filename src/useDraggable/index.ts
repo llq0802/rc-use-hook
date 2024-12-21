@@ -9,39 +9,30 @@ export type Draggable = {
 
 type Options = {
   defaultPosition?: Draggable;
-  bounding?:
-    | 'viewport'
-    | 'parent'
-    | {
-        x: number;
-        y: number;
-        width: number;
-        height: number;
-      };
+  bounding?: 'viewport' | 'parent' | HTMLElement;
   onStart?: (position: Draggable, e: PointerEvent) => void;
   onMove?: (position: Draggable, e: PointerEvent) => void;
   onEnd?: (position: Draggable, e: PointerEvent) => void;
 };
 
 function getBounding(ele: HTMLElement, val: Options['bounding']) {
+  const { width: elWidth, height: elHeight } = ele.getBoundingClientRect();
   const bounding = {
-    x: 0,
-    y: 0,
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
+    maxX: document.documentElement.clientWidth - elWidth,
+    maxY: document.documentElement.clientHeight - elHeight,
   };
   if (val === 'parent' && ele.parentElement) {
+    ele.style.position = 'absolute';
     const { width, height } = ele.parentElement.getBoundingClientRect();
-
-    bounding.x = 0;
-    bounding.y = 0;
-    bounding.width = width;
-    bounding.height = height;
-  } else if (val && typeof val === 'object') {
-    bounding.x = 0;
-    bounding.y = 0;
-    bounding.width = val.width;
-    bounding.height = val.height;
+    bounding.maxX = width - elWidth;
+    bounding.maxY = height - elHeight;
+  } else if (val && typeof val === 'object' && val.getBoundingClientRect) {
+    ele.style.position = 'absolute';
+    const { width, height } = val.getBoundingClientRect();
+    bounding.maxX = width - elWidth;
+    bounding.maxY = height - elHeight;
+  } else {
+    ele.style.position = 'fixed';
   }
   return bounding;
 }
@@ -71,22 +62,12 @@ export default function useDraggable(
     el.style.touchAction = 'none';
     el.style.transform = `translate(${x}px, ${y}px)`;
 
-    const {
-      x: boundingX,
-      y: boundingY,
-      width: boundingWidth,
-      height: boundingHeight,
-    } = getBounding(el, opts?.bounding || 'viewport');
+    const { maxX, maxY } = getBounding(el, opts?.bounding || 'viewport');
 
     const handleDown = (e: PointerEvent) => {
       e.preventDefault();
       el.setPointerCapture(e.pointerId);
       el.style.cursor = 'move';
-
-      console.log('===boundingWidth===>', boundingWidth);
-      console.log('===boundingHeight===>', boundingHeight);
-
-      const { width: elWidth, height: elHeight } = el.getBoundingClientRect();
       offsetRef.current.x = e.clientX - offsetRef.current.x;
       offsetRef.current.y = e.clientY - offsetRef.current.y;
 
@@ -100,14 +81,14 @@ export default function useDraggable(
         if (newLeft < 0) {
           newLeft = 0;
         }
-        if (newLeft > boundingWidth - elWidth) {
-          newLeft = boundingWidth - elWidth;
+        if (newLeft > maxX) {
+          newLeft = maxX;
         }
         if (newTop < 0) {
           newTop = 0;
         }
-        if (newTop > boundingHeight - elHeight) {
-          newTop = boundingHeight - elHeight;
+        if (newTop > maxY) {
+          newTop = maxY;
         }
 
         el.style.transform = `translate(${newLeft}px, ${newTop}px)`;
@@ -118,7 +99,6 @@ export default function useDraggable(
 
       const handleUp = (e: PointerEvent) => {
         el.releasePointerCapture(e.pointerId);
-        console.log('===xyRef.current===>', xyRef.current);
         el.style.cursor = 'auto';
         offsetRef.current.x = xyRef.current.x;
         offsetRef.current.y = xyRef.current.y;
