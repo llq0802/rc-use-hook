@@ -1,6 +1,6 @@
 import { useLatest, useRafState } from 'ahooks';
 import { getTargetElement } from 'rc-use-hooks/utils';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export type Draggable = {
   x: number;
@@ -18,9 +18,9 @@ type Options = {
         width: number;
         height: number;
       };
-  onStart?: (position: Draggable) => void;
-  onMove?: (position: Draggable) => void;
-  onEnd?: (position: Draggable) => void;
+  onStart?: (position: Draggable, e: PointerEvent) => void;
+  onMove?: (position: Draggable, e: PointerEvent) => void;
+  onEnd?: (position: Draggable, e: PointerEvent) => void;
 };
 
 function getBounding(ele: HTMLElement, val: Options['bounding']) {
@@ -31,15 +31,15 @@ function getBounding(ele: HTMLElement, val: Options['bounding']) {
     height: document.documentElement.clientHeight,
   };
   if (val === 'parent' && ele.parentElement) {
-    const { top, left, width, height } =
-      ele.parentElement.getBoundingClientRect();
-    bounding.x = left;
-    bounding.y = top;
+    const { width, height } = ele.parentElement.getBoundingClientRect();
+
+    bounding.x = 0;
+    bounding.y = 0;
     bounding.width = width;
     bounding.height = height;
   } else if (val && typeof val === 'object') {
-    bounding.x = val.x;
-    bounding.y = val.y;
+    bounding.x = 0;
+    bounding.y = 0;
     bounding.width = val.width;
     bounding.height = val.height;
   }
@@ -57,21 +57,19 @@ export default function useDraggable(
   ele: Parameters<typeof getTargetElement>[0],
   opts?: Options,
 ) {
-  const [{ x, y }, setXY] = useRafState(
+  const [xy, setXY] = useRafState<Draggable>(
     () => opts?.defaultPosition || { x: 0, y: 0 },
   );
-
-  const [moveing, setMoveing] = useRafState(false);
-  const moveingRef = useLatest(moveing);
+  const offsetRef = useRef<Draggable>({ x: 0, y: 0 });
+  const [moving, setMoving] = useRafState(false);
+  const movingRef = useLatest(moving);
+  const xyRef = useLatest<Draggable>(xy);
 
   useEffect(() => {
     const el = getTargetElement(ele);
     if (!el) return;
-
     el.style.touchAction = 'none';
-    let startX = opts?.defaultPosition?.x || 0;
-    let startY = opts?.defaultPosition?.y || 0;
-    el.style.transform = `translate(${startX}px, ${startY}px)`;
+    el.style.transform = `translate(${x}px, ${y}px)`;
 
     const {
       x: boundingX,
@@ -85,36 +83,47 @@ export default function useDraggable(
       el.setPointerCapture(e.pointerId);
       el.style.cursor = 'move';
 
+      console.log('===boundingWidth===>', boundingWidth);
+      console.log('===boundingHeight===>', boundingHeight);
+
       const { width: elWidth, height: elHeight } = el.getBoundingClientRect();
-      startX = e.clientX - startX;
-      startY = e.clientY - startY;
+      offsetRef.current.x = e.clientX - offsetRef.current.x;
+      offsetRef.current.y = e.clientY - offsetRef.current.y;
 
       const handleMove = (e: PointerEvent) => {
-        const diffX = e.clientX - startX;
-        const diffY = e.clientY - startY;
-        // 计算新的位置并应用边界检查
-        let newLeft = Math.max(
-          boundingX,
-          Math.min(diffX, boundingWidth - elWidth),
-        );
-        let newTop = Math.max(
-          boundingY,
-          Math.min(diffY, boundingHeight - elHeight),
-        );
-        el.style.transform = `translate(${newLeft}px, ${newTop}px)`;
+        const diffX = e.clientX - offsetRef.current.x;
+        const diffY = e.clientY - offsetRef.current.y;
+        let newLeft = diffX;
+        let newTop = diffY;
 
+        // 计算新的位置并应用边界检查
+        if (newLeft < 0) {
+          newLeft = 0;
+        }
+        if (newLeft > boundingWidth - elWidth) {
+          newLeft = boundingWidth - elWidth;
+        }
+        if (newTop < 0) {
+          newTop = 0;
+        }
+        if (newTop > boundingHeight - elHeight) {
+          newTop = boundingHeight - elHeight;
+        }
+
+        el.style.transform = `translate(${newLeft}px, ${newTop}px)`;
         setXY({ x: newLeft, y: newTop });
-        if (!moveingRef.current) setMoveing(true);
-        opts?.onMove?.({ x: newLeft, y: newTop });
+        if (!movingRef.current) setMoving(true);
+        opts?.onMove?.({ x: newLeft, y: newTop }, e);
       };
 
       const handleUp = (e: PointerEvent) => {
         el.releasePointerCapture(e.pointerId);
+        console.log('===xyRef.current===>', xyRef.current);
         el.style.cursor = 'auto';
-        startX = e.clientX - e.offsetX;
-        startY = e.clientY - e.offsetY;
-        setMoveing(false);
-        opts?.onEnd?.({ x, y });
+        offsetRef.current.x = xyRef.current.x;
+        offsetRef.current.y = xyRef.current.y;
+        setMoving(false);
+        opts?.onEnd?.({ x: xyRef.current.x, y: xyRef.current.y }, e); // 使用最新的 x, y
         el.removeEventListener('pointermove', handleMove);
         el.removeEventListener('pointerup', handleUp);
       };
@@ -122,7 +131,7 @@ export default function useDraggable(
       el.addEventListener('pointermove', handleMove);
       el.addEventListener('pointerup', handleUp);
 
-      opts?.onStart?.({ x, y });
+      opts?.onStart?.({ x: xyRef.current.x, y: xyRef.current.y }, e);
     };
 
     el.addEventListener('pointerdown', handleDown);
@@ -130,7 +139,8 @@ export default function useDraggable(
     return () => {
       el.removeEventListener('pointerdown', handleDown);
     };
-  }, []);
+  }, [xy]);
 
-  return { x, y, moveing };
+  const { x, y } = xy;
+  return { x, y, moving };
 }
