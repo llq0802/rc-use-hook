@@ -1,7 +1,7 @@
 {
   "name": "rc-use-hooks",
   "version": "2.0.8",
-  "description": "一个对 ahook 补充的 React Hook 库",
+  "description": "一个对 ahooks 补充的 React Hook 库",
   "keywords": [
     "rc-use-hooks",
     "rc-use-hook",
@@ -81,6 +81,9 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "optionalDependencies": {
+    "antd": "^5.22.5"
   },
   "publishConfig": {
     "access": "public"
