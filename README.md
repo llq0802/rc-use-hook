@@ -1,6 +1,6 @@
 # rc-use-hooks
 
-🚀 一个对 ahook 补充的 React Hook 库。可以显著的提升制作 CRUD 页面的效率。
+🚀 一个对 ahooks 补充的 React Hook 库。可以显著的提升制作 CRUD 页面的效率。
 
 ## 特性
 

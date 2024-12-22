@@ -1,6 +1,6 @@
 ### 介绍
 
-一个对 ahook 补充的 React Hook 库
+一个对 ahooks 补充的 React Hook 库
 
 ### 安装
 
