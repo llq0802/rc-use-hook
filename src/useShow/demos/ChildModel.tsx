@@ -1,34 +1,39 @@
 import { Checkbox, Form, Input, message, Modal } from 'antd';
 import type { UseShowInstanceRef } from 'rc-use-hooks';
 import { useShow } from 'rc-use-hooks';
-import React, { useState } from 'react';
+import React from 'react';
 
 type ChildModelProps = {
-  funcRef: UseShowInstanceRef;
+  modalRef: UseShowInstanceRef;
+  [key: string]: any;
 };
 
 /**
  * 子组件
  */
-export default function ChildModel({ funcRef }: ChildModelProps) {
-  const [open, setOpen] = useState(false);
-
-  const { parentData, setParentData } = useShow(funcRef, {
+export default function ChildModel({ modalRef }: ChildModelProps) {
+  const {
+    showRecord,
+    hideRecord,
+    setParentData,
+    open,
+    updateOpen,
+    clear,
+    close,
+  } = useShow(modalRef, {
     onShow: (data) => {
       message.info(
         `父组件调用了onShow并传参数${JSON.stringify(data, null, 2)}`,
       );
       console.log('父组件调用了onShow并传参数 ', data);
-      setOpen(true);
     },
-
     onHide: (data) => {
       message.info(
         `父组件调用了onHide并传参数${JSON.stringify(data, null, 2)}`,
       );
 
       console.log('父组件调用了onHide并传参数 ', data);
-      setOpen(false);
+      clear();
     },
   });
 
@@ -37,16 +42,17 @@ export default function ChildModel({ funcRef }: ChildModelProps) {
       title: '我是子组件数据',
       value: 99,
     });
-    setOpen(false);
+    close();
   };
 
   const handleCancel = () => {
     setParentData(null);
-    setOpen(false);
+    close();
   };
 
   return (
     <Modal
+      destroyOnClose
       open={open}
       title="这是子组件的弹窗"
       onOk={handleOk}
@@ -54,10 +60,9 @@ export default function ChildModel({ funcRef }: ChildModelProps) {
       okText="点我向父组件传数据"
     >
       <Form
-        name="basic"
-        labelCol={{ span: 5 }}
+        labelCol={{ span: 4 }}
         wrapperCol={{ span: 19 }}
-        initialValues={parentData}
+        initialValues={showRecord}
       >
         <Form.Item
           label="name"
@@ -78,14 +83,14 @@ export default function ChildModel({ funcRef }: ChildModelProps) {
         <Form.Item
           name="remember"
           valuePropName="checked"
-          wrapperCol={{ offset: 5, span: 19 }}
+          wrapperCol={{ offset: 4, span: 19 }}
         >
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 5, span: 19 }}>
-          <span>父组件传过来的值: </span>
-          <pre>{JSON.stringify(parentData, null, 4)}</pre>
+        <Form.Item wrapperCol={{ offset: 4, span: 19 }}>
+          <span>父组件调用 onShow 传过来的值: </span>
+          <pre>{JSON.stringify(showRecord, null, 4)}</pre>
         </Form.Item>
       </Form>
     </Modal>

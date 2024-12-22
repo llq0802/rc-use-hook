@@ -1,18 +1,17 @@
-import { getScrollableParent, isFunction } from 'rc-use-hooks/utils';
-import { MutableRefObject, useEffect, useState } from 'react';
+import { getScrollableParent, getTargetElement } from 'rc-use-hooks/utils';
+import { useEffect, useState } from 'react';
 
 /**
- * 从给定的ele元素开始，遍历所有父元素直到document的根元素(document.body)。对于每个父节点，检查它是否是一个可滚动的节点。
- * @param target
- * @returns
+ * 从给定的 ele 元素开始，遍历所有父元素直到 document 根元素。对于每个父节点，检查它是否是一个可滚动的节点。
+ * @param target 目标元素
+ * @returns 可滚动的元素
  */
 const useScrollableParent = (
-  target: MutableRefObject<HTMLElement | null> | (() => HTMLElement),
+  target: Parameters<typeof getTargetElement>[0],
 ) => {
-  const [scrollDom, setScrollDom] = useState(null);
+  const [scrollDom, setScrollDom] = useState<HTMLElement | null>(null);
   useEffect(() => {
-    const ele = isFunction(target) ? target?.() : target?.current;
-    const dom = getScrollableParent(ele);
+    const dom = getScrollableParent(getTargetElement(target));
     setScrollDom(dom);
   }, []);
 

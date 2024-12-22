@@ -5,7 +5,6 @@ const isDev = process.env.NODE_ENV === 'development';
 const publicPath = !isDev ? `/rc-use-hook/` : '/';
 const logo = `${publicPath}logo.png`;
 const favicons = [`${publicPath}logo.png`];
-
 export default defineConfig({
   // https: {},
   outputPath: 'docs-dist',
@@ -29,8 +28,16 @@ export default defineConfig({
       { title: '指南', link: '/guide' },
       { title: 'HOOKS', link: '/hooks' },
       {
-        title: '组件库',
+        title: 'lighting-design',
         link: 'https://llq0802.github.io/lighting-design/latest/',
+      },
+      {
+        title: 'ahooks',
+        link: 'https://ahooks.js.org/zh-CN/hooks/use-request/index',
+      },
+      {
+        title: 'react-use',
+        link: 'https://github.com/streamich/react-use',
       },
       {
         title: 'GitHub',

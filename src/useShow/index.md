@@ -6,8 +6,7 @@ toc: content
 # useShow
 
 父组件通过 ref 唤起子组件 、用于业务功能代码分离、避免过多状态和业务代码集中在一个文件上。
-
-基于 `useImperativeHandle`、可以相互传参。各组件拥有独立的状态、状态更新也不会造成其他组件重复执行。
+可以相互传参, 各组件拥有独立的状态、状态更新也不会造成其他组件重复执行。
 
 ## 代码演示
 
@@ -22,7 +21,7 @@ toc: content
 ### 父组件调用
 
 ```ts
-const funRef = useRef<OnShowInstance>();
+const funRef = useRef<UseShowInstance>();
 
 funRef.current?.onShow(data); // 触发子组件方法onShow
 funRef.current?.onHide(data); // 触发子组件方法onHide
@@ -36,16 +35,18 @@ funRef.current?.getChildData(); // 获取子组件数据
 ```ts
 import { useShow } from 'rc-use-hooks';
 
-// <ChildModel funcRef={funRef} />;
-/**
- *  parentData 父组件调用onShow传给子组件的参数
- *  setParentData 子组件执行方法，往内部ref存放数据、父组件使用getChildData函数获取子组件数据
- */
-const { parentData, setParentData }:UseShowResult = useShow<T extends Record<string,any>>(funRef, {
-  onShow: (data:T) => void, // 父组件执行onShow的时候触发
-  onHide: (data?: T) => void, // 父组件执行onHide的时候触发
-  onFormart: (data:T) => any, // 格式化父组件调用onShow传入的参数parentData
+// funRef 为通过 props 传递的 ref 实例
+const ret :UseShowResult = useShow(funRef, {
+  /** show 触发事件 */
+  onShow?(record: T): void;
+  /** hide 触发事件 */
+  onHide?: (record?: T) => void;
+  /** 格式化 onShow 的参数 record */
+  showFormart?: (record: T) => any;
+  /** 格式化 onHide 的参数 record */
+  hideFormart?: (record: T) => any;
 });
+
 ```
 
 ### Params
@@ -57,9 +58,9 @@ const { parentData, setParentData }:UseShowResult = useShow<T extends Record<str
 
 ### Result
 
-|              参数              |                       说明                       |      类型       |
-| :----------------------------: | :----------------------------------------------: | :-------------: |
-| `{ parentData,setParentData }` | 父组件调用 onShow 传入的数据传给父组件数据的方法 | `UseShowResult` |
+|   参数   |        说明        |      类型       |
+| :------: | :----------------: | :-------------: |
+| `result` | 查看 UseShowResult | `UseShowResult` |
 
 ### 导出类型
 
@@ -68,11 +69,11 @@ const { parentData, setParentData }:UseShowResult = useShow<T extends Record<str
 export declare type UseShowInstance<
   T extends Record<string, any> = Record<string, any>,
 > = {
-  /** 触发子组件的 onShow 方法并传值 */
+  /** 触发 useShow 的 onShow 配置项方法并传值 */
   onShow(record: T): void;
-  /** 触发子组件的 onHide 方法并传值 */
+  /** 触发 useShow 的 onHide 配置项方法并传值 */
   onHide: (record?: T) => void;
-  /** 获取子组件的数据 ( 通过子组件 setParentData( ) 设置 )*/
+  /** 获取 useShow 的 setParentData() 设置的值 */
   getChildData: () => any;
 };
 
@@ -81,22 +82,35 @@ export declare type UseShowOptions<
   T extends Record<string, any> = Record<string, any>,
 > = {
   /** show 触发事件 */
-  onShow?(data: T): void;
+  onShow?(record: T): void;
   /** hide 触发事件 */
-  onHide?: (data?: T) => void;
-  /** 格式化 data */
-  onFormart?: (data: T) => any;
+  onHide?: (record?: T) => void;
+  /** 格式化 onShow 的参数 record */
+  showFormart?: (record: T) => any;
+  /** 格式化 onHide 的参数 record */
+  hideFormart?: (record: T) => any;
 };
 
-/**用于在子组件 props 的 'funcRef' 的类型*/
+/**用于在子组件 props 的 useShow 的实例的类型*/
 export declare type UseShowInstanceRef<
   T extends Record<string, any> = Record<string, any>,
 > = MutableRefObject<UseShowInstance<T> | undefined>;
 
-export declare type UseShowResult<T> = {
-  /** 父组件 useShow 实例调用 onShow 事件传入的参数 */
-  parentData: T | undefined;
+/**useShow 的返回值 */
+export declare type UseShowResult<T extends Record<string, any>> = {
   /** 向父组件传数据 （父组件调用 getChildData( ) 获取 ） */
   setParentData: (data: any) => void;
+  /** 父组件 useShow 实例调用 onShow 事件传入的参数 */
+  showRecord: T | undefined;
+  /** 父组件 useShow 实例调用 onHide 事件传入的参数 */
+  hideRecord: T | undefined;
+  /** 配合 Modal 或 Drawer 配置 open */
+  open: boolean;
+  /**更新 open  */
+  updateOpen: (b: boolean) => void;
+  /** 配合 Modal 或 Drawer 触发 onClose 事件 */
+  close: () => void;
+  /**清空传值的数据 */
+  clear: () => void;
 };
 ```

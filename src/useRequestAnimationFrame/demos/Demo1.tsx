@@ -5,6 +5,8 @@ function Demo1() {
   const [count, setCount] = useState(0);
 
   useRequestAnimationFrame((deltaTime) => {
+    console.log('==deltaTime====>', deltaTime);
+
     setCount((prevCount) => (prevCount + deltaTime * 0.01) % 100);
   });
 

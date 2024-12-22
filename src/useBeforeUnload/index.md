@@ -22,7 +22,7 @@ useBeforeUnload(enabled:boolean, message?:string);
 
 ### Params
 
-| 参数    | 说明                          | 类型      | 默认值 |
-| ------- | ----------------------------- | --------- | ------ |
-| enabled | 是否启用                      | `boolean` | `true` |
-| message | 自定义提示信息 部分浏览器无效 | `string`  | `-`    |
+| 参数    | 说明                              | 类型      | 默认值 |
+| ------- | --------------------------------- | --------- | ------ |
+| enabled | 是否启用                          | `boolean` | `true` |
+| message | 自定义提示信息 绝大部分浏览器无效 | `string`  | `-`    |

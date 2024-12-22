@@ -6,25 +6,6 @@ import {
   type EffectCallback,
 } from 'react';
 
-// /**
-//  * 是否时第一次渲染组件
-//  */
-// const useIsFirstRender = (deps): boolean => {
-//   // const isFirst = useRef<boolean>(true);
-//   // const { current } = isFirst;
-//   // // 如果是第一次，改变状态并返回true
-//   // if (current) {
-//   //   isFirst.current = false;
-//   //   return true;
-//   // }
-//   // return current;
-//   const isFirstMount = useRef(true);
-//   useEffect(() => {
-//     isFirstMount.current = false;
-//   }, [deps]);
-//   return isFirstMount.current;
-// };
-
 /**
  * 只在更新时调用并且会深度比较依赖项
  * @param effect{EffectCallback} 更新时所需要调用的函数

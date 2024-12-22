@@ -7,17 +7,17 @@ import ChildModel from './ChildModel';
  * 父组件
  */
 export default function Parent() {
-  const childModelRef = useRef<UseShowInstance>();
+  const modalRef = useRef<UseShowInstance>();
 
   const handleClickShow = () => {
-    childModelRef.current?.onShow({
+    modalRef.current?.onShow({
       name: '李岚清',
       age: 25,
       remember: true,
     });
   };
   const handleClickHide = () => {
-    childModelRef.current?.onHide({
+    modalRef.current?.onHide({
       name: '吴彦祖',
       age: 18,
       remember: false,
@@ -25,7 +25,7 @@ export default function Parent() {
   };
 
   const handleGetData = () => {
-    const childData = childModelRef.current?.getChildData();
+    const childData = modalRef.current?.getChildData();
     message.info(`获得到子组件数据为:   ${JSON.stringify(childData, null, 2)}`);
   };
 
@@ -42,7 +42,7 @@ export default function Parent() {
         <Button onClick={handleGetData}> 父组件获取子组件数据</Button>
       </Space>
 
-      <ChildModel funcRef={childModelRef} />
+      <ChildModel modalRef={modalRef} />
     </div>
   );
 }
