@@ -135,6 +135,10 @@ export default {
           title: 'useAudio',
           link: '/hooks/use-Audio',
         },
+        {
+          title: 'usePageLeave',
+          link: '/hooks/use-Page-Leave',
+        },
       ],
     },
   ],
