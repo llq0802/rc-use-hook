@@ -7,16 +7,14 @@ import { useEffect, useState } from 'react';
  */
 export default function useImageSize(url: string) {
   const [size, setSize] = useState([0, 0]);
-
   useEffect(() => {
     if (!url) return;
     const img = document.createElement('img');
     img.addEventListener('load', (e: Event) => {
-      const { naturalWidth, naturalHeight } = e.target;
+      const { naturalWidth, naturalHeight } = e.target as HTMLImageElement;
       setSize([naturalWidth, naturalHeight]);
     });
     img.src = url;
   }, [url]);
-
   return size;
 }

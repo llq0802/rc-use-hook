@@ -12,7 +12,7 @@ function getSize() {
 }
 
 /**
- * 使用窗口大小和dpr变化的 Hook
+ * 使用窗口 大小 和 dpr 变化的 Hook
  * @param fn 窗口大小变化时的回调函数，可选参数
  * @param waitTime 防抖的等待时间，默认为 200 毫秒
  * @returns 当前窗口的大小以及dpr

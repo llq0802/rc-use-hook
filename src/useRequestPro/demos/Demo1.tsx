@@ -1,14 +1,15 @@
 import { Button, Space } from 'antd';
 import { useRequestPro } from 'rc-use-hooks';
 import React from 'react';
+// import berterMcok from 'better-mock'
 
 function mockRequest(a) {
   return new Promise<any>((resolve, reject) => {
     setTimeout(() => {
       resolve({
+        data: a || Date.now(),
         success: true,
-        data: a,
-        message: '',
+        message: '成功',
       });
     }, 500);
   });
@@ -23,18 +24,17 @@ function Demo1() {
     loading,
     mutate: seData,
   } = useRequestPro(mockRequest, {
-    defaultParams: [1],
-    // dataKeyName: 'data',
+    isLockRun: true,
   });
+
   return (
     <div>
       {loading ? '加载中...' : '加载完成!'}
-
       <h3>
-        <pre>{JSON.stringify(initData, null, 4)}</pre>
+        <pre>{JSON.stringify(initData, null, 2)}</pre>
       </h3>
       <h3>
-        <pre>{JSON.stringify(data, null, 4)}</pre>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
       </h3>
 
       <Space>

@@ -6,21 +6,20 @@ import { useEffect, useState } from 'react';
  * @return  {boolean} 是匹配成功
  */
 export default function useMedia(query: string): boolean {
-  const [matches, setMatches] = useState(window.matchMedia(query).matches);
+  const [matches, setMatches] = useState(
+    () => window.matchMedia(query).matches,
+  );
 
   useEffect(() => {
     const media = window.matchMedia(query);
-    if (media.matches !== matches) {
-      setMatches(media.matches);
-    }
     const listener = () => {
       setMatches(media.matches);
     };
 
-    media.addListener(listener);
+    media.addEventListener('change', listener);
 
-    return () => media.removeListener(listener);
-  }, [matches, query]);
+    return () => media.removeEventListener('change', listener);
+  }, [query]);
 
   return matches;
 }

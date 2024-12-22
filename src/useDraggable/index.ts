@@ -7,15 +7,44 @@ export type Position = {
   y: number;
 };
 
-type Options = {
+export type UseDraggableOptions = {
+  /**
+   * 拖动元素的默认位置。
+   * 如果未提供，则默认为 { x: 0, y: 0 }。
+   */
   defaultPosition?: Position;
+
+  /**
+   * 拖动元素的边界限制。
+   * 可以是 'viewport'（视口）、'parent'（父元素）或自定义的 HTMLElement。
+   */
   bounding?: 'viewport' | 'parent' | HTMLElement;
+
+  /**
+   * 拖动开始时的回调函数。
+   * 在拖动开始时触发，接收当前的位置和 PointerEvent 对象。
+   */
   onStart?: (position: Position, e: PointerEvent) => void;
+
+  /**
+   * 拖动过程中移动时的回调函数。
+   * 在每次移动时触发，接收当前的位置和 PointerEvent 对象。
+   */
   onMove?: (position: Position, e: PointerEvent) => void;
+
+  /**
+   * 拖动结束时的回调函数。
+   * 在拖动结束时触发，接收最终的位置和 PointerEvent 对象。
+   */
   onEnd?: (position: Position, e: PointerEvent) => void;
 };
 
-function getBounding(ele: HTMLElement, val: Options['bounding']) {
+type UseDraggableReturn = Position & {
+  /**是否正在移动 */
+  moving: boolean;
+};
+
+function getBounding(ele: HTMLElement, val: UseDraggableOptions['bounding']) {
   const { width: elWidth, height: elHeight } = ele.getBoundingClientRect();
   const bounding = {
     maxX: document.documentElement.clientWidth - elWidth,
@@ -43,19 +72,20 @@ function getBounding(ele: HTMLElement, val: Options['bounding']) {
 }
 
 /**
- * 高性能的可拖动组件的钩子函数
+ * 高性能的可拖动组件的钩子函数。
  *
- * 支持 PC端  移动端  触控笔
+ * 支持 `PC端` `移动端`和`触控笔设备`。
  *
- * 该函数使指定的元素具有拖动功能，并可根据配置限制拖动范围和初始位置
+ * 该函数使指定的元素具有拖动功能，并可根据配置限制拖动范围和初始位置。
  *
- * @param ele 要拖动的元素或其选择器
- * @param opts 配置选项，包括拖动范围等
+ * @param ele - 要拖动的元素或其选择器
+ * @param opts - 配置选项，包括拖动范围等
+ * @returns 包含当前坐标和是否正在拖动的对象
  */
 export default function useDraggable(
   ele: Parameters<typeof getTargetElement>[0],
-  opts?: Options,
-): Position & { moving: boolean } {
+  opts?: UseDraggableOptions,
+): UseDraggableReturn {
   const [xy, setXY] = useRafState<Position>(
     () => opts?.defaultPosition || { x: 0, y: 0 },
   );

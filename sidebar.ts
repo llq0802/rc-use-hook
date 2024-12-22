@@ -30,7 +30,7 @@ export default {
 
         {
           title: 'useWorker',
-          link: '/hooks/use-worker',
+          link: '/hooks/use-Worker',
         },
 
         {
@@ -60,7 +60,7 @@ export default {
         },
         {
           title: 'useLazyImage',
-          link: '/hooks/use-lazy-image',
+          link: '/hooks/use-Lazy-Image',
         },
         {
           title: 'useDeepMemo',
@@ -72,7 +72,7 @@ export default {
         },
         {
           title: 'useCallbackState',
-          link: '/hooks/use-callback-state',
+          link: '/hooks/use-Callback-State',
         },
         {
           title: 'useLockScroll',
@@ -122,6 +122,14 @@ export default {
         {
           title: 'useDraggable',
           link: '/hooks/use-Draggable',
+        },
+        {
+          title: 'useResizeObserver',
+          link: '/hooks/use-Resize-Observer',
+        },
+        {
+          title: 'useMeasure',
+          link: '/hooks/use-Measure',
         },
       ],
     },

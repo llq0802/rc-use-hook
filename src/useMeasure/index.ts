@@ -1,7 +1,8 @@
 import type { getTargetElement } from 'rc-use-hooks/utils';
 import { useState } from 'react';
-import { useResizeObserver } from '../useResizeObserver';
-type RectState = {
+import useResizeObserver from '../useResizeObserver';
+
+export type RectState = {
   x: number;
   y: number;
   width: number;
@@ -23,7 +24,9 @@ const defaultState: RectState = {
 };
 
 /**
- * 钩子用于测量HTML元素的尺寸和位置
+ * 用于测量HTML元素的`尺寸`和`位置`
+ *
+ * `ahooks` 的 `useSize` 只会返回 width 和 height
  *
  * 它基于Resize Observer API，提供了一种简单的方法来获取元素的实时大小和位置信息
  *
@@ -31,9 +34,9 @@ const defaultState: RectState = {
  * @param options 传递给ResizeObserver的选项，用于配置观察行为
  * @returns 返回一个包含元素尺寸和位置信息的矩形对象，以及一个用于停止观察的函数
  */
-export const useMeasure = (
+const useMeasure = (
   target: Parameters<typeof getTargetElement>[0],
-  options: ResizeObserverOptions,
+  options?: ResizeObserverOptions,
 ) => {
   const [rect, setRect] = useState(defaultState);
 
@@ -51,3 +54,4 @@ export const useMeasure = (
 
   return rect;
 };
+export default useMeasure;

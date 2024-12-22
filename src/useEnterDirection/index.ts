@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 const PI = Math.PI;
 /**方向 */
-enum Direction {
+export enum Direction {
   top = 'top',
   left = 'left',
   right = 'right',
@@ -20,8 +20,8 @@ export default function useEnterDirection(
   const [direction, setDirection] = useState<Direction>();
 
   useEffect(() => {
-    if (!target) return;
     const dom = getTargetElement(target);
+    if (!dom) return;
     const rect = dom?.getBoundingClientRect();
     const theta = Math.atan2(rect.height, rect.width);
     const mouseenter = (e: MouseEvent) => {

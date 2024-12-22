@@ -5,6 +5,7 @@ import React from 'react';
 
 type ChildModelProps = {
   modalRef: UseShowInstanceRef;
+  [key: string]: any;
 };
 
 /**

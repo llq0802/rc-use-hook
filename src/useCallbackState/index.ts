@@ -4,7 +4,7 @@ import type { SetStateAction } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * useState 的回调 setState 第二个参数(回调函数)获取最新的state并执行一些操作
+ * useState 的回调 setState 第二个参数(回调函数)获取最新的`state`并执行一些操作
  * @param {T} state
  * @return {*}  { [T,  (val: SetStateAction<T>, cb: (newVal: T) => void) => void}
  */
