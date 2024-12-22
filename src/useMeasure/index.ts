@@ -2,7 +2,7 @@ import type { getTargetElement } from 'rc-use-hooks/utils';
 import { useState } from 'react';
 import useResizeObserver from '../useResizeObserver';
 
-export type RectState = {
+export type Rect = {
   x: number;
   y: number;
   width: number;
@@ -12,7 +12,7 @@ export type RectState = {
   bottom: number;
   right: number;
 };
-const defaultState: RectState = {
+const defaultState: Rect = {
   x: 0,
   y: 0,
   width: 0,
@@ -41,7 +41,7 @@ const useMeasure = (
   const [rect, setRect] = useState(defaultState);
 
   useResizeObserver(
-    target,
+    target || document.body,
     (entries) => {
       if (entries[0]) {
         const { x, y, width, height, top, left, bottom, right } =

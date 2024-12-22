@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 
 function Demo2() {
   const ref = useRef<HTMLDivElement>(null);
-  const [lock, setLock] = useLockScroll(false, ref);
+  const [lock, setLock] = useLockScroll(ref);
 
   return (
     <div
@@ -16,7 +16,14 @@ function Demo2() {
       }}
     >
       <Button onClick={() => setLock(!lock)}>切换锁定</Button>
-      <div style={{ height: 1000 }}>超出的内容</div>
+      <div
+        style={{
+          height: 1000,
+          overscrollBehavior: 'contain', //阻止嵌套滚动冒泡 给里面的容器加
+        }}
+      >
+        超出的内容
+      </div>
     </div>
   );
 }

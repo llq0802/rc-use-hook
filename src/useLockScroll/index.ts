@@ -11,8 +11,8 @@ let originalOverflow: string | null = null;
  * @return 返回锁定的状态和修改锁定的方法数组
  */
 const useLockScroll = (
-  lock = false,
   target: Parameters<typeof getTargetElement>[0] = () => document.body,
+  lock = false,
   scrollW = 17,
 ): [boolean, (bool: boolean) => void] => {
   const [locked, setLocked] = useState<boolean>(lock);

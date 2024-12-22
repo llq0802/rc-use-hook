@@ -5,7 +5,7 @@ toc: content
 
 # useMeasure
 
-实时返回窗口的宽高
+用于测量元素的`尺寸`和`位置`
 
 ## 代码演示
 
@@ -15,21 +15,31 @@ toc: content
 
 ## API
 
-> - window.innerHeight不包括浏览器的 `地址栏` `收藏栏`
-> - window.outerHeight包括浏览器的 `地址栏` `收藏栏`
-
 ```ts
 import { useMeasure } from 'rc-use-hooks';
 ```
 
 ### Params
 
-|   参数   |      说明      |   类型   | 类型  |
-| :------: | :------------: | :------: | :---: |
-| waitTime | 防抖的延迟时间 | `number` | `200` |
+|  参数  |  说明   |                              类型                              |      类型       |
+| :----: | :-----: | :------------------------------------------------------------: | :-------------: |
+| target | dom节点 | `MutableRefObject<HTMLElement \| null> \| (() => HTMLElement)` | `document.body` |
 
 ### Result
 
-|    参数    |      说明       |                                             类型                                             |
-| :--------: | :-------------: | :------------------------------------------------------------------------------------------: |
-| windowSize | 窗口的宽高和dpr | `{  innerHeight:number,innerWidth: number,outerHeight:number,outerWidth: number,dpr:number}` |
+| 参数 |        说明        |  类型  |
+| :--: | :----------------: | :----: |
+| rect | 元素位置与尺寸信息 | `Rect` |
+
+```ts
+export type Rect = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  left: number;
+  bottom: number;
+  right: number;
+};
+```

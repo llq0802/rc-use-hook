@@ -2,7 +2,7 @@ import { useDeepCompareEffect, useLatest } from 'ahooks';
 import { getTargetElement } from 'rc-use-hooks/utils';
 import { useCallback, useRef } from 'react';
 /**
- * 用于观察指定元素的尺寸变化并调用回调函数 支持数组dom
+ * 用于观察指定元素的尺寸变化并调用回调函数
  *
  * 主要用途是封装ResizeObserver，使其更方便地在React组件中使用
  *

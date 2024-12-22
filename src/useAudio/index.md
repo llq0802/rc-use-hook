@@ -7,7 +7,7 @@ nav:
 
 # useAudio
 
-用于平滑动画数字变化的`useState`
+音频钩子函数，用于管理音频的播放状态和操作
 
 ## 代码演示
 
@@ -17,35 +17,38 @@ nav:
 
 ```ts
 import { useAudio } from 'rc-use-hooks';
-const [val, setVal] = useAnimateNumber(num:number, options?:{ enterance?: boolean, duration?: number });
-
+const useAudio: (src: string, opts?: UseAudioOptions) => UseAudioReturn;
 ```
 
 ### Params
 
-| 参数    | 说明       | 类型      | 默认值 |
-| ------- | ---------- | --------- | ------ |
-| num     | 初始数字值 | `number`  | `0`    |
-| options | 配置项     | `Options` | `-`    |
+| 参数 | 说明                      | 类型              | 默认值 |
+| ---- | ------------------------- | ----------------- | ------ |
+| src  | 音频地址 推荐使用Blob地址 | `string`          | `-`    |
+| opts | 配置项                    | `UseAudioOptions` | `-`    |
 
 ### Result
 
-| 参数   | 说明                                                      | 类型                                    | 默认值 |
-| ------ | --------------------------------------------------------- | --------------------------------------- | ------ |
-| val    | 数字值                                                    | `number`                                | `-`    |
-| setVal | 更新数字值的函数, `isSkip 为 true 时此次更新不会触发动画` | `(num:number, isSkip?:boolean) => void` | `-`    |
+| 参数 | 说明     | 类型                                         | 默认值 |
+| ---- | -------- | -------------------------------------------- | ------ |
+| ret  | 返回对象 | `音频钩子函数，用于管理音频的播放状态和操作` | `-`    |
 
-### Options
+### 类型定义
 
 ```ts
-interface Options {
-  /**
-   * 初次组件挂载时是否开启动画 (从0开始加载到初始值) 默认为 true
-   */
-  enterance?: boolean;
-  /**
-   * 动画持续时间 默认 1000ms
-   */
-  duration?: number;
-}
+export type UseAudioReturn = {
+  play: () => void;
+  pause: () => void;
+  stop: () => void;
+  isPlaying: boolean;
+  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+};
+
+export type UseAudioOptions = {
+  onPlay?: (value: any) => void;
+  onPlaying?: (e: any) => void;
+  onPause?: () => void;
+  onStop?: () => void;
+  onEnd?: (e: any) => void;
+};
 ```

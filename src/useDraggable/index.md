@@ -7,7 +7,9 @@ nav:
 
 # useDraggable
 
-用于平滑动画数字变化的`useState`
+高性能的可拖动组件的钩子函数
+
+支持 `PC端` `移动端`和`触控笔设备`。
 
 ## 代码演示
 
@@ -25,7 +27,7 @@ nav:
 
 <code src='./demos/Demo3.tsx'></code>
 
-### API
+## API
 
 ```ts
 import { useDraggable } from 'rc-use-hooks';
@@ -33,29 +35,59 @@ import { useDraggable } from 'rc-use-hooks';
 
 ### Params
 
-| 参数    | 说明       | 类型      | 默认值 |
-| ------- | ---------- | --------- | ------ |
-| num     | 初始数字值 | `number`  | `0`    |
-| options | 配置项     | `Options` | `-`    |
+| 参数    | 说明      | 类型                                                           | 默认值 |
+| ------- | --------- | -------------------------------------------------------------- | ------ |
+| ele     | ref或元素 | `MutableRefObject<HTMLElement \| null> \| (() => HTMLElement)` | `-`    |
+| options | 配置项    | `UseDraggableOptions`                                          | `-`    |
 
 ### Result
 
-| 参数   | 说明                                                      | 类型                                    | 默认值 |
-| ------ | --------------------------------------------------------- | --------------------------------------- | ------ |
-| val    | 数字值                                                    | `number`                                | `-`    |
-| setVal | 更新数字值的函数, `isSkip 为 true 时此次更新不会触发动画` | `(num:number, isSkip?:boolean) => void` | `-`    |
+| 参数 | 说明     | 类型                 | 默认值 |
+| ---- | -------- | -------------------- | ------ |
+| ret  | 返回对象 | `UseDraggableReturn` | `-`    |
 
-### Options
+### 类型定义
 
 ```ts
-interface Options {
+export type Position = {
+  x: number;
+  y: number;
+};
+
+export type UseDraggableOptions = {
   /**
-   * 初次组件挂载时是否开启动画 (从0开始加载到初始值) 默认为 true
+   * 拖动元素的默认位置。
+   * 如果未提供，则默认为 { x: 0, y: 0 }。
    */
-  enterance?: boolean;
+  defaultPosition?: Position;
+
   /**
-   * 动画持续时间 默认 1000ms
+   * 拖动元素的边界限制。
+   * 可以是 'viewport'（视口）、'parent'（父元素）或自定义的 HTMLElement。
    */
-  duration?: number;
-}
+  bounding?: 'viewport' | 'parent' | HTMLElement;
+
+  /**
+   * 拖动开始时的回调函数。
+   * 在拖动开始时触发，接收当前的位置和 PointerEvent 对象。
+   */
+  onStart?: (position: Position, e: PointerEvent) => void;
+
+  /**
+   * 拖动过程中移动时的回调函数。
+   * 在每次移动时触发，接收当前的位置和 PointerEvent 对象。
+   */
+  onMove?: (position: Position, e: PointerEvent) => void;
+
+  /**
+   * 拖动结束时的回调函数。
+   * 在拖动结束时触发，接收最终的位置和 PointerEvent 对象。
+   */
+  onEnd?: (position: Position, e: PointerEvent) => void;
+};
+
+type UseDraggableReturn = Position & {
+  /**是否正在移动 */
+  moving: boolean;
+};
 ```

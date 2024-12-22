@@ -1,7 +1,8 @@
 import { useLockFn, usePrevious, useRafState, useRequest } from 'ahooks';
 import type { Options } from 'ahooks/lib/useRequest/src/types';
 import { isPlainObject } from 'lodash-es';
-import { useRef } from 'react';
+import { isFunction } from 'rc-use-hooks/utils';
+import { useMemo, useRef } from 'react';
 
 /**
  * 请求函数类型定义
@@ -22,6 +23,10 @@ export type ServicePro<TData = any, TParams extends any[] = any[]> = (
 export type OptionsPro<TData, TParams extends any[]> = {
   /**
    * 指定结果数据的键名，默认为整个响应对象
+   *
+   * - 必须满足 ServicePro 异步函数的返回值是一个普通`object`类型
+   *
+   * - 如果配置了`formatResult` 则以 `formatResult` 的返回值作为响应结果
    */
   dataKeyName?: string;
 
@@ -32,6 +37,8 @@ export type OptionsPro<TData, TParams extends any[]> = {
 
   /**
    * 格式化请求结果的函数
+   *
+   * 优先级比 `dataKeyName` 高
    * @param result - 请求返回的结果
    * @param params - 请求参数
    * @returns 格式化后的结果
@@ -51,6 +58,8 @@ export type OptionsPro<TData, TParams extends any[]> = {
    * @param params - 请求参数
    */
   onNoInitSuccess?: (ret: TData, params: TParams) => void;
+  /**自定义判断数据是否为空, 函数的返回值会作为 hasData 的值 */
+  hasDataFn?: (data: TData | undefined, params: TParams) => boolean;
 } & Options<TData, TParams>;
 
 /**
@@ -65,7 +74,7 @@ export type UseRequestProReturn<TData> = ReturnType<typeof useRequest> & {
   previousData: TData | undefined;
 
   /**
-   * 初始请求的数据
+   * 初始请求*`成功`*的数据
    */
   initData: TData | undefined;
 
@@ -78,6 +87,20 @@ export type UseRequestProReturn<TData> = ReturnType<typeof useRequest> & {
    * 非初始加载状态
    */
   noInitLoading: boolean;
+  /**
+   * 是否含有数据
+   * 
+   * 如果配置了 hasDataFn 函数，则使用自定义函数的返回值
+   * 
+   * 默认情况时 以下的返回值的判断规则为：
+ 
+   *  - `false`  `''`  `null`  `undefined`  `NaN`  为空数据
+   *  - 如果是数组类型，则判断其长度是否大于 `0`
+   *  - 如果是普通的 `object` 类型，则判断其是否为空对象 `{}`
+   *  - 其余的任意类型的值都为`true`
+   * 
+   */
+  hasData: boolean;
 };
 
 /**
@@ -154,20 +177,35 @@ export default function useRequestPro<
   );
 
   const previousData = usePrevious(res?.data);
-
   const lockRun = useLockFn(async (...args: Parameters<typeof res.run>) =>
     res.run(...args),
   );
   const lockRunAsync = useLockFn(res.runAsync);
-
   const run = isLockRun ? lockRun : res.run;
   const runAsync = isLockRun ? lockRunAsync : res.runAsync;
+
+  const hasData = useMemo(() => {
+    if (isFunction(opts.hasDataFn))
+      return opts.hasDataFn(res.data, res.params as TParams);
+
+    if (Array.isArray(res.data)) {
+      return res.data.length > 0;
+    }
+    if (res.data && isPlainObject(res.data)) {
+      return Object.keys(res?.data).length > 0;
+    }
+    if (res.data !== 0 && !res.data) {
+      return false;
+    }
+    return true;
+  }, [res.data, res.params]);
 
   return {
     ...res,
     run,
     runAsync,
     previousData,
+    hasData,
     initData,
     initLoading,
     noInitLoading,

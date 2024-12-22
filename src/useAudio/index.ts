@@ -2,9 +2,9 @@ import { useMemoizedFn } from 'ahooks';
 import { useEffect, useRef, useState } from 'react';
 
 export type UseAudioReturn = {
-  play: (aSrc?: string) => void;
+  play: () => void;
   pause: () => void;
-  stop: (cb?: () => any) => void;
+  stop: () => void;
   isPlaying: boolean;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
 };
