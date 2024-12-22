@@ -5,7 +5,7 @@ toc: content
 
 # usePortal
 
-允许在父组件之外呈现子组件, 自定义挂载到元素下。
+允许在父组件之外呈现子组件, 自定义挂载到元素下, 常用于弹窗等。
 
 ## 代码演示
 
@@ -16,7 +16,7 @@ toc: content
 ## API
 
 ```ts
-import { usePortal } from 'rc-use-hook';
+import { usePortal } from 'rc-use-hooks';
 ```
 
 ### Params

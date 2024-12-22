@@ -1,4 +1,4 @@
-import { isFunction } from 'rc-use-hook/utils';
+import { isFunction } from 'rc-use-hooks/utils';
 import { MutableRefObject, useEffect, useState } from 'react';
 
 const PI = Math.PI;

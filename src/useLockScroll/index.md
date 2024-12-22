@@ -20,7 +20,7 @@ toc: content
 ## API
 
 ```ts
-import { useLockScroll } from 'rc-use-hook';
+import { useLockScroll } from 'rc-use-hooks';
 const [lock, setLock] = useLockScroll(initLock, target);
 ```
 

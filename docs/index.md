@@ -1,22 +1,21 @@
 ---
+title: rc-use-hooks 让 React 开发更简单
 hero:
-  title: library
-  description: A react library developed with dumi
+  title: rc-use-hooks
+  description: 一个对 ahook 补充的 React Hook 库
   actions:
-    - text: Hello
-      link: /
-    - text: World
-      link: /
+    - text: 快速开始
+      link: /guide
+    - text: GitHub
+      link: https://github.com/llq0802/rc-use-hooks
 features:
-  - title: Hello
+  - title: rc-use-hooks
     emoji: 💎
-    description: Put hello description here
-  - title: World
+    description: 稳定
+  - title: rc-use-hooks
     emoji: 🌈
-    description: Put world description here
-  - title: '!'
+    description: 高效
+  - title: 'rc-use-hooks'
     emoji: 🚀
-    description: Put ! description here
+    description: 简单
 ---
-
-rc-use-hook

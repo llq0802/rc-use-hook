@@ -16,7 +16,7 @@ toc: content
 ## API
 
 ```ts
-import { useEnterDirection } from 'rc-use-hook';
+import { useEnterDirection } from 'rc-use-hooks';
 ```
 
 ### Params

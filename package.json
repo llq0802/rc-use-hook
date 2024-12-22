@@ -1,5 +1,5 @@
 {
-  "name": "rc-use-hook",
+  "name": "rc-use-hooks",
   "version": "2.0.0",
   "description": "A react library developed with dumi",
   "module": "dist/index.js",
@@ -15,7 +15,9 @@
     "lint": "npm run lint:es && npm run lint:css",
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
-    "prepublishOnly": "father doctor && npm run build"
+    "prepublishOnly": "father doctor && npm run build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "deploy": "npm run docs:build && npm run docs:deploy"
   },
   "authors": [],
   "license": "MIT",
@@ -51,6 +53,7 @@
     "dumi": "^2.2.1",
     "eslint": "^8.45.0",
     "father": "^4.3.0",
+    "gh-pages": "^6.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
@@ -62,6 +65,7 @@
   },
   "dependencies": {
     "@koale/useworker": "^4.0.2",
+    "ahooks": "^3.7.8",
     "copy-to-clipboard": "^3.3.3",
     "lodash-es": "^4.17.21"
   }

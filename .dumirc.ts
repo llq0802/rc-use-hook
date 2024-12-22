@@ -17,8 +17,9 @@ export default defineConfig({
     atomDirs: [{ type: 'hooks', dir: 'src' }],
   },
   themeConfig: {
+    name: 'rc-use-hooks',
+    rtl: true,
     sidebar,
-    name: 'rc-use-hook',
     footer:
       'Open-source MIT Licensed | Copyright © 2020-present Powered by llq0802',
     socialLinks: {
@@ -40,7 +41,7 @@ export default defineConfig({
   metas: [
     {
       name: 'keywords',
-      content: 'hook, use-hook, rc-use-hook, hooks, react-hook',
+      content: 'hook, use-hook, rc-use-hooks, hooks, react-hook',
     },
     {
       name: 'description',

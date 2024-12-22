@@ -1,9 +1,9 @@
 ---
-title: useLazyLoadImage
+title: useLazyImage
 toc: content
 ---
 
-# useLazyLoadImage
+# useLazyImage
 
 使用`IntersectionObserver`实现的懒加载图像，在组件卸载或者图像已经加载后不再监听
 
@@ -29,7 +29,7 @@ IntersectionObserver API: [IntersectionObserver](https://developer.mozilla.org/z
 > - `img` 的 `src` 属性推荐设置为默认占位的图片地址
 
 ```ts
-import { useLazyLoadImage } from 'rc-use-hook';
+import { useLazyLoadImage } from 'rc-use-hooks';
 useLazyLoadImage();
 // or
 useLazyLoadImage({

@@ -1,4 +1,4 @@
-import { useRequestAnimationFrame } from 'rc-use-hook';
+import { useRequestAnimationFrame } from 'rc-use-hooks';
 import React, { useState } from 'react';
 
 function Demo1() {

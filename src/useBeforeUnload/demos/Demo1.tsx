@@ -1,4 +1,4 @@
-import { useBeforeUnload } from 'rc-use-hook';
+import { useBeforeUnload } from 'rc-use-hooks';
 import React from 'react';
 
 const Demo1 = () => {
