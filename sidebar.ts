@@ -131,6 +131,10 @@ export default {
           title: 'useMeasure',
           link: '/hooks/use-Measure',
         },
+        {
+          title: 'useAudio',
+          link: '/hooks/use-Audio',
+        },
       ],
     },
   ],

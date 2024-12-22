@@ -4,6 +4,8 @@ export * from './useAllRequest';
 export { default as useAllRequest } from './useAllRequest';
 export * from './useAnimateNumber';
 export { default as useAnimateNumber } from './useAnimateNumber';
+export * from './useAudio';
+export { default as useAudio } from './useAudio';
 export * from './useBeforeUnload';
 export { default as useBeforeUnload } from './useBeforeUnload';
 export * from './useBusEvent';
