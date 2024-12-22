@@ -5,7 +5,7 @@ toc: content
 
 # useRequestAnimationFrame
 
-运行一个函数，在每次`重绘`之前调用它。
+运行一个函数，在浏览器每次`重绘`之前调用它。
 
 ## 代码演示
 

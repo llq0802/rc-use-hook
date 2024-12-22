@@ -5,7 +5,7 @@ toc: content
 
 # useResizeObserver
 
-实时返回窗口的宽高
+用于观察指定元素的尺寸变化并调用回调函数
 
 ## 代码演示
 
@@ -15,21 +15,12 @@ toc: content
 
 ## API
 
-> - window.innerHeight不包括浏览器的 `地址栏` `收藏栏`
-> - window.outerHeight包括浏览器的 `地址栏` `收藏栏`
-
 ```ts
-import { useWindowSize } from 'rc-use-hooks';
+import { useResizeObserver } from 'rc-use-hooks';
+
+const useResizeObserver: (
+  target: MutableRefObject<HTMLElement | null> | (() => HTMLElement),
+  callback: ResizeObserverCallback,
+  options?: ResizeObserverOptions,
+) => stopFunction;
 ```
-
-### Params
-
-|   参数   |      说明      |   类型   | 类型  |
-| :------: | :------------: | :------: | :---: |
-| waitTime | 防抖的延迟时间 | `number` | `200` |
-
-### Result
-
-|    参数    |      说明       |                                             类型                                             |
-| :--------: | :-------------: | :------------------------------------------------------------------------------------------: |
-| windowSize | 窗口的宽高和dpr | `{  innerHeight:number,innerWidth: number,outerHeight:number,outerWidth: number,dpr:number}` |
