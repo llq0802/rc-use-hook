@@ -21,10 +21,10 @@ import { useFocus } from 'rc-use-hooks';
 
 ### Params
 
-|     参数     |     说明     |                              类型                              | 默认值  |
-| :----------: | :----------: | :------------------------------------------------------------: | :-----: |
-|    target    |   dom节点    | `MutableRefObject<HTMLElement \| null> \| (() => HTMLElement)` |   `-`   |
-| defaultState | 初始是否聚焦 |                           `boolean`                            | `false` |
+|     参数     |     说明     |                              类型                              |  默认值  |
+| :----------: | :----------: | :------------------------------------------------------------: | :------: |
+|    target    |   dom节点    | `MutableRefObject<HTMLElement \| null> \| (() => HTMLElement)` | `window` |
+| defaultState | 初始是否聚焦 |                           `boolean`                            | `false`  |
 
 ### Result
 

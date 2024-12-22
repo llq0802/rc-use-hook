@@ -8,13 +8,14 @@ import { useEffect, useState } from 'react';
  * @returns 是否聚焦的状态
  */
 const useFocus = (
-  target: Parameters<typeof getTargetElement>[0],
+  target?: Parameters<typeof getTargetElement>[0],
   defaultState = false,
 ) => {
   const [state, setState] = useState(defaultState);
 
   useEffect(() => {
     const dom = getTargetElement(target) || window;
+
     const onFocus = () => setState(true);
     const onBlur = () => setState(false);
 

@@ -5,6 +5,9 @@ const Demo1 = () => {
   const ref = useRef<HTMLDivElement>(null!);
   const { moving, x, y } = useDraggable(ref, {
     bounding: 'parent',
+    onMove: (p) => {
+      console.log(p);
+    },
   });
 
   return (

@@ -39,14 +39,14 @@ useLazyLoadImage({
 
 ### Params
 
-|   参数   |  说明  |           类型           |
-| :------: | :----: | :----------------------: |
-| paramObj | 配置项 | `useLazyLoadImageParams` |
+|   参数   |  说明  |         类型         |
+| :------: | :----: | :------------------: |
+| paramObj | 配置项 | `UseLazyImageParams` |
 
-### useLazyLoadImageParams
+### UseLazyImageParams
 
 ```ts
-export type useLazyLoadImageParams = {
+export type UseLazyImageParams = {
   /** 在哪个节点下查询 querySelectorAll */
   target?: MutableRefObject<HTMLElement | null> | (() => HTMLElement); //  默认为 document
   /** querySelectorAll抓取在 `target` 所有可延迟加载的图像的自定义属性 */

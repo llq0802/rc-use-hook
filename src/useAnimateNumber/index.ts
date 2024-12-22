@@ -1,7 +1,7 @@
 import { useMemoizedFn } from 'ahooks';
 import useNumber from 'use-animate-number';
 
-type Options = {
+type UseAnimateNumberOptions = {
   duration?: number;
   enterance?: boolean;
   direct?: boolean;
@@ -12,12 +12,12 @@ type Options = {
  * 使用数字动画的自定义钩子.
  *
  * @param state 初始数值状态，默认为0.
- * @param options 动画的配置选项.
+ * @param UseAnimateNumberOptions 动画的配置选项.
  * @returns 返回一个包含当前数值和更新数值函数的数组.
  */
 export default function useAnimateNumber<T = number>(
   state = 0,
-  options: Options = {},
+  options: UseAnimateNumberOptions = {},
 ): [val: number, fn: (patch: T | ((num: T) => T), skip?: boolean) => void] {
   const [value, setValue] = useNumber(state, {
     duration: 1000,

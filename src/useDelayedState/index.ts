@@ -26,7 +26,6 @@ const useDelayedState = <T = any>(
 
   const updateState = (newState: T | SetStateAction<T>) => {
     if (!loaded) return;
-
     if (isFunction(newState)) {
       setState((prev) => ({
         //@ts-ignore
