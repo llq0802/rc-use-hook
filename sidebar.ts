@@ -27,12 +27,18 @@ export default {
           title: 'useFocus',
           link: '/hooks/use-Focus',
         },
-
+        {
+          title: 'useAudio',
+          link: '/hooks/use-Audio',
+        },
         {
           title: 'useWorker',
           link: '/hooks/use-Worker',
         },
-
+        {
+          title: 'useRequestPro',
+          link: '/hooks/use-Request-Pro',
+        },
         {
           title: 'useBusEvent',
           link: '/hooks/use-Bus-Event',
@@ -46,9 +52,23 @@ export default {
           link: '/hooks/use-Page-Load-Type',
         },
         {
-          title: 'useRequestPro',
-          link: '/hooks/use-Request-Pro',
+          title: 'useActiveElement',
+          link: '/hooks/use-Active-Element',
         },
+        {
+          title: 'useDraggable',
+          link: '/hooks/use-Draggable',
+        },
+
+        {
+          title: 'useMeasure',
+          link: '/hooks/use-Measure',
+        },
+        {
+          title: 'usePageLeave',
+          link: '/hooks/use-Page-Leave',
+        },
+
         {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
@@ -95,10 +115,6 @@ export default {
           link: '/hooks/use-Before-Unload',
         },
         {
-          title: 'useSlideVerify',
-          link: '/hooks/use-Slide-Verify',
-        },
-        {
           title: 'useAnimateNumber',
           link: '/hooks/use-Animate-Number',
         },
@@ -106,38 +122,21 @@ export default {
           title: 'useEnterDirection',
           link: '/hooks/use-Enter-Direction',
         },
-
+        {
+          title: 'useSlideVerify',
+          link: '/hooks/use-Slide-Verify',
+        },
         {
           title: 'useDeepUpdateEffect',
           link: '/hooks/use-deep-update-effect',
-        },
-        {
-          title: 'useRequestAnimationFrame',
-          link: '/hooks/use-Request-Animation-Frame',
-        },
-        {
-          title: 'useActiveElement',
-          link: '/hooks/use-Active-Element',
-        },
-        {
-          title: 'useDraggable',
-          link: '/hooks/use-Draggable',
         },
         {
           title: 'useResizeObserver',
           link: '/hooks/use-Resize-Observer',
         },
         {
-          title: 'useMeasure',
-          link: '/hooks/use-Measure',
-        },
-        {
-          title: 'useAudio',
-          link: '/hooks/use-Audio',
-        },
-        {
-          title: 'usePageLeave',
-          link: '/hooks/use-Page-Leave',
+          title: 'useRequestAnimationFrame',
+          link: '/hooks/use-Request-Animation-Frame',
         },
       ],
     },

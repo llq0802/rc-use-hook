@@ -11,17 +11,24 @@ toc: content
 - [useShow] - 性能更好的父子组件传参
 - [useDefer] - 分片渲染长列表
 - [useMedia] - JS媒体查询
-- [usePortal] - 自定义挂载元素
+- [useAudio] - 管理音频的播放状态和操作
 - [useFocus] - 是否聚焦
--
-- [useWorker] - WebWorker
-- [useBusEvent] - 事件总线
+- [useWorker] - Web Worker线程
+- [useRequestPro] - useRequest 的升级版
+- [useAllRequest] - useRequest 的并发请求
+- [useMeasure] - 发布订阅模式的事件总线
+- [useBusEvent] - 测量元素的尺寸和位置
+- [useDraggable] - 高性能的可拖动钩子
+- [usePageLoadType] - 判断页面加载方式
+- [usePageLeave] - 判断是否离开页面文档
+- [useActiveElement] - 跟踪当前活跃的元素
 - [useDeepMemo] - 深度比较的useMemo
 - [useClipboard] - 复制剪切
 - [useImageSize] - 获取图像原始宽高
-- [useAllRequest] - 并发请求异步函数
 - [useLazyImage] - 性能更好的懒加载图片
+- [useSlideVerify] - 用于滑块验证滑动距离
 - [useAnimateNumber] - 平滑数字更新
+- [useResizeObserver] - 观察元素几何信息变化
 - [useDelayedState] - 延迟创建状态
 - [useCallbackState] - 更新状态后的回调
 - [useLockScroll] - 锁定元素的滚动
@@ -33,6 +40,15 @@ toc: content
 - [useDeepUpdateEffect] - 深度比较依赖项更新时的副作用
 - [useRequestAnimationFrame] - 浏览器重绘的回调
 
+[useSlideVerify]: /hooks/use-Slide-Verify
+[useResizeObserver]: /hooks/use-Resize-Observer
+[usePageLeave]: /hooks/use-Page-Leave
+[useMeasure]: /hooks/use-Measure
+[useDraggable]: /hooks/use-Draggable
+[useActiveElement]: /hooks/use-Active-Element
+[usePageLoadType]: /hooks/use-PageLoad-Type
+[useRequestPro]: /hooks/use-Request-Pro
+[useAudio]: /hooks/use-Audio
 [useAnimateNumber]: /hooks/use-Animate-Number
 [useBusEvent]: /hooks/use-Bus-Event
 [useDeepMemo]: /hooks/use-Deep-Memo
