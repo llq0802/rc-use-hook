@@ -111,6 +111,10 @@ export default {
           link: '/hooks/use-Will-Mount',
         },
         {
+          title: 'useMergedRef',
+          link: '/hooks/use-Merged-Ref',
+        },
+        {
           title: 'useBeforeUnload',
           link: '/hooks/use-Before-Unload',
         },
