@@ -135,6 +135,10 @@ export default {
           link: '/hooks/use-deep-update-effect',
         },
         {
+          title: 'useDeepUpdateLayoutEffect',
+          link: '/hooks/use-Deep-Update-Layout-Effect',
+        },
+        {
           title: 'useResizeObserver',
           link: '/hooks/use-Resize-Observer',
         },

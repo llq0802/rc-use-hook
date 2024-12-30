@@ -18,6 +18,8 @@ export * from './useDeepMemo';
 export { default as useDeepMemo } from './useDeepMemo';
 export * from './useDeepUpdateEffect';
 export { default as useDeepUpdateEffect } from './useDeepUpdateEffect';
+export * from './useDeepUpdateLayoutEffect';
+export { default as useDeepUpdateLayoutEffect } from './useDeepUpdateLayoutEffect';
 export * from './useDefer';
 export { default as useDefer } from './useDefer';
 export * from './useDelayedState';
