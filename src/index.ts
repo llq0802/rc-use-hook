@@ -38,6 +38,8 @@ export * from './useMeasure';
 export { default as useMeasure } from './useMeasure';
 export * from './useMedia';
 export { default as useMedia } from './useMedia';
+export * from './useMergedRef';
+export { default as useMergedRef } from './useMergedRef';
 export * from './usePageLeave';
 export { default as usePageLeave } from './usePageLeave';
 export * from './usePageLoadType';
