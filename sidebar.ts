@@ -111,6 +111,10 @@ export default {
           link: '/hooks/use-Will-Mount',
         },
         {
+          title: 'useMergedRef',
+          link: '/hooks/use-Merged-Ref',
+        },
+        {
           title: 'useBeforeUnload',
           link: '/hooks/use-Before-Unload',
         },
@@ -129,6 +133,10 @@ export default {
         {
           title: 'useDeepUpdateEffect',
           link: '/hooks/use-deep-update-effect',
+        },
+        {
+          title: 'useDeepUpdateLayoutEffect',
+          link: '/hooks/use-Deep-Update-Layout-Effect',
         },
         {
           title: 'useResizeObserver',
