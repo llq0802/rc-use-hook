@@ -17,12 +17,19 @@ importers:
       copy-to-clipboard:
         specifier: ^3.3.3
         version: 3.3.3
+      localforage:
+        specifier: ^1.10.0
+        version: 1.10.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
       use-animate-number:
         specifier: ^1.0.5
         version: 1.0.5(react@18.2.0)
+    optionalDependencies:
+      antd:
+        specifier: ^5.22.5
+        version: 5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@commitlint/cli':
         specifier: ^17.6.7
@@ -42,15 +49,12 @@ importers:
       '@umijs/lint':
         specifier: ^4.0.72
         version: 4.0.72(eslint@8.45.0)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(typescript@5.0.4)
-      antd:
-        specifier: ^5.22.5
-        version: 5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       better-mock:
         specifier: ^0.3.6
         version: 0.3.6
       dumi:
         specifier: ^2.2.1
-        version: 2.2.1(@babel/core@7.22.10)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57))
+        version: 2.2.1(@babel/core@7.21.0)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57))
       eslint:
         specifier: ^8.45.0
         version: 8.45.0
@@ -3926,6 +3930,9 @@ packages:
     engines: {node: '>=6.9.0'}
     hasBin: true
 
+  immediate@3.0.6:
+    resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+
   immutable@4.3.2:
     resolution: {integrity: sha512-oGXzbEDem9OOpDWZu88jGiYCvIsLHMvGw+8OXlpsvTFvIQplQbjg1B1cvKg8f7Hoch6+NGjpPsH1Fr+Mc2D1aA==}
 
@@ -4397,6 +4404,9 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
+  lie@3.1.1:
+    resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
+
   lightningcss-darwin-arm64@1.19.0:
     resolution: {integrity: sha512-wIJmFtYX0rXHsXHSr4+sC5clwblEMji7HHQ4Ub1/CznVRxtCFha6JIt5JZaNf8vQrfdZnBxLLC6R8pC818jXqg==}
     engines: {node: '>= 12.0.0'}
@@ -4489,6 +4499,9 @@ packages:
   local-pkg@0.4.3:
     resolution: {integrity: sha512-SFppqq5p42fe2qcZQqqEOiVRXl+WCP1MdT6k7BDEW1j++sp5fIY+/fdRQitvKgB5BrBcmrs5m/L0v2FrU5MY1g==}
     engines: {node: '>=14'}
+
+  localforage@1.10.0:
+    resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
 
   locate-path@3.0.0:
     resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
@@ -6689,9 +6702,6 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
-  stylis@4.3.0:
-    resolution: {integrity: sha512-E87pIogpwUsUwXw7dNyU4QDjdgVMy52m+XEOPEKUn161cCzWjjhPSQhByfd1CcNvrOLnXQ6OnnZDwnJrz/Z4YQ==}
-
   stylis@4.3.4:
     resolution: {integrity: sha512-osIBl6BGUmSfDkyH2mB7EFvCJntXDrLhKjHTRj/rK6xLH0yuPrHULDRQzKokSOD4VoorhtKpfcfW1GAntu8now==}
 
@@ -7336,6 +7346,7 @@ snapshots:
   '@ant-design/colors@7.1.0':
     dependencies:
       '@ctrl/tinycolor': 3.6.1
+    optional: true
 
   '@ant-design/cssinjs-utils@1.1.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -7344,6 +7355,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@ant-design/cssinjs@1.22.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -7356,14 +7368,17 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       stylis: 4.3.4
+    optional: true
 
   '@ant-design/fast-color@2.0.6':
     dependencies:
       '@babel/runtime': 7.26.0
+    optional: true
 
   '@ant-design/icons-svg@4.3.0': {}
 
-  '@ant-design/icons-svg@4.4.2': {}
+  '@ant-design/icons-svg@4.4.2':
+    optional: true
 
   '@ant-design/icons@5.5.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -7374,6 +7389,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@ant-design/react-slick@1.1.2(react@18.2.0)':
     dependencies:
@@ -7383,6 +7399,7 @@ snapshots:
       react: 18.2.0
       resize-observer-polyfill: 1.5.1
       throttle-debounce: 5.0.2
+    optional: true
 
   '@antfu/install-pkg@0.1.1':
     dependencies:
@@ -7649,14 +7666,24 @@ snapshots:
     dependencies:
       '@babel/core': 7.22.10
 
+  '@babel/plugin-syntax-async-generators@7.8.4(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
+      '@babel/helper-plugin-utils': 7.22.5
+
   '@babel/plugin-syntax-async-generators@7.8.4(@babel/core@7.22.10)':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
 
-  '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.22.10)':
+  '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.21.0)':
     dependencies:
-      '@babel/core': 7.22.10
+      '@babel/core': 7.21.0
+      '@babel/helper-plugin-utils': 7.22.5
+
+  '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
       '@babel/helper-plugin-utils': 7.22.5
 
   '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.22.10)':
@@ -7689,9 +7716,19 @@ snapshots:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
 
+  '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
+      '@babel/helper-plugin-utils': 7.22.5
+
   '@babel/plugin-syntax-import-meta@7.10.4(@babel/core@7.22.10)':
     dependencies:
       '@babel/core': 7.22.10
+      '@babel/helper-plugin-utils': 7.22.5
+
+  '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
       '@babel/helper-plugin-utils': 7.22.5
 
   '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.22.10)':
@@ -7704,9 +7741,19 @@ snapshots:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
 
+  '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
+      '@babel/helper-plugin-utils': 7.22.5
+
   '@babel/plugin-syntax-logical-assignment-operators@7.10.4(@babel/core@7.22.10)':
     dependencies:
       '@babel/core': 7.22.10
+      '@babel/helper-plugin-utils': 7.22.5
+
+  '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
       '@babel/helper-plugin-utils': 7.22.5
 
   '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.22.10)':
@@ -7714,9 +7761,19 @@ snapshots:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
 
+  '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
+      '@babel/helper-plugin-utils': 7.22.5
+
   '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.22.10)':
     dependencies:
       '@babel/core': 7.22.10
+      '@babel/helper-plugin-utils': 7.22.5
+
+  '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
       '@babel/helper-plugin-utils': 7.22.5
 
   '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.22.10)':
@@ -7724,9 +7781,19 @@ snapshots:
       '@babel/core': 7.22.10
       '@babel/helper-plugin-utils': 7.22.5
 
+  '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
+      '@babel/helper-plugin-utils': 7.22.5
+
   '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.22.10)':
     dependencies:
       '@babel/core': 7.22.10
+      '@babel/helper-plugin-utils': 7.22.5
+
+  '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
       '@babel/helper-plugin-utils': 7.22.5
 
   '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.22.10)':
@@ -7737,6 +7804,11 @@ snapshots:
   '@babel/plugin-syntax-private-property-in-object@7.14.5(@babel/core@7.22.10)':
     dependencies:
       '@babel/core': 7.22.10
+      '@babel/helper-plugin-utils': 7.22.5
+
+  '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.21.0)':
+    dependencies:
+      '@babel/core': 7.21.0
       '@babel/helper-plugin-utils': 7.22.5
 
   '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.22.10)':
@@ -7891,10 +7963,10 @@ snapshots:
       '@babel/helper-module-transforms': 7.22.9(@babel/core@7.22.10)
       '@babel/helper-plugin-utils': 7.22.5
 
-  '@babel/plugin-transform-modules-commonjs@7.21.2(@babel/core@7.22.10)':
+  '@babel/plugin-transform-modules-commonjs@7.21.2(@babel/core@7.21.0)':
     dependencies:
-      '@babel/core': 7.22.10
-      '@babel/helper-module-transforms': 7.22.9(@babel/core@7.22.10)
+      '@babel/core': 7.21.0
+      '@babel/helper-module-transforms': 7.22.9(@babel/core@7.21.0)
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-simple-access': 7.22.5
 
@@ -8444,9 +8516,11 @@ snapshots:
     dependencies:
       postcss-selector-parser: 6.0.13
 
-  '@ctrl/tinycolor@3.6.1': {}
+  '@ctrl/tinycolor@3.6.1':
+    optional: true
 
-  '@emotion/hash@0.8.0': {}
+  '@emotion/hash@0.8.0':
+    optional: true
 
   '@emotion/is-prop-valid@1.2.1':
     dependencies:
@@ -8454,7 +8528,8 @@ snapshots:
 
   '@emotion/memoize@0.8.1': {}
 
-  '@emotion/unitless@0.7.5': {}
+  '@emotion/unitless@0.7.5':
+    optional: true
 
   '@emotion/unitless@0.8.1': {}
 
@@ -8843,6 +8918,7 @@ snapshots:
   '@rc-component/async-validator@5.0.4':
     dependencies:
       '@babel/runtime': 7.26.0
+    optional: true
 
   '@rc-component/color-picker@2.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -8852,6 +8928,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@rc-component/context@1.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -8859,10 +8936,12 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@rc-component/mini-decimal@1.1.0':
     dependencies:
       '@babel/runtime': 7.26.0
+    optional: true
 
   '@rc-component/mutate-observer@1.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -8871,6 +8950,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@rc-component/portal@1.1.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -8887,6 +8967,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@rc-component/tour@1.15.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -8897,6 +8978,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@rc-component/trigger@1.15.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
@@ -8920,6 +9002,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   '@rushstack/node-core-library@3.59.6(@types/node@20.4.8)':
     dependencies:
@@ -9696,13 +9779,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/test@4.0.74(@babel/core@7.22.10)':
+  '@umijs/test@4.0.74(@babel/core@7.21.0)':
     dependencies:
-      '@babel/plugin-transform-modules-commonjs': 7.21.2(@babel/core@7.22.10)
+      '@babel/plugin-transform-modules-commonjs': 7.21.2(@babel/core@7.21.0)
       '@jest/types': 27.5.1
       '@umijs/bundler-utils': 4.0.74
       '@umijs/utils': 4.0.74
-      babel-jest: 29.6.2(@babel/core@7.22.10)
+      babel-jest: 29.6.2(@babel/core@7.21.0)
       esbuild: 0.17.19
       identity-obj-proxy: 3.0.0
       isomorphic-unfetch: 4.0.2
@@ -9966,6 +10049,7 @@ snapshots:
       - date-fns
       - luxon
       - moment
+    optional: true
 
   anymatch@3.1.3:
     dependencies:
@@ -10093,13 +10177,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-jest@29.6.2(@babel/core@7.22.10):
+  babel-jest@29.6.2(@babel/core@7.21.0):
     dependencies:
-      '@babel/core': 7.22.10
+      '@babel/core': 7.21.0
       '@jest/transform': 29.6.2
       '@types/babel__core': 7.20.1
       babel-plugin-istanbul: 6.1.1
-      babel-preset-jest: 29.5.0(@babel/core@7.22.10)
+      babel-preset-jest: 29.5.0(@babel/core@7.21.0)
       chalk: 4.1.2
       graceful-fs: 4.2.11
       slash: 3.0.0
@@ -10175,27 +10259,27 @@ snapshots:
       lodash: 4.17.21
       traverse: 0.6.6
 
-  babel-preset-current-node-syntax@1.0.1(@babel/core@7.22.10):
+  babel-preset-current-node-syntax@1.0.1(@babel/core@7.21.0):
     dependencies:
-      '@babel/core': 7.22.10
-      '@babel/plugin-syntax-async-generators': 7.8.4(@babel/core@7.22.10)
-      '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.22.10)
-      '@babel/plugin-syntax-class-properties': 7.12.13(@babel/core@7.22.10)
-      '@babel/plugin-syntax-import-meta': 7.10.4(@babel/core@7.22.10)
-      '@babel/plugin-syntax-json-strings': 7.8.3(@babel/core@7.22.10)
-      '@babel/plugin-syntax-logical-assignment-operators': 7.10.4(@babel/core@7.22.10)
-      '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3(@babel/core@7.22.10)
-      '@babel/plugin-syntax-numeric-separator': 7.10.4(@babel/core@7.22.10)
-      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.22.10)
-      '@babel/plugin-syntax-optional-catch-binding': 7.8.3(@babel/core@7.22.10)
-      '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.22.10)
-      '@babel/plugin-syntax-top-level-await': 7.14.5(@babel/core@7.22.10)
+      '@babel/core': 7.21.0
+      '@babel/plugin-syntax-async-generators': 7.8.4(@babel/core@7.21.0)
+      '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.21.0)
+      '@babel/plugin-syntax-class-properties': 7.12.13(@babel/core@7.21.0)
+      '@babel/plugin-syntax-import-meta': 7.10.4(@babel/core@7.21.0)
+      '@babel/plugin-syntax-json-strings': 7.8.3(@babel/core@7.21.0)
+      '@babel/plugin-syntax-logical-assignment-operators': 7.10.4(@babel/core@7.21.0)
+      '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3(@babel/core@7.21.0)
+      '@babel/plugin-syntax-numeric-separator': 7.10.4(@babel/core@7.21.0)
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.21.0)
+      '@babel/plugin-syntax-optional-catch-binding': 7.8.3(@babel/core@7.21.0)
+      '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.21.0)
+      '@babel/plugin-syntax-top-level-await': 7.14.5(@babel/core@7.21.0)
 
-  babel-preset-jest@29.5.0(@babel/core@7.22.10):
+  babel-preset-jest@29.5.0(@babel/core@7.21.0):
     dependencies:
-      '@babel/core': 7.22.10
+      '@babel/core': 7.21.0
       babel-plugin-jest-hoist: 29.5.0
-      babel-preset-current-node-syntax: 1.0.1(@babel/core@7.22.10)
+      babel-preset-current-node-syntax: 1.0.1(@babel/core@7.21.0)
 
   bail@2.0.2: {}
 
@@ -10460,7 +10544,8 @@ snapshots:
 
   classnames@2.3.2: {}
 
-  classnames@2.5.1: {}
+  classnames@2.5.1:
+    optional: true
 
   clean-css@5.3.2:
     dependencies:
@@ -10602,7 +10687,8 @@ snapshots:
       array-ify: 1.0.0
       dot-prop: 5.3.0
 
-  compute-scroll-into-view@3.0.3: {}
+  compute-scroll-into-view@3.0.3:
+    optional: true
 
   concat-map@0.0.1: {}
 
@@ -10867,7 +10953,8 @@ snapshots:
       image-size: 0.8.3
       mimer: 1.1.0
 
-  dayjs@1.11.13: {}
+  dayjs@1.11.13:
+    optional: true
 
   dayjs@1.11.9: {}
 
@@ -11030,7 +11117,7 @@ snapshots:
 
   dumi-assets-types@2.0.0-alpha.0: {}
 
-  dumi@2.2.1(@babel/core@7.22.10)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57)):
+  dumi@2.2.1(@babel/core@7.21.0)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57)):
     dependencies:
       '@ant-design/icons-svg': 4.3.0
       '@makotot/ghostui': 2.0.0(react@18.2.0)
@@ -11088,7 +11175,7 @@ snapshots:
       remark-rehype: 10.1.0
       sass: 1.64.2
       sitemap: 7.1.1
-      umi: 4.0.74(@babel/core@7.22.10)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(sass@1.64.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57))
+      umi: 4.0.74(@babel/core@7.21.0)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(sass@1.64.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57))
       unified: 10.1.2
       unist-util-visit: 4.1.2
       unist-util-visit-parents: 5.1.3
@@ -12252,6 +12339,8 @@ snapshots:
     dependencies:
       queue: 6.0.1
 
+  immediate@3.0.6: {}
+
   immutable@4.3.2: {}
 
   import-fresh@3.3.0:
@@ -12651,6 +12740,7 @@ snapshots:
   json2mq@0.2.0:
     dependencies:
       string-convert: 0.2.1
+    optional: true
 
   json5@0.5.1: {}
 
@@ -12717,6 +12807,10 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  lie@3.1.1:
+    dependencies:
+      immediate: 3.0.6
 
   lightningcss-darwin-arm64@1.19.0:
     optional: true
@@ -12800,6 +12894,10 @@ snapshots:
       json5: 2.2.3
 
   local-pkg@0.4.3: {}
+
+  localforage@1.10.0:
+    dependencies:
+      lie: 3.1.1
 
   locate-path@3.0.0:
     dependencies:
@@ -14297,6 +14395,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-checkbox@3.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14305,6 +14404,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-collapse@3.9.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14314,6 +14414,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-dialog@9.6.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14324,6 +14425,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-drawer@7.2.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14334,6 +14436,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-dropdown@4.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14352,6 +14455,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-field-form@2.7.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14360,6 +14464,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-image@7.11.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14371,6 +14476,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-input-number@9.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14381,6 +14487,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-input@1.6.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14389,6 +14496,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-mentions@2.17.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14401,6 +14509,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-menu@9.11.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14423,6 +14532,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-motion@2.7.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14439,6 +14549,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-notification@5.6.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14448,6 +14559,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-overflow@1.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14466,6 +14578,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-pagination@5.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14474,6 +14587,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-picker@4.8.3(dayjs@1.11.13)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14487,6 +14601,7 @@ snapshots:
       react-dom: 18.2.0(react@18.2.0)
     optionalDependencies:
       dayjs: 1.11.13
+    optional: true
 
   rc-progress@4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14495,6 +14610,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-rate@2.13.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14503,6 +14619,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-resize-observer@1.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14521,6 +14638,7 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resize-observer-polyfill: 1.5.1
+    optional: true
 
   rc-segmented@2.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14530,6 +14648,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-select@14.16.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14542,6 +14661,7 @@ snapshots:
       rc-virtual-list: 3.5.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-slider@11.1.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14550,6 +14670,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-steps@6.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14558,6 +14679,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-switch@4.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14566,6 +14688,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-table@7.49.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14577,6 +14700,7 @@ snapshots:
       rc-virtual-list: 3.16.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-tabs@12.10.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14601,6 +14725,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-textarea@1.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14611,6 +14736,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-tooltip@6.2.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14619,6 +14745,7 @@ snapshots:
       classnames: 2.5.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-tree-select@5.24.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14629,6 +14756,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-tree@5.10.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14639,6 +14767,7 @@ snapshots:
       rc-virtual-list: 3.5.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-tree@5.7.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14657,6 +14786,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-util@5.36.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14671,6 +14801,7 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-is: 18.3.1
+    optional: true
 
   rc-virtual-list@3.16.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14680,6 +14811,7 @@ snapshots:
       rc-util: 5.44.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    optional: true
 
   rc-virtual-list@3.5.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
@@ -14762,7 +14894,8 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-is@18.3.1: {}
+  react-is@18.3.1:
+    optional: true
 
   react-merge-refs@1.1.0: {}
 
@@ -14879,7 +15012,7 @@ snapshots:
 
   regenerator-transform@0.15.2:
     dependencies:
-      '@babel/runtime': 7.22.10
+      '@babel/runtime': 7.26.0
 
   regexp.prototype.flags@1.5.0:
     dependencies:
@@ -15154,6 +15287,7 @@ snapshots:
   scroll-into-view-if-needed@3.1.0:
     dependencies:
       compute-scroll-into-view: 3.0.3
+    optional: true
 
   selderee@0.6.0:
     dependencies:
@@ -15390,7 +15524,8 @@ snapshots:
 
   string-argv@0.3.2: {}
 
-  string-convert@0.2.1: {}
+  string-convert@0.2.1:
+    optional: true
 
   string-width@2.1.1:
     dependencies:
@@ -15513,12 +15648,12 @@ snapshots:
       '@emotion/unitless': 0.8.1
       '@types/stylis': 4.2.0
       css-to-react-native: 3.2.0
-      csstype: 3.1.2
+      csstype: 3.1.3
       postcss: 8.4.27
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       shallowequal: 1.1.0
-      stylis: 4.3.0
+      stylis: 4.3.4
       tslib: 2.6.1
     optionalDependencies:
       babel-plugin-styled-components: 2.1.1(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
@@ -15578,8 +15713,6 @@ snapshots:
       write-file-atomic: 5.0.1
     transitivePeerDependencies:
       - supports-color
-
-  stylis@4.3.0: {}
 
   stylis@4.3.4: {}
 
@@ -15709,7 +15842,8 @@ snapshots:
     dependencies:
       real-require: 0.1.0
 
-  throttle-debounce@5.0.2: {}
+  throttle-debounce@5.0.2:
+    optional: true
 
   through2@2.0.5:
     dependencies:
@@ -15869,7 +16003,7 @@ snapshots:
 
   typescript@5.1.6: {}
 
-  umi@4.0.74(@babel/core@7.22.10)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(sass@1.64.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57)):
+  umi@4.0.74(@babel/core@7.21.0)(@types/node@20.4.8)(@types/react@18.2.16)(eslint@8.45.0)(postcss@8.4.27)(prettier@3.0.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rollup@3.27.2)(sass@1.64.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(stylelint@15.10.2)(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57)):
     dependencies:
       '@babel/runtime': 7.21.0
       '@umijs/bundler-utils': 4.0.74
@@ -15879,7 +16013,7 @@ snapshots:
       '@umijs/preset-umi': 4.0.74(@types/node@20.4.8)(@types/react@18.2.16)(postcss@8.4.27)(rollup@3.27.2)(sass@1.64.2)(styled-components@6.0.7(babel-plugin-styled-components@2.1.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(terser@5.19.2)(type-fest@1.4.0)(typescript@5.0.4)(webpack@5.88.2(@swc/core@1.3.57))
       '@umijs/renderer-react': 4.0.74(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@umijs/server': 4.0.74
-      '@umijs/test': 4.0.74(@babel/core@7.22.10)
+      '@umijs/test': 4.0.74(@babel/core@7.21.0)
       '@umijs/utils': 4.0.74
       prettier-plugin-organize-imports: 3.2.3(prettier@3.0.0)(typescript@5.0.4)
       prettier-plugin-packagejson: 2.4.3(prettier@3.0.0)

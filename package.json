@@ -53,6 +53,7 @@
     "@koale/useworker": "^4.0.2",
     "ahooks": "^3.8.2",
     "copy-to-clipboard": "^3.3.3",
+    "localforage": "^1.10.0",
     "lodash-es": "^4.17.21",
     "use-animate-number": "^1.0.5"
   },
