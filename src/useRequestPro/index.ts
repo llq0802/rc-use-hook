@@ -131,18 +131,33 @@ export default function useRequestPro<
     formatResult,
     onInitSuccess,
     onNoInitSuccess,
+    //
+    cacheKey,
+    getCache,
+    setCache,
     ...rest
   } = opts;
+
+  const getCacheFn = (...args) => {
+    if (!cacheKey) return;
+    if (getCache) return getCache(...args);
+    return JSON.parse(localStorage.getItem(cacheKey) || '{}');
+  };
+  const setCacheFn = (data: any) => {
+    if (!cacheKey) return;
+    if (setCache) return setCache(data);
+    localStorage.setItem(cacheKey, JSON.stringify(data));
+  };
 
   const res = useRequest<TData, TParams>(
     async (...pars) => {
       const result = await fn(...pars);
       if (formatResult) {
-        return formatResult(result, pars) ?? result;
+        return formatResult(result, pars);
       }
       if (dataKeyName && isPlainObject(result)) {
         //@ts-expect-error ignore
-        return result[dataKeyName] ?? result;
+        return result?.[dataKeyName];
       }
       return result;
     },
@@ -173,6 +188,9 @@ export default function useRequestPro<
         if (noInitLoading) setNoInitLoading(false);
         rest.onError?.(err, params);
       },
+      cacheKey,
+      setCache: setCacheFn,
+      getCache: getCacheFn,
     },
   );
 
