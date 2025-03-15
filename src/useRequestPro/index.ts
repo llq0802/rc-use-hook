@@ -138,9 +138,9 @@ export default function useRequestPro<
     ...rest
   } = opts;
 
-  const getCacheFn = (...args) => {
+  const getCacheFn = (...p: TParams) => {
     if (!cacheKey) return;
-    if (getCache) return getCache(...args);
+    if (getCache) return getCache(p);
     return JSON.parse(localStorage.getItem(cacheKey) || '{}');
   };
   const setCacheFn = (data: any) => {
@@ -189,8 +189,8 @@ export default function useRequestPro<
         rest.onError?.(err, params);
       },
       cacheKey,
-      setCache: setCacheFn,
-      getCache: getCacheFn,
+      setCache: cacheKey ? setCacheFn : void 0,
+      getCache: cacheKey ? getCacheFn : void 0,
     },
   );
 
