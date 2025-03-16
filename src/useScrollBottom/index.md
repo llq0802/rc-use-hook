@@ -31,3 +31,15 @@ import { useScrollBottom } from 'rc-use-hooks';
 |   参数   |      说明      |   类型    | 默认值  |
 | :------: | :------------: | :-------: | :-----: |
 | bottomed | 是否滚动到底部 | `boolean` | `false` |
+|   opts   |     配置项     |  `Opts`   |   `-`   |
+
+```ts
+
+type Opts= {
+    /**阈值*/
+    threshold = 0,
+    defaultState = false,
+    onBottom,
+    onNoBottom,
+  }
+```
