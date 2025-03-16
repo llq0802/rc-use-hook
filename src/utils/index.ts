@@ -82,5 +82,8 @@ export function getTargetElement(
   const dom: HTMLElement = isFunction(target)
     ? (target as () => HTMLElement)?.()
     : (target as unknown as MutableRefObject<HTMLElement>)?.current;
+
+  console.log('===target===>', target);
+
   return dom;
 }

@@ -103,6 +103,10 @@ export default {
           link: '/hooks/use-Lock-Scroll',
         },
         {
+          title: 'useScrollBottom',
+          link: '/hooks/use-Scroll-Bottom',
+        },
+        {
           title: 'useParentScroll',
           link: '/hooks/use-Parent-Scroll',
         },
