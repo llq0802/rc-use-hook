@@ -1,60 +1,53 @@
 import localForage from 'localforage';
+import { isNil } from 'lodash-es';
 import { useCallback, useEffect, useState } from 'react';
 
 function useLocalForage<T>(
   key: string,
   initialValue: T | (() => T),
-): [T, (value: T) => Promise<void>, () => Promise<void>] {
-  const [value, setValue] = useState<T>(() => {
-    if (typeof initialValue === 'function') {
-      return (initialValue as () => T)();
-    }
-    return initialValue;
-  });
+): [T, (value?: T) => void, () => void] {
+  const [value, setValue] = useState<T>(initialValue);
 
-  // 修正后的handleStorageOperation
-  async function handleStorageOperation<R, P extends any[]>(
-    operation: (...args: P) => Promise<R>,
-    ...args: P
-  ): Promise<R> {
+  // 从 localForage 删除值并触发事件
+  const removeValueFromStorage = useCallback(async () => {
     try {
-      return await operation(...args);
+      await localForage.removeItem(key);
+      setValue(initialValue);
     } catch (error) {
-      console.error('Storage operation failed:', error);
-      throw error;
+      console.error('Failed to remove item from localForage:', error);
     }
-  }
+  }, [key, initialValue]);
 
+  // 设置值到 localForage 并触发事件
   const setValueInStorage = useCallback(
-    async (newValue: T) => {
-      await handleStorageOperation(localForage.setItem, key, newValue);
-      setValue(newValue);
+    async (newValue: T | undefined) => {
+      try {
+        if (isNil(newValue)) {
+          removeValueFromStorage();
+          return;
+        }
+        await localForage.setItem(key, newValue);
+        setValue(newValue);
+      } catch (error) {
+        console.error('Failed to set item in localForage:', error);
+      }
     },
     [key],
   );
 
-  const removeValueFromStorage = useCallback(async () => {
-    await handleStorageOperation(localForage.removeItem, key);
-    setValue(
-      typeof initialValue === 'function'
-        ? (initialValue as () => T)()
-        : initialValue,
-    );
-  }, [key, initialValue]);
-
+  // 初始化时从 localForage 获取值
   useEffect(() => {
     const fetchInitialValue = async () => {
       const storedValue = await localForage.getItem<T>(key);
-      setValue(
-        storedValue !== null
-          ? storedValue
-          : typeof initialValue === 'function'
-          ? (initialValue as () => T)()
-          : initialValue,
-      );
+      if (!isNil(storedValue)) {
+        setValue(storedValue);
+      } else {
+        setValue(initialValue);
+      }
     };
+
     fetchInitialValue();
-  }, [key]);
+  }, [key, initialValue]);
 
   return [value, setValueInStorage, removeValueFromStorage];
 }

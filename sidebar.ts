@@ -73,6 +73,10 @@ export default {
           title: 'useClipboard',
           link: '/hooks/use-Clipboard',
         },
+        {
+          title: 'useLocalForage',
+          link: '/hooks/use-Local-Forage',
+        },
 
         {
           title: 'useImageSize',

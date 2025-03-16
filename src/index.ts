@@ -34,6 +34,8 @@ export * from './useImageSize';
 export { default as useImageSize } from './useImageSize';
 export * from './useLazyImage';
 export { default as useLazyImage } from './useLazyImage';
+export * from './useLocalForage';
+export { default as useLocalForage } from './useLocalForage';
 export * from './useLockScroll';
 export { default as useLockScroll } from './useLockScroll';
 export * from './useMeasure';
