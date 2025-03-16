@@ -1,5 +1,5 @@
 import { useLockFn, usePrevious, useRafState, useRequest } from 'ahooks';
-import type { Options } from 'ahooks/lib/useRequest/src/types';
+import type { Options, Result } from 'ahooks/lib/useRequest/src/types';
 import { isPlainObject } from 'lodash-es';
 import { isFunction } from 'rc-use-hooks/utils';
 import { useMemo, useRef } from 'react';
@@ -10,7 +10,7 @@ import { useMemo, useRef } from 'react';
  * @template TData - 请求返回的数据类型，默认为 `any`
  * @template TParams - 请求参数类型，默认为 `any[]`
  */
-export type ServicePro<TData = any, TParams extends any[] = any[]> = (
+export type ServicePro<TData, TParams extends any[]> = (
   ...args: TParams
 ) => Promise<TData>;
 
@@ -67,7 +67,7 @@ export type OptionsPro<TData, TParams extends any[]> = {
  *
  * @template TData - 请求返回的数据类型，默认为 `any`
  */
-export type UseRequestProReturn<TData> = ReturnType<typeof useRequest> & {
+export type UseRequestProReturn<TData, TParams extends any[]> = {
   /**
    * 上一次请求的数据
    */
@@ -101,7 +101,7 @@ export type UseRequestProReturn<TData> = ReturnType<typeof useRequest> & {
    * 
    */
   hasData: boolean;
-};
+} & Result<TData, TParams>;
 
 /**
  * `useRequestPro` 是对 `ahooks` 库中 `useRequest` 的二次封装，
@@ -114,13 +114,10 @@ export type UseRequestProReturn<TData> = ReturnType<typeof useRequest> & {
  * @param opts - 请求选项，类型为 `OptionsPro`，包含请求的各种配置，默认值为空对象
  * @returns 返回请求的结果，以及初始数据、初始加载状态和是否未初始化加载状态
  */
-export default function useRequestPro<
-  TData = any,
-  TParams extends any[] = any[],
->(
+export default function useRequestPro<TData, TParams extends any[]>(
   fn: ServicePro<TData, TParams>,
   opts: OptionsPro<TData, TParams> = {},
-): UseRequestProReturn<TData> {
+): UseRequestProReturn<TData, TParams> {
   const isFirstRequestRef = useRef(true);
   const [initData, setInitData] = useRafState<TData | undefined>();
   const [initLoading, setInitLoading] = useRafState(false);
@@ -131,23 +128,9 @@ export default function useRequestPro<
     formatResult,
     onInitSuccess,
     onNoInitSuccess,
-    //
     cacheKey,
-    getCache,
-    setCache,
     ...rest
   } = opts;
-
-  const getCacheFn = (...p: TParams) => {
-    if (!cacheKey) return;
-    if (getCache) return getCache(p);
-    return JSON.parse(localStorage.getItem(cacheKey) || '{}');
-  };
-  const setCacheFn = (data: any) => {
-    if (!cacheKey) return;
-    if (setCache) return setCache(data);
-    localStorage.setItem(cacheKey, JSON.stringify(data));
-  };
 
   const res = useRequest<TData, TParams>(
     async (...pars) => {
@@ -189,8 +172,6 @@ export default function useRequestPro<
         rest.onError?.(err, params);
       },
       cacheKey,
-      setCache: cacheKey ? setCacheFn : void 0,
-      getCache: cacheKey ? getCacheFn : void 0,
     },
   );
 
@@ -198,9 +179,8 @@ export default function useRequestPro<
   const lockRun = useLockFn(async (...args: Parameters<typeof res.run>) =>
     res.run(...args),
   );
-  const lockRunAsync = useLockFn(res.runAsync);
+  const lockRunAsync = useLockFn<TParams, TData>(res.runAsync);
   const run = isLockRun ? lockRun : res.run;
-  const runAsync = isLockRun ? lockRunAsync : res.runAsync;
 
   const hasData = useMemo(() => {
     if (isFunction(opts.hasDataFn))
@@ -216,12 +196,14 @@ export default function useRequestPro<
       return false;
     }
     return true;
-  }, [res.data, res.params]);
+  }, [res.data, res.params, opts?.hasDataFn]);
 
   return {
     ...res,
     run,
-    runAsync,
+    runAsync: isLockRun
+      ? (lockRunAsync as (...params: TParams) => Promise<TData>)
+      : res.runAsync,
     previousData,
     hasData,
     initData,

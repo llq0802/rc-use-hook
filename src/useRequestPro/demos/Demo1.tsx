@@ -14,7 +14,16 @@ function Demo1() {
     run,
     loading,
     mutate: seData,
-  } = useRequestPro(mockRequest, {
+  } = useRequestPro<
+    {
+      key: string;
+      name: string;
+      birthday: string;
+      address: string;
+      age: string;
+    }[],
+    any[]
+  >(mockRequest, {
     isLockRun: true,
     dataKeyName: 'data',
     // 支持其余所有的 useRequest 的配置项

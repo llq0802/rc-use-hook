@@ -5,9 +5,7 @@ toc: content
 
 # useMergedRef
 
-监听页面离开事件，当鼠标移出页面或页面失去焦点时返回 true。
-
-只要鼠标不在文档中，就认为页面已离开。包含`鼠标在标签页`或者`调试台`或者`切换浏览器标签页`
+使用useMergedRef来合并多个refs，并返回一个RefCallback函数
 
 ## 代码演示
 
