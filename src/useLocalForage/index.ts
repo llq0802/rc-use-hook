@@ -4,45 +4,57 @@ import { useCallback, useEffect, useState } from 'react';
 function useLocalForage<T>(
   key: string,
   initialValue: T | (() => T),
-): [T, (value: T) => void, () => void] {
-  const [value, setValue] = useState<T>(initialValue);
+): [T, (value: T) => Promise<void>, () => Promise<void>] {
+  const [value, setValue] = useState<T>(() => {
+    if (typeof initialValue === 'function') {
+      return (initialValue as () => T)();
+    }
+    return initialValue;
+  });
 
-  // 设置值到 localForage 并触发事件
+  // 修正后的handleStorageOperation
+  async function handleStorageOperation<R, P extends any[]>(
+    operation: (...args: P) => Promise<R>,
+    ...args: P
+  ): Promise<R> {
+    try {
+      return await operation(...args);
+    } catch (error) {
+      console.error('Storage operation failed:', error);
+      throw error;
+    }
+  }
+
   const setValueInStorage = useCallback(
     async (newValue: T) => {
-      try {
-        await localForage.setItem(key, newValue);
-        setValue(newValue);
-      } catch (error) {
-        console.error('Failed to set item in localForage:', error);
-      }
+      await handleStorageOperation(localForage.setItem, key, newValue);
+      setValue(newValue);
     },
     [key],
   );
 
-  // 从 localForage 删除值并触发事件
   const removeValueFromStorage = useCallback(async () => {
-    try {
-      await localForage.removeItem(key);
-      setValue(initialValue);
-    } catch (error) {
-      console.error('Failed to remove item from localForage:', error);
-    }
+    await handleStorageOperation(localForage.removeItem, key);
+    setValue(
+      typeof initialValue === 'function'
+        ? (initialValue as () => T)()
+        : initialValue,
+    );
   }, [key, initialValue]);
 
-  // 初始化时从 localForage 获取值
   useEffect(() => {
     const fetchInitialValue = async () => {
       const storedValue = await localForage.getItem<T>(key);
-      if (storedValue !== null) {
-        setValue(storedValue);
-      } else {
-        setValue(initialValue);
-      }
+      setValue(
+        storedValue !== null
+          ? storedValue
+          : typeof initialValue === 'function'
+          ? (initialValue as () => T)()
+          : initialValue,
+      );
     };
-
     fetchInitialValue();
-  }, [key, initialValue]);
+  }, [key]);
 
   return [value, setValueInStorage, removeValueFromStorage];
 }
