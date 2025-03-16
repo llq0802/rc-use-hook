@@ -14,7 +14,7 @@ const useFocus = (
   const [state, setState] = useState(defaultState);
 
   useEffect(() => {
-    const dom = getTargetElement(target) || window;
+    const dom = getTargetElement(target!) || window;
 
     const onFocus = () => setState(true);
     const onBlur = () => setState(false);
