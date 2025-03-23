@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@koale/useworker": "^4.0.2",
-    "ahooks": "^3.8.2",
+    "ahooks": "^3.8.4",
     "copy-to-clipboard": "^3.3.3",
     "localforage": "^1.10.0",
     "lodash-es": "^4.17.21",
