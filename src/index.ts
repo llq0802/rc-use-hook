@@ -56,6 +56,8 @@ export * from './useRequestPro';
 export { default as useRequestPro } from './useRequestPro';
 export * from './useResizeObserver';
 export { default as useResizeObserver } from './useResizeObserver';
+export * from './useScale';
+export { default as useScale } from './useScale';
 export * from './useScrollBottom';
 export { default as useScrollBottom } from './useScrollBottom';
 export * from './useShow';

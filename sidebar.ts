@@ -16,6 +16,10 @@ export default {
           link: '/hooks/use-Show',
         },
         {
+          title: 'useScale',
+          link: '/hooks/use-Scale',
+        },
+        {
           title: 'useDefer',
           link: '/hooks/use-Defer',
         },
