@@ -102,7 +102,7 @@
 import { useCountDown } from 'ahooks';
 import { useEffect, useRef, useState } from 'react';
 
-type UseRecorderOptions = {
+export type UseRecorderOptions = {
   timeout?: number;
   audioType?: string;
   audioOptions?: true | MediaTrackConstraints;
@@ -113,11 +113,10 @@ type UseRecorderOptions = {
     powerLevel: number,
     sampleRate: number,
   ) => void;
-
-  onTimeOut: () => void;
+  onTimeOut?: () => void;
 };
 
-type UseRecorderReturn = {
+export type UseRecorderReturn = {
   isOpening: boolean;
   isRecording: boolean;
   error: string | null;
@@ -130,15 +129,19 @@ type UseRecorderReturn = {
   stop: () => void;
 };
 
-const useRecorder = ({
-  audioType = 'wav',
-  audioOptions = true,
-  timeout = 60 * 60,
-  onStart,
-  onProcess,
-  onEnd,
-  onTimeOut,
-}: UseRecorderOptions): UseRecorderReturn => {
+/**
+ * 要求运行在 HTTPS 或 localhost 环境下，并且用户需授予麦克风权限。
+ */
+const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
+  const {
+    audioType = 'wav',
+    audioOptions = true,
+    timeout = 60 * 60,
+    onStart,
+    onProcess,
+    onEnd,
+    onTimeOut,
+  } = opts;
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isOpening, setIsOpening] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -212,13 +215,13 @@ const useRecorder = ({
       };
 
       mediaRecorder.onstop = async (...args) => {
-        onEnd?.(...args);
         // 可以选择其他格式如 'audio/ogg'
         const audioBlob = new Blob(audioChunksRef.current, {
           type: `audio/${audioType}`,
         });
         setBlobUrl(URL.createObjectURL(audioBlob));
         setSize(audioBlob.size);
+        onEnd?.(...args);
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64String = reader.result as string;

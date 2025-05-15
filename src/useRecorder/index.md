@@ -1,11 +1,11 @@
 ---
-title: useAudio
+title: useRecorder
 toc: content
 nav:
   path: /
 ---
 
-# useAudio
+# useRecorder
 
 音频钩子函数，用于管理音频的播放状态和操作
 
@@ -16,39 +16,49 @@ nav:
 ### API
 
 ```ts
-import { useAudio } from 'rc-use-hooks';
-const useAudio: (src: string, opts?: UseAudioOptions) => UseAudioReturn;
+import { useRecorder } from 'rc-use-hooks';
+const useRecorder: (opts?: UseRecorderOptions) => UseRecorderReturn;
 ```
 
 ### Params
 
-| 参数 | 说明                      | 类型              | 默认值 |
-| ---- | ------------------------- | ----------------- | ------ |
-| src  | 音频地址 推荐使用Blob地址 | `string`          | `-`    |
-| opts | 配置项                    | `UseAudioOptions` | `-`    |
+| 参数 | 说明   | 类型                 | 默认值 |
+| ---- | ------ | -------------------- | ------ |
+| opts | 配置项 | `UseRecorderOptions` | `-`    |
 
 ### Result
 
-| 参数 | 说明     | 类型                                         | 默认值 |
-| ---- | -------- | -------------------------------------------- | ------ |
-| ret  | 返回对象 | `音频钩子函数，用于管理音频的播放状态和操作` | `-`    |
+| 参数 | 说明     | 类型                | 默认值 |
+| ---- | -------- | ------------------- | ------ |
+| ret  | 返回对象 | `UseRecorderReturn` | `-`    |
 
 ### 类型定义
 
 ```ts
-export type UseAudioReturn = {
-  play: () => void;
-  pause: () => void;
-  stop: () => void;
-  isPlaying: boolean;
-  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+export type UseRecorderOptions = {
+  timeout?: number;
+  audioType?: string;
+  audioOptions?: true | MediaTrackConstraints;
+  onStart?: () => void;
+  onEnd?: (...args: any[]) => void;
+  onProcess?: (
+    pcmData: number[],
+    powerLevel: number,
+    sampleRate: number,
+  ) => void;
+  onTimeOut?: () => void;
 };
 
-export type UseAudioOptions = {
-  onPlay?: (value: any) => void;
-  onPlaying?: (e: any) => void;
-  onPause?: () => void;
-  onStop?: () => void;
-  onEnd?: (e: any) => void;
+export type UseRecorderReturn = {
+  isOpening: boolean;
+  isRecording: boolean;
+  error: string | null;
+  blobUrl: string | null;
+  base64Url: string | null;
+  size: number | null;
+  countdown: number;
+  start: () => void;
+  cancel: () => void;
+  stop: () => void;
 };
 ```

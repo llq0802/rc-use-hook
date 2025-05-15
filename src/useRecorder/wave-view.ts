@@ -14,7 +14,7 @@ interface WaveViewSettings {
   linearBg?: any[];
 }
 
-class WaveView {
+export class WaveView {
   private set: WaveViewSettings;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
