@@ -36,6 +36,10 @@ export default {
           link: '/hooks/use-Audio',
         },
         {
+          title: 'useRecorder',
+          link: '/hooks/use-Recorder',
+        },
+        {
           title: 'useWorker',
           link: '/hooks/use-Worker',
         },
