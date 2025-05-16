@@ -12,6 +12,8 @@ nav:
 ## 代码演示
 
 <code src='./Demo1.tsx'></code>
+<code src='./Demo2.tsx'></code>
+<code src='./Demo3.tsx'></code>
 
 ### API
 
