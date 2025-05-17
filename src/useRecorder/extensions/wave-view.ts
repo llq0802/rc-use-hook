@@ -23,23 +23,23 @@ class WaveView {
   private linearBg: CanvasGradient;
   private _phase: number = 0;
   private timer: NodeJS.Timer | null = null;
-  private pcmData: Float32Array | null = null;
+  private pcmData: number[] | null = null;
   private sampleRate: number = 0;
   private drawTime: number = 0;
   private inputTime: number = 0;
   private pcmPos: number = 0;
   private set: Required<WaveViewInitOptions>;
-
+  private currentAmplitude: number = 0; // 添加这个属性来跟踪当前振幅
   constructor(set: WaveViewInitOptions) {
     const defaultOptions: Required<WaveViewInitOptions> = {
       compatibleCanvas: set.compatibleCanvas,
-      width: set.width || 400,
-      height: set.height || 100,
+      width: set.width || 0,
+      height: set.height || 0,
       scale: set.scale || window.devicePixelRatio,
       speed: set.speed || 9,
       phase: set.phase || 21.8,
       fps: set.fps || 20,
-      keep: set.keep !== undefined ? set.keep : true,
+      keep: set.keep || true,
       lineWidth: set.lineWidth || 3,
       linear1: set.linear1 || [
         0,
@@ -71,8 +71,9 @@ class WaveView {
 
     this.canvas = this.set.compatibleCanvas;
     this.ctx = this.canvas.getContext('2d')!;
-    this.width = this.set.width * this.set.scale;
-    this.height = this.set.height * this.set.scale;
+    this.width = (this.set.width || this.canvas.clientWidth) * this.set.scale;
+    this.height =
+      (this.set.height || this.canvas.clientHeight) * this.set.scale;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
@@ -118,7 +119,7 @@ class WaveView {
     phase: number,
   ): number[] {
     const { width, height, set } = this;
-    const maxAmplitude = height / 2;
+    const maxAmplitude = height / 2.5; // 将最大振幅改为height的1/3，避免波形过大
     const path: number[] = [];
 
     for (let x = 0; x <= width; x += set.scale!) {
@@ -128,7 +129,7 @@ class WaveView {
           maxAmplitude *
           amplitude *
           Math.sin(2 * Math.PI * (x / width) * frequency + phase) +
-        maxAmplitude;
+        height / 2; // 将基线移到canvas中间
       path.push(y);
     }
 
@@ -137,10 +138,9 @@ class WaveView {
 
   static PowerLevel(sum: number, length: number): number {
     if (length === 0) return 0;
-    return (Math.sqrt(sum / length) / 0.02) * 100; // 归一化到 0-100 范围
+    return Math.min((Math.sqrt(sum / length) / 0.02) * 100, 100); // 限制最大值为100
   }
-
-  input(pcmData: Float32Array, powerLevel: number, sampleRate: number): void {
+  input(pcmData: number[], powerLevel: number, sampleRate: number): void {
     this.sampleRate = sampleRate;
     this.pcmData = pcmData;
     this.pcmPos = 0;
@@ -184,13 +184,24 @@ class WaveView {
   draw(powerLevel: number): void {
     const { ctx, width, height, set } = this;
     const { speed, phase, fps } = set;
-    const amplitude = powerLevel / 100;
+    // const amplitude = powerLevel / 100;
+    // this._phase -= speed / fps;
+    // const phase2 = this._phase + (speed / fps) * phase;
+
+    // const path1 = this.genPath(2, amplitude, this._phase);
+    // const path2 = this.genPath(1.8, amplitude, phase2);
+
+    // 添加平滑过渡
+    const targetAmplitude = powerLevel / 100;
+    const smoothFactor = 0.5; // 调整这个值可以控制平滑程度（0-1之间）
+    this.currentAmplitude +=
+      (targetAmplitude - this.currentAmplitude) * smoothFactor;
 
     this._phase -= speed / fps;
     const phase2 = this._phase + (speed / fps) * phase;
 
-    const path1 = this.genPath(2, amplitude, this._phase);
-    const path2 = this.genPath(1.8, amplitude, phase2);
+    const path1 = this.genPath(2, this.currentAmplitude, this._phase);
+    const path2 = this.genPath(1.8, this.currentAmplitude, phase2);
 
     ctx.clearRect(0, 0, width, height);
 

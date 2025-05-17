@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import useRecorder from '.';
 import WaveView from './extensions/wave-view';
 
-const AudioRecorderWithVisualizer = () => {
+const Demo1 = () => {
   const ref = useRef<HTMLCanvasElement>(null!);
   const waveViewRef = useRef<WaveView>(null!);
 
@@ -12,25 +12,19 @@ const AudioRecorderWithVisualizer = () => {
       compatibleCanvas: ref.current,
       width: 400,
       height: 100,
-      lineWidth: 2,
       keep: false,
-      // phase: 3,
     });
   }, []);
 
-  const { isRecording, blobUrl, size, error, start, stop, cancel } =
+  const { isRecording, blobUrl, size, duration, start, stop, cancel } =
     useRecorder({
       onProcess(pcmData, powerLevel, sampleRate) {
         waveViewRef.current?.input(pcmData, powerLevel, sampleRate);
-      },
-      onEnd(...args) {
-        console.log('onEnd', ...args);
       },
     });
 
   return (
     <div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
       <Flex gap={10}>
         <Button
           variant="filled"
@@ -59,6 +53,11 @@ const AudioRecorderWithVisualizer = () => {
           <p>{(size || 0) / 1024} kb</p>
         </div>
       )}
+      {duration && (
+        <div>
+          <p>录音时长：{duration} s</p>
+        </div>
+      )}
       <Divider />
 
       <canvas
@@ -73,4 +72,4 @@ const AudioRecorderWithVisualizer = () => {
   );
 };
 
-export default AudioRecorderWithVisualizer;
+export default Demo1;

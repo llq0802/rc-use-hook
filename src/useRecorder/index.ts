@@ -22,7 +22,7 @@ export type UseRecorderOptions = {
    */
   audioOptions?: true | MediaTrackConstraints;
   onStart?: () => void;
-  onEnd?: (blob: Blob, ...args: any[]) => void;
+  onEnd?: (blob: Blob, duration: number, ...args: any[]) => void;
   onProcess?: (
     pcmData: number[],
     powerLevel: number,
@@ -39,12 +39,12 @@ export type UseRecorderReturn = {
   blobUrl: string | null;
   base64Url: string | null;
   size: number | null;
-  countdown: number;
+  duration: number;
   start: () => void;
   cancel: () => void;
   stop: () => void;
-  analyser: AnalyserNode | null;
-  dataArray: Uint8Array | null;
+  audioData: number[]; // 音频数据
+  stream: MediaStream | undefined;
 };
 
 /**
@@ -55,6 +55,7 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
     audioType = 'wav',
     audioOptions = true,
     timeout = 60 * 60,
+    fftSize = 2048,
     onStart,
     onProcess,
     onEnd,
@@ -67,14 +68,17 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [base64Url, setBase64Url] = useState<string | null>(null);
   const [size, setSize] = useState<number | null>(null);
+  const [stream, setStream] = useState<MediaStream>();
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const [audioData, setAudioData] = useState<number[]>([]);
+  const animationFrameRef = useRef<number>();
 
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const dataArrayRef = useRef<Uint8Array | null>(null);
 
-  const [targetDate, setTargetDate] = useState<number>(0);
+  const [targetDate, setTargetDate] = useState<number>();
   const [countdown] = useCountDown({
     targetDate,
     onEnd() {
@@ -83,44 +87,79 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       onTimeOut?.();
     },
   });
+  const duration = Math.round(countdown / 1000);
+
+  const updateAudioData = () => {
+    if (!analyserRef.current || !dataArrayRef.current) return;
+    analyserRef.current.getByteTimeDomainData(dataArrayRef.current);
+
+    const sum = dataArrayRef.current.reduce(
+      (acc, val) => acc + Math.abs(val - 128),
+      0,
+    );
+    const average = sum / dataArrayRef.current.length;
+
+    // 添加阈值判断，如果音量太小就将所有值设为 128（对应归一化后的 0）
+    const threshold = 1; // 可以根据需要调整这个阈值
+
+    const normalizedData =
+      average < threshold
+        ? new Array(dataArrayRef.current.length).fill(0)
+        : Array.from(dataArrayRef.current).map((value) => value / 128.0 - 1);
+
+    setAudioData(normalizedData);
+
+    const powerLevel =
+      Math.sqrt(
+        normalizedData.reduce((acc, val) => acc + val * val, 0) /
+          normalizedData.length,
+      ) * 100; // 将powerLevel归一化到0-100的范围
+
+    onProcess?.(
+      normalizedData,
+      powerLevel,
+      audioContextRef.current?.sampleRate || 44100,
+    );
+
+    animationFrameRef.current = requestAnimationFrame(updateAudioData);
+  };
 
   const start = async () => {
     try {
       setIsOpening(true);
-      const stream = await navigator.mediaDevices.getUserMedia({
+      const audioStream = await navigator.mediaDevices.getUserMedia({
         audio: audioOptions,
       });
-
+      setStream(audioStream);
+      // 初始化音频上下文
       const audioContext = new window.AudioContext();
-      const source = audioContext.createMediaStreamSource(stream);
+      const source = audioContext.createMediaStreamSource(audioStream);
       const analyser = audioContext.createAnalyser();
-      // 可配置 fftSize，默认 2048
-      analyser.fftSize = opts.fftSize ?? 2048;
+      analyser.fftSize = fftSize;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
       source.connect(analyser);
-      // 存储引用
       audioContextRef.current = audioContext;
       analyserRef.current = analyser;
       dataArrayRef.current = dataArray;
 
-      mediaRecorderRef.current = new MediaRecorder(stream);
+      //#region
+      mediaRecorderRef.current = new MediaRecorder(audioStream);
       audioChunksRef.current = [];
-
       mediaRecorderRef.current.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
+        if (event.data.size > 0) audioChunksRef.current.push(event.data);
       };
-
       mediaRecorderRef.current.onstop = async (...args) => {
         const audioBlob = new Blob(audioChunksRef.current, {
           type: `audio/${audioType}`,
         });
         setBlobUrl(URL.createObjectURL(audioBlob));
         setSize(audioBlob.size);
-        onEnd?.(audioBlob, ...args);
+        onEnd?.(audioBlob, duration, ...args);
+
+        // 转换为 base64
         const reader = new FileReader();
+        reader.readAsDataURL(audioBlob);
         reader.onloadend = () => {
           const base64String = reader.result as string;
           const base64DataUrl = `data:audio/${audioType};base64,${
@@ -128,13 +167,15 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
           }`;
           setBase64Url(base64DataUrl);
         };
-        reader.readAsDataURL(audioBlob);
       };
+      //#endregion
       onStart?.();
       setIsOpening(false);
       setIsRecording(true);
       setTargetDate(Date.now() + timeout * 1000);
       mediaRecorderRef.current.start();
+      // 开始音频数据更新循环
+      animationFrameRef.current = requestAnimationFrame(updateAudioData);
     } catch (err) {
       console.error(err);
       setError('无法访问麦克风：' + (err as Error).message);
@@ -148,11 +189,16 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       mediaRecorderRef.current = null;
     }
 
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = void 0;
+    }
+
     audioContextRef.current = null;
     analyserRef.current = null;
     dataArrayRef.current = null;
 
-    setTargetDate(0);
+    setTargetDate(void 0);
     setIsRecording(false);
   };
 
@@ -164,11 +210,16 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       URL.revokeObjectURL(blobUrl);
     }
 
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = void 0;
+    }
+
     audioContextRef.current = null;
     analyserRef.current = null;
     dataArrayRef.current = null;
 
-    setTargetDate(0);
+    setTargetDate(void 0);
     setIsRecording(false);
   };
 
@@ -184,13 +235,13 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
     isRecording,
     blobUrl,
     base64Url,
-    countdown,
+    duration,
     size,
     start,
     cancel,
     stop,
-    analyser: analyserRef.current,
-    dataArray: dataArrayRef.current,
+    stream,
+    audioData,
   };
 };
 
