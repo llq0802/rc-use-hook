@@ -136,19 +136,7 @@ class WaveView {
     return path;
   }
 
-  static PowerLevel(sum: number, length: number): number {
-    if (length === 0) return 0;
-    return Math.min((Math.sqrt(sum / length) / 0.02) * 100, 100); // 限制最大值为100
-  }
-  input(pcmData: number[], powerLevel: number, sampleRate: number): void {
-    this.sampleRate = sampleRate;
-    this.pcmData = pcmData;
-    this.pcmPos = 0;
-    this.inputTime = Date.now();
-    this.schedule();
-  }
-
-  schedule(): void {
+  private schedule(): void {
     const { fps, keep } = this.set;
     const interval = Math.floor(1000 / fps);
 
@@ -181,7 +169,7 @@ class WaveView {
     }
   }
 
-  draw(powerLevel: number): void {
+  private draw(powerLevel: number): void {
     const { ctx, width, height, set } = this;
     const { speed, phase, fps } = set;
     // const amplitude = powerLevel / 100;
@@ -246,6 +234,35 @@ class WaveView {
     ctx.lineWidth = set.lineWidth! * scale!;
     ctx.strokeStyle = color;
     ctx.stroke();
+  }
+  static PowerLevel(sum: number, length: number): number {
+    if (length === 0) return 0;
+    return Math.min((Math.sqrt(sum / length) / 0.02) * 100, 100); // 限制最大值为100
+  }
+  input(pcmData: number[], powerLevel: number, sampleRate: number): void {
+    this.sampleRate = sampleRate;
+    this.pcmData = pcmData;
+    this.pcmPos = 0;
+    this.inputTime = Date.now();
+    this.schedule();
+  }
+
+  reset(): void {
+    // 重置所有状态
+    this.pcmData = null;
+    this.sampleRate = 0;
+    this.pcmPos = 0;
+    this.currentAmplitude = 0;
+    this._phase = 0;
+
+    // 清除定时器
+    if (this.timer) {
+      clearInterval(Number(this.timer));
+      this.timer = null;
+    }
+
+    // 清空画布
+    this.ctx.clearRect(0, 0, this.width, this.height);
   }
 }
 

@@ -16,12 +16,11 @@ const Demo1 = () => {
     });
   }, []);
 
-  const { isRecording, blobUrl, size, duration, start, stop, cancel } =
-    useRecorder({
-      onProcess(pcmData, powerLevel, sampleRate) {
-        waveViewRef.current?.input(pcmData, powerLevel, sampleRate);
-      },
-    });
+  const { isRecording, blobUrl, size, start, stop, cancel } = useRecorder({
+    onProcess(pcmData, powerLevel, sampleRate) {
+      waveViewRef.current?.input(pcmData, powerLevel, sampleRate);
+    },
+  });
 
   return (
     <div>
@@ -40,6 +39,7 @@ const Demo1 = () => {
           variant="filled"
           onClick={() => {
             cancel();
+            waveViewRef.current.reset();
           }}
         >
           cancel
@@ -53,13 +53,7 @@ const Demo1 = () => {
           <p>{(size || 0) / 1024} kb</p>
         </div>
       )}
-      {duration && (
-        <div>
-          <p>录音时长：{duration} s</p>
-        </div>
-      )}
       <Divider />
-
       <canvas
         ref={ref}
         style={{

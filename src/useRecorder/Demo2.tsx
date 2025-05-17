@@ -1,14 +1,29 @@
 import { Button, Divider, Flex } from 'antd';
-import React, { useRef } from 'react';
-import useRecorder from './index1';
+import React, { useEffect, useRef } from 'react';
+import useRecorder from '.';
+import WaveView from './extensions/wavesurfer-view';
 
-const Demo2 = () => {
-  const ref = useRef();
-  const { isRecording, start, stop } = useRecorder(ref.current);
+const Demo1 = () => {
+  const ref = useRef<HTMLElement>(null!);
+  const waveViewRef = useRef<WaveView>(null!);
+
+  useEffect(() => {
+    waveViewRef.current = new WaveView({
+      elem: ref.current,
+      width: 400,
+      height: 100,
+    });
+  }, []);
+
+  const { isRecording, blobUrl, size, start, stop, cancel } = useRecorder({
+    onProcess(pcmData, powerLevel, sampleRate) {
+      waveViewRef.current?.input(pcmData, powerLevel, sampleRate);
+    },
+  });
 
   return (
     <div>
-      <Flex gap={16}>
+      <Flex gap={10}>
         <Button
           variant="filled"
           color="primary"
@@ -18,10 +33,27 @@ const Demo2 = () => {
         >
           {isRecording ? '停止录音' : '开始录音'}
         </Button>
+
+        <Button
+          variant="filled"
+          onClick={() => {
+            cancel();
+            waveViewRef.current.reset();
+          }}
+        >
+          cancel
+        </Button>
       </Flex>
       <Divider />
-
-      <canvas
+      {blobUrl && (
+        <div>
+          <p>录音文件：</p>
+          <audio src={blobUrl} controls />
+          <p>{(size || 0) / 1024} kb</p>
+        </div>
+      )}
+      <Divider />
+      <div
         ref={ref}
         style={{
           width: 400,
@@ -33,4 +65,4 @@ const Demo2 = () => {
   );
 };
 
-export default Demo2;
+export default Demo1;

@@ -39,6 +39,7 @@ export type UseRecorderReturn = {
   blobUrl: string | null;
   base64Url: string | null;
   size: number | null;
+  countdown: number;
   duration: number;
   start: () => void;
   cancel: () => void;
@@ -73,13 +74,15 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
   const audioChunksRef = useRef<Blob[]>([]);
   const [audioData, setAudioData] = useState<number[]>([]);
   const animationFrameRef = useRef<number>();
+  const [duration, setDuration] = useState<number>(0);
+  const durationTimerRef = useRef<NodeJS.Timer>();
 
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const dataArrayRef = useRef<Uint8Array | null>(null);
 
   const [targetDate, setTargetDate] = useState<number>();
-  const [countdown] = useCountDown({
+  const [t] = useCountDown({
     targetDate,
     onEnd() {
       console.warn('===超过录制时长限制，强制结束===');
@@ -87,7 +90,7 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       onTimeOut?.();
     },
   });
-  const duration = Math.round(countdown / 1000);
+  const countdown = Math.round(t / 1000);
 
   const updateAudioData = () => {
     if (!analyserRef.current || !dataArrayRef.current) return;
@@ -105,7 +108,9 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
     const normalizedData =
       average < threshold
         ? new Array(dataArrayRef.current.length).fill(0)
-        : Array.from(dataArrayRef.current).map((value) => value / 128.0 - 1);
+        : Array.from(dataArrayRef.current).map(
+            (value) => (value / 128.0 - 1) * 2,
+          );
 
     setAudioData(normalizedData);
 
@@ -170,12 +175,18 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       };
       //#endregion
       onStart?.();
-      setIsOpening(false);
-      setIsRecording(true);
-      setTargetDate(Date.now() + timeout * 1000);
-      mediaRecorderRef.current.start();
-      // 开始音频数据更新循环
-      animationFrameRef.current = requestAnimationFrame(updateAudioData);
+
+      setTimeout(() => {
+        setIsOpening(false);
+        setIsRecording(true);
+        setTargetDate(Date.now() + timeout * 1000);
+        mediaRecorderRef.current?.start();
+        animationFrameRef.current = requestAnimationFrame(updateAudioData);
+        // 开始计时
+        durationTimerRef.current = setInterval(() => {
+          setDuration((prev) => prev + 1);
+        }, 1000);
+      });
     } catch (err) {
       console.error(err);
       setError('无法访问麦克风：' + (err as Error).message);
@@ -193,7 +204,10 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = void 0;
     }
-
+    if (durationTimerRef.current) {
+      clearInterval(durationTimerRef.current);
+      durationTimerRef.current = void 0;
+    }
     audioContextRef.current = null;
     analyserRef.current = null;
     dataArrayRef.current = null;
@@ -214,7 +228,10 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = void 0;
     }
-
+    if (durationTimerRef.current) {
+      clearInterval(durationTimerRef.current);
+      durationTimerRef.current = void 0;
+    }
     audioContextRef.current = null;
     analyserRef.current = null;
     dataArrayRef.current = null;
@@ -235,6 +252,7 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
     isRecording,
     blobUrl,
     base64Url,
+    countdown,
     duration,
     size,
     start,
