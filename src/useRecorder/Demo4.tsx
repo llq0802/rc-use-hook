@@ -3,19 +3,28 @@ import React, { useEffect, useRef } from 'react';
 import useRecorder from '.';
 
 const AudioVisualizer: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { start, stop, isRecording, audioData } = useRecorder();
+  const canvasRef = useRef<HTMLCanvasElement>(null!);
+  const ctxRef = useRef<CanvasRenderingContext2D>(null!);
+
+  const { start, stop, cancel, isRecording, audioData } = useRecorder();
 
   useEffect(() => {
-    if (!canvasRef.current || !audioData?.length) return;
-
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const ctx = canvas.getContext('2d')!;
+    ctxRef.current = ctx;
+    const width = canvas.width * devicePixelRatio;
+    const height = canvas.height * devicePixelRatio;
+    canvas.width = width;
+    canvas.height = height;
+  }, []);
 
+  useEffect(() => {
+    if (!audioData?.length) return;
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
     // 清除画布
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     // 创建渐变色
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
     gradient.addColorStop(0, '#ff0099');
@@ -73,13 +82,26 @@ const AudioVisualizer: React.FC = () => {
     ctx.translate(0, -canvas.height);
     ctx.stroke();
     ctx.restore();
-  }, [audioData, isRecording]);
+  }, [audioData]);
 
   return (
     <div>
-      <Flex>
+      <Flex gap={16}>
         <Button onClick={isRecording ? stop : start}>
           {isRecording ? '停止' : '开始'}录音
+        </Button>
+        <Button
+          onClick={() => {
+            cancel();
+            ctxRef.current.clearRect(
+              0,
+              0,
+              canvasRef.current.width,
+              canvasRef.current.height,
+            );
+          }}
+        >
+          取消录音
         </Button>
       </Flex>
       <Divider></Divider>

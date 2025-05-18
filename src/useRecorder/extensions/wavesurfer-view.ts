@@ -1,7 +1,7 @@
 interface WaveViewOptions {
-  elem?: string | HTMLElement;
-  width: number;
-  height: number;
+  compatibleCanvas: HTMLCanvasElement; // 必填：canvas 元素
+  width?: number;
+  height?: number;
   scale?: number;
   fps?: number;
   duration?: number;
@@ -14,7 +14,6 @@ interface WaveViewOptions {
 
 class WaveView {
   private set: WaveViewOptions;
-  private elem?: HTMLDivElement;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private canvas2: HTMLCanvasElement;
@@ -30,7 +29,7 @@ class WaveView {
 
   constructor(options: WaveViewOptions) {
     this.set = {
-      scale: 2,
+      scale: window.devicePixelRatio,
       fps: 50,
       duration: 2500,
       direction: 1,
@@ -47,44 +46,14 @@ class WaveView {
       centerColor: '',
       ...options,
     };
-
-    let elem = this.set.elem;
-    if (elem) {
-      if (typeof elem === 'string') {
-        elem = document.querySelector(elem) as HTMLElement;
-      } else if ((elem as any).length) {
-        elem = (elem as any)[0];
-      }
-      if (elem) {
-        this.set.width = elem.offsetWidth;
-        this.set.height = elem.offsetHeight;
-      }
-    }
-
-    const thisElem = (this.elem = document.createElement('div'));
-    thisElem.style.fontSize = '0';
-    thisElem.innerHTML = '<canvas style="width:100%;height:100%;"/>';
-
-    this.canvas = thisElem.querySelector('canvas')!;
-    this.canvas2 = document.createElement('canvas');
-
-    if (elem) {
-      elem.innerHTML = '';
-      elem.appendChild(thisElem);
-    }
-
+    this.canvas = this.set.compatibleCanvas;
     const scale = this.set.scale!;
-    const width = this.set.width * scale;
-    const height = this.set.height * scale;
-
-    if (!width || !height) {
-      throw new Error('WaveView width=0 height=0');
-    }
-
+    const width = (this.set.width || this.canvas.clientWidth) * scale;
+    const height = (this.set.height || this.canvas.clientHeight) * scale;
     this.canvas.width = width;
     this.canvas.height = height;
     this.ctx = this.canvas.getContext('2d')!;
-
+    this.canvas2 = document.createElement('canvas');
     this.canvas2.width = width * 2; // 卷轴，后台绘制画布能容纳两块窗口内容，进行无缝滚动
     this.canvas2.height = height;
     this.ctx2 = this.canvas2.getContext('2d')!;
@@ -304,6 +273,13 @@ class WaveView {
       clearInterval(this.timer);
       this.timer = null;
     }
+    this.x = 0;
+    this.pcmData = null;
+    this.pcmPos = 0;
+    this.sampleRate = 44100;
+    this.drawTime = 0;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx2.clearRect(0, 0, this.canvas2.width, this.canvas2.height);
   }
 }
 

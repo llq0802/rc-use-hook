@@ -4,12 +4,12 @@ import useRecorder from '.';
 import FrequencyHistogramView from './extensions/histogram-view';
 
 const Demo1 = () => {
-  const ref = useRef<HTMLDivElement>(null!);
+  const ref = useRef<HTMLCanvasElement>(null!);
   const waveViewRef = useRef<FrequencyHistogramView>(null!);
 
   useEffect(() => {
     waveViewRef.current = new FrequencyHistogramView({
-      elem: ref.current,
+      compatibleCanvas: ref.current,
       width: 400,
       height: 100,
     });
@@ -40,6 +40,7 @@ const Demo1 = () => {
           variant="filled"
           onClick={() => {
             cancel();
+            waveViewRef.current?.reset();
           }}
         >
           cancel
@@ -54,7 +55,7 @@ const Demo1 = () => {
         </div>
       )}
       <Divider />
-      <div
+      <canvas
         ref={ref}
         style={{
           width: 400,

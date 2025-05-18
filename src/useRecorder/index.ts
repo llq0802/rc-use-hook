@@ -177,11 +177,12 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
         };
       };
       //#endregion
-      onStart?.();
+
+      setIsOpening(false);
+      setIsRecording(true);
 
       setTimeout(() => {
-        setIsOpening(false);
-        setIsRecording(true);
+        onStart?.();
         setTargetDate(Date.now() + timeout * 1000);
         mediaRecorderRef.current?.start();
         animationFrameRef.current = requestAnimationFrame(updateAudioData);
@@ -191,7 +192,6 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
         }, 1000);
       });
     } catch (err) {
-      console.error(err);
       setError('无法访问麦克风：' + (err as Error).message);
       onError?.(err);
     }
@@ -262,7 +262,6 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
     cancel,
     stop,
     stream,
-    // audioData: new Uint8Array(audioData),
     audioData,
   };
 };

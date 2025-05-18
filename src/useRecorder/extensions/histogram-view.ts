@@ -102,10 +102,9 @@ class FFT {
 
 // 频谱图选项接口
 interface FrequencyHistogramViewOptions {
-  elem?: string | HTMLElement;
   width?: number;
   height?: number;
-  compatibleCanvas?: HTMLCanvasElement;
+  compatibleCanvas: HTMLCanvasElement;
   scale?: number;
   fps?: number;
   lineCount?: number;
@@ -132,7 +131,6 @@ interface FrequencyHistogramViewOptions {
 // 频谱图实现
 class FrequencyHistogramView {
   private set: FrequencyHistogramViewOptions;
-  private elem?: HTMLDivElement;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private fft: FFT;
@@ -147,7 +145,7 @@ class FrequencyHistogramView {
 
   constructor(options: FrequencyHistogramViewOptions) {
     this.set = {
-      scale: 2,
+      scale: window.devicePixelRatio,
       fps: 20,
       lineCount: 30,
       widthRatio: 0.6,
@@ -178,41 +176,11 @@ class FrequencyHistogramView {
       ...options,
     };
 
-    let elem = this.set.elem;
-    if (elem) {
-      if (typeof elem === 'string') {
-        elem = document.querySelector(elem) as HTMLElement;
-      } else if ((elem as any).length) {
-        elem = (elem as any)[0];
-      }
-      if (elem) {
-        this.set.width = elem.offsetWidth;
-        this.set.height = elem.offsetHeight;
-      }
-    }
-
-    if (this.set.compatibleCanvas) {
-      this.canvas = this.set.compatibleCanvas;
-    } else {
-      const thisElem = (this.elem = document.createElement('div'));
-      thisElem.style.fontSize = '0';
-      thisElem.innerHTML = '<canvas style="width:100%;height:100%;"/>';
-
-      this.canvas = thisElem.querySelector('canvas')!;
-
-      if (elem) {
-        elem.innerHTML = '';
-        elem.appendChild(thisElem);
-      }
-    }
+    this.canvas = this.set.compatibleCanvas;
 
     const scale = this.set.scale!;
-    const width = (this.set.width || 0) * scale;
-    const height = (this.set.height || 0) * scale;
-
-    if (!width || !height) {
-      throw new Error('FrequencyHistogramView width=0 height=0');
-    }
+    const width = (this.set.width || this.canvas.clientWidth) * scale;
+    const height = (this.set.height || this.canvas.clientHeight) * scale;
 
     this.canvas.width = width;
     this.canvas.height = height;
@@ -533,6 +501,27 @@ class FrequencyHistogramView {
     if (frequencyData) {
       set.onDraw?.(frequencyData, sampleRate);
     }
+  }
+  public reset(): void {
+    // 重置数据相关的状态
+    this.pcmData = undefined;
+    this.pcmPos = 0;
+    this.sampleRate = 44100;
+    this.lastH = [];
+    this.stripesH = [];
+
+    // 清除定时器
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+
+    // 重置时间相关的状态
+    this.drawTime = 0;
+    this.inputTime = 0;
+
+    // 清空画布
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }
 

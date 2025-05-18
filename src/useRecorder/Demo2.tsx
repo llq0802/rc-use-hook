@@ -4,12 +4,12 @@ import useRecorder from '.';
 import WaveView from './extensions/wavesurfer-view';
 
 const Demo1 = () => {
-  const ref = useRef<HTMLDivElement>(null!);
+  const ref = useRef<HTMLCanvasElement>(null!);
   const waveViewRef = useRef<WaveView>(null!);
 
   useEffect(() => {
     waveViewRef.current = new WaveView({
-      elem: ref.current,
+      compatibleCanvas: ref.current,
       width: 400,
       height: 100,
     });
@@ -55,7 +55,7 @@ const Demo1 = () => {
         </div>
       )}
       <Divider />
-      <div
+      <canvas
         ref={ref}
         style={{
           width: 400,

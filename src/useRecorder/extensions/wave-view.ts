@@ -76,7 +76,6 @@ class WaveView {
       (this.set.height || this.canvas.clientHeight) * this.set.scale;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
-
     this.linear1 = this.createLinearGradient(
       this.ctx,
       this.width,

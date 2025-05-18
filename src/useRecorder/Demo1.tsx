@@ -7,23 +7,19 @@ const Demo1 = () => {
   const ref = useRef<HTMLCanvasElement>(null!);
   const waveViewRef = useRef<WaveView>(null!);
 
-  useEffect(() => {
-    waveViewRef.current = new WaveView({
-      compatibleCanvas: ref.current,
-      width: 400,
-      height: 100,
-      keep: false,
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   const { isRecording, blobUrl, size, start, stop, cancel } = useRecorder({
+    onStart() {
+      waveViewRef.current = new WaveView({
+        compatibleCanvas: ref.current,
+        keep: false,
+      });
+    },
     onProcess(pcmData, powerLevel, sampleRate) {
-      const int16Data = new Int16Array(pcmData.map((x) => x * 32767));
-
-      waveViewRef.current?.input(int16Data, powerLevel, sampleRate);
+      waveViewRef.current?.input(pcmData, powerLevel, sampleRate);
     },
   });
-
   return (
     <div>
       <Flex gap={10}>
@@ -71,7 +67,10 @@ const Demo1 = () => {
         </div>
       )}
       <Divider />
+
       <canvas
+        width={400}
+        height={100}
         ref={ref}
         style={{
           display: isRecording ? 'block' : 'none',
