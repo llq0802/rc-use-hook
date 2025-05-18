@@ -15,11 +15,11 @@ nav:
 
 <code src='./Demo2.tsx'></code>
 
-<code src='./Demo3.tsx'></code>
+<!-- <code src='./Demo3.tsx'></code> -->
 
 <code src='./Demo4.tsx'></code>
 
-<!-- <code src='./Demo5.tsx'></code> -->
+<code src='./Demo5.tsx'></code>
 
 ### API
 

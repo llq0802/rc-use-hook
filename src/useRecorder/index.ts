@@ -44,7 +44,10 @@ export type UseRecorderReturn = {
   start: () => void;
   cancel: () => void;
   stop: () => void;
-  audioData: number[]; // 音频数据
+  /**
+   * Uint8Array 数据
+   */
+  audioData: number[];
   stream: MediaStream | undefined;
 };
 
@@ -136,8 +139,8 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
         audio: audioOptions,
       });
       setStream(audioStream);
-      // 初始化音频上下文
-      const audioContext = new window.AudioContext();
+      // 初始化内部的音频上下文
+      const audioContext = new AudioContext();
       const source = audioContext.createMediaStreamSource(audioStream);
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = fftSize;
@@ -259,6 +262,7 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
     cancel,
     stop,
     stream,
+    // audioData: new Uint8Array(audioData),
     audioData,
   };
 };

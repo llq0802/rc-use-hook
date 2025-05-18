@@ -4,7 +4,7 @@ import useRecorder from '.';
 import WaveView from './extensions/wavesurfer-view';
 
 const Demo1 = () => {
-  const ref = useRef<HTMLElement>(null!);
+  const ref = useRef<HTMLDivElement>(null!);
   const waveViewRef = useRef<WaveView>(null!);
 
   useEffect(() => {
@@ -17,7 +17,9 @@ const Demo1 = () => {
 
   const { isRecording, blobUrl, size, start, stop, cancel } = useRecorder({
     onProcess(pcmData, powerLevel, sampleRate) {
-      waveViewRef.current?.input(pcmData, powerLevel, sampleRate);
+      // const int16Data = new Int16Array(pcmData.map((x) => x * 32767));
+      const int16Data = pcmData.map((x) => x * 30000);
+      waveViewRef.current?.input(int16Data, powerLevel, sampleRate);
     },
   });
 

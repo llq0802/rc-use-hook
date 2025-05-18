@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Divider, Flex } from 'antd';
 import React, { useEffect, useRef } from 'react';
 import useRecorder from '.';
 
@@ -32,15 +32,22 @@ const AudioVisualizer: React.FC = () => {
 
     // 使用 bezierCurveTo 实现平滑曲线
     ctx.beginPath();
-    const sliceWidth = canvas.width / (audioData.length - 1);
+
+    // 绘制波形
+
+    ctx.beginPath();
+    // 减少采样点，每3个点取一个
+    const skipPoints = 2;
+    const effectiveLength = Math.floor(audioData.length / skipPoints);
+    const sliceWidth = canvas.width / (effectiveLength - 1);
     let x = 0;
     let prevY = ((audioData[0] + 1) * canvas.height) / 2;
 
     ctx.moveTo(x, prevY);
 
-    for (let i = 1; i < audioData.length - 2; i++) {
+    for (let i = skipPoints; i < audioData.length - 2; i += skipPoints) {
       const currentY = ((audioData[i] + 1) * canvas.height) / 2;
-      const nextY = ((audioData[i + 1] + 1) * canvas.height) / 2;
+      const nextY = ((audioData[i + skipPoints] + 1) * canvas.height) / 2;
 
       // 控制点
       const cp1x = x + sliceWidth / 2;
@@ -55,7 +62,8 @@ const AudioVisualizer: React.FC = () => {
       prevY = currentY;
     }
 
-    // 绘制波形
+    // 增加线条宽度
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     // 添加镜像效果
@@ -65,20 +73,22 @@ const AudioVisualizer: React.FC = () => {
     ctx.translate(0, -canvas.height);
     ctx.stroke();
     ctx.restore();
-  }, [audioData]);
+  }, [audioData, isRecording]);
 
   return (
     <div>
-      <Button onClick={isRecording ? stop : start}>
-        {isRecording ? '停止' : '开始'}录音
-      </Button>
+      <Flex>
+        <Button onClick={isRecording ? stop : start}>
+          {isRecording ? '停止' : '开始'}录音
+        </Button>
+      </Flex>
+      <Divider></Divider>
       <canvas
         ref={canvasRef}
         width={400}
         height={100}
         style={{
           border: '1px solid #ccc',
-          borderRadius: '8px',
         }}
       />
     </div>

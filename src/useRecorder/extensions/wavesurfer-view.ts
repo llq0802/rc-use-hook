@@ -144,7 +144,6 @@ class WaveView {
       this.timer = null;
     }
   }
-
   private draw(pcmData: Int16Array): void {
     const set = this.set;
     const ctx = this.ctx2;
