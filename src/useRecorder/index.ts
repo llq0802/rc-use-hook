@@ -267,3 +267,5 @@ const useRecorder = (opts: UseRecorderOptions = {}): UseRecorderReturn => {
 };
 
 export default useRecorder;
+
+export * from './extensions';
