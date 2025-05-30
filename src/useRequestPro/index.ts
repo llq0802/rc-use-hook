@@ -4,6 +4,18 @@ import { isPlainObject } from 'lodash-es';
 import { isFunction } from 'rc-use-hooks/utils';
 import { useMemo, useRef } from 'react';
 
+/**请求状态 */
+export enum StatusEnum {
+  /**请求未初始 */
+  Init = 'init',
+  /**请求成功 */
+  Success = 'success',
+  /**请求失败 */
+  Error = 'error',
+  /**请求中 */
+  Loading = 'loading',
+}
+
 /**
  * 请求函数类型定义
  *
@@ -74,17 +86,17 @@ export type UseRequestProReturn<TData, TParams extends any[]> = {
   previousData: TData | undefined;
 
   /**
-   * 初始请求*`成功`*的数据
+   * 第一次请求 **成功** 的数据
    */
   initData: TData | undefined;
 
   /**
-   * 初始加载状态
+   * 第一次请求加载状态
    */
   initLoading: boolean;
 
   /**
-   * 非初始加载状态
+   * 非第一次请求加载状态
    */
   noInitLoading: boolean;
   /**
@@ -101,6 +113,10 @@ export type UseRequestProReturn<TData, TParams extends any[]> = {
    * 
    */
   hasData: boolean;
+  /**
+   * 请求的状态
+   */
+  status: StatusEnum;
 } & Result<TData, TParams>;
 
 /**
@@ -122,6 +138,7 @@ export default function useRequestPro<TData, TParams extends any[]>(
   const [initData, setInitData] = useRafState<TData | undefined>();
   const [initLoading, setInitLoading] = useRafState(false);
   const [noInitLoading, setNoInitLoading] = useRafState(false);
+  const [status, setStatus] = useRafState(StatusEnum.Init);
   const {
     isLockRun,
     dataKeyName,
@@ -152,6 +169,7 @@ export default function useRequestPro<TData, TParams extends any[]>(
         } else {
           if (!noInitLoading) setNoInitLoading(true);
         }
+        setStatus(StatusEnum.Loading);
         rest?.onBefore?.(...args);
       },
       onSuccess(ret, params) {
@@ -164,11 +182,13 @@ export default function useRequestPro<TData, TParams extends any[]>(
           onNoInitSuccess?.(ret, params);
           if (noInitLoading) setNoInitLoading(false);
         }
+        setStatus(StatusEnum.Success);
         rest.onSuccess?.(ret, params);
       },
       onError(err, params) {
         if (initLoading) setInitLoading(false);
         if (noInitLoading) setNoInitLoading(false);
+        setStatus(StatusEnum.Error);
         rest.onError?.(err, params);
       },
       cacheKey,
@@ -183,9 +203,9 @@ export default function useRequestPro<TData, TParams extends any[]>(
   const run = isLockRun ? lockRun : res.run;
 
   const hasData = useMemo(() => {
-    if (isFunction(opts.hasDataFn))
+    if (isFunction(opts.hasDataFn)) {
       return opts.hasDataFn(res.data, res.params as TParams);
-
+    }
     if (Array.isArray(res.data)) {
       return res.data.length > 0;
     }
@@ -204,6 +224,7 @@ export default function useRequestPro<TData, TParams extends any[]>(
     runAsync: isLockRun
       ? (lockRunAsync as (...params: TParams) => Promise<TData>)
       : res.runAsync,
+    status,
     previousData,
     hasData,
     initData,
