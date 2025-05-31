@@ -1,14 +1,13 @@
 import { Button, Divider, Flex } from 'antd';
+import { WavesurferView, useRecorder } from 'rc-use-hooks';
 import React, { useEffect, useRef } from 'react';
-import useRecorder from '.';
-import WaveView from './extensions/wavesurfer-view';
 
 const Demo1 = () => {
   const ref = useRef<HTMLCanvasElement>(null!);
-  const waveViewRef = useRef<WaveView>(null!);
+  const waveViewRef = useRef<WavesurferView>(null!);
 
   useEffect(() => {
-    waveViewRef.current = new WaveView({
+    waveViewRef.current = new WavesurferView({
       compatibleCanvas: ref.current,
       width: 400,
       height: 100,

@@ -1,19 +1,80 @@
-interface WaveViewInitOptions {
-  compatibleCanvas: HTMLCanvasElement; // 必填：canvas 元素
+/**
+ * 波形视图配置选项接口
+ */
+interface WaveViewOptions {
+  /** 必填：用于绘制的 canvas 元素 */
+  compatibleCanvas: HTMLCanvasElement;
+
+  /** 可选：canvas 绘制区域的宽度，默认为 canvas 元素的 clientWidth */
   width?: number;
+
+  /** 可选：canvas 绘制区域的高度，默认为 canvas 元素的 clientHeight */
   height?: number;
-  scale?: number; // 缩放系数，提升清晰度
-  speed?: number; // 波浪移动速度
-  phase?: number; // 初始相位偏移
-  fps?: number; // 帧率
-  keep?: boolean; // 是否保持停止输入时的波形
-  lineWidth?: number; // 线宽
-  linear1?: [number, string, ...any[]]; // 渐变色配置
+
+  /** 可选：缩放比例，通常用于高分辨率屏幕，默认为 window.devicePixelRatio */
+  scale?: number;
+
+  /**
+   * 可选：波浪移动速度，值越大越快。
+   *
+   * 默认值为 `9`
+   */
+  speed?: number;
+
+  /**
+   * 可选：初始相位偏移。
+   *
+   * 调整了速度后，调整这个值得到一个看起来舒服的波形。
+   */
+  phase?: number;
+
+  /**
+   * 可选：每秒帧数，控制绘图频率。
+   *
+   * 默认为系统自动计算
+   */
+  fps?: number;
+
+  /**
+   * 可选：是否保持停止输入时的波形。
+   *
+   * 如果为 true，则在没有新数据输入时保持当前波形不消失。
+   */
+  keep?: boolean;
+
+  /**
+   * 可选：波形线条宽度。
+   *
+   * 默认为 `1`
+   */
+  lineWidth?: number;
+
+  /**
+   * 可选：波形上半部分的颜色渐变配置数组。
+   *
+   * 格式为 [位置, CSS 颜色, ...]；
+   * 位置取值范围 0.0-1.0 之间。
+   */
+  linear1?: [number, string, ...any[]];
+
+  /**
+   * 可选：波形下半部分的颜色渐变配置数组。
+   *
+   * 格式为 [位置, CSS 颜色, ...]；
+   * 位置取值范围 0.0-1.0 之间。
+   */
   linear2?: [number, string, ...any[]];
+
+  /**
+   * 可选：背景颜色渐变配置数组。
+   *
+   * 格式为 [位置, CSS 颜色, ...]；
+   * 位置取值范围 0.0-1.0 之间。
+   */
   linearBg?: [number, string, ...any[]];
 }
 
-class WaveView {
+export class WaveView {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private width: number;
@@ -28,10 +89,10 @@ class WaveView {
   private drawTime: number = 0;
   private inputTime: number = 0;
   private pcmPos: number = 0;
-  private set: Required<WaveViewInitOptions>;
+  private set: Required<WaveViewOptions>;
   private currentAmplitude: number = 0; // 添加这个属性来跟踪当前振幅
-  constructor(set: WaveViewInitOptions) {
-    const defaultOptions: Required<WaveViewInitOptions> = {
+  constructor(set: WaveViewOptions) {
+    const defaultOptions: Required<WaveViewOptions> = {
       compatibleCanvas: set.compatibleCanvas,
       width: set.width || 0,
       height: set.height || 0,
@@ -264,5 +325,3 @@ class WaveView {
     this.ctx.clearRect(0, 0, this.width, this.height);
   }
 }
-
-export default WaveView;

@@ -1,7 +1,6 @@
 import { Button, Divider, Flex } from 'antd';
+import { WaveView, useRecorder } from 'rc-use-hooks';
 import React, { useEffect, useRef } from 'react';
-import useRecorder from '.';
-import WaveView from './extensions/wave-view';
 
 const Demo1 = () => {
   const ref = useRef<HTMLCanvasElement>(null!);
@@ -13,7 +12,6 @@ const Demo1 = () => {
     onStart() {
       waveViewRef.current = new WaveView({
         compatibleCanvas: ref.current,
-        keep: false,
       });
     },
     onProcess(pcmData, powerLevel, sampleRate) {

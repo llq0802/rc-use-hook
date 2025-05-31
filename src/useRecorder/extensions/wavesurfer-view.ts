@@ -1,19 +1,65 @@
-interface WaveViewOptions {
-  compatibleCanvas: HTMLCanvasElement; // 必填：canvas 元素
+/**
+ * WavesurferView 配置选项接口
+ */
+interface WavesurferViewOptions {
+  /**
+   * 必填：用于绘制的 canvas 元素
+   */
+  compatibleCanvas: HTMLCanvasElement;
+
+  /**
+   * 可选：canvas 绘制区域的宽度，默认为 canvas 元素的 clientWidth
+   */
   width?: number;
+
+  /**
+   * 可选：canvas 绘制区域的高度，默认为 canvas 元素的 clientHeight
+   */
   height?: number;
+
+  /**
+   * 可选：缩放比例，通常用于高分辨率屏幕，默认为 window.devicePixelRatio
+   */
   scale?: number;
+
+  /**
+   * 可选：每秒帧数，控制绘图频率，默认为 50 帧/秒
+   */
   fps?: number;
+
+  /**
+   * 可选：音频可视化的总持续时间（单位：毫秒），默认为 2500 毫秒
+   */
   duration?: number;
+
+  /**
+   * 可选：绘制方向，1 表示从左到右，-1 表示从右到左，默认为 1
+   */
   direction?: number;
+
+  /**
+   * 可选：波形在垂直方向上的位置，取值范围 -1 到 1，默认为 0（居中）
+   */
   position?: number;
+
+  /**
+   * 可选：中心线高度，默认为 1 像素
+   */
   centerHeight?: number;
+
+  /**
+   * 可选：颜色渐变配置数组，格式为 [偏移量, 颜色, ...]，默认为一个绿色到橙色的渐变
+   */
   linear?: (number | string)[];
+
+  /**
+   * 可选：中心线的颜色，默认为空字符串，表示使用 linear 的第一个颜色
+   */
   centerColor?: string;
 }
 
-class WaveView {
-  private set: WaveViewOptions;
+export class WavesurferView {
+  private set: WavesurferViewOptions;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private canvas2: HTMLCanvasElement;
@@ -27,7 +73,7 @@ class WaveView {
   private x: number = 0;
   private inputTime: number = 0;
 
-  constructor(options: WaveViewOptions) {
+  constructor(options: WavesurferViewOptions) {
     this.set = {
       scale: window.devicePixelRatio,
       fps: 50,
@@ -282,5 +328,3 @@ class WaveView {
     this.ctx2.clearRect(0, 0, this.canvas2.width, this.canvas2.height);
   }
 }
-
-export default WaveView;

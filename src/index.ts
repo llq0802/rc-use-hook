@@ -50,6 +50,8 @@ export * from './usePageLoadType';
 export { default as usePageLoadType } from './usePageLoadType';
 export * from './useParentScroll';
 export { default as useParentScroll } from './useParentScroll';
+export * from './useRecorder';
+export { default as useRecorder } from './useRecorder';
 export * from './useRequestAnimationFrame';
 export { default as useRequestAnimationFrame } from './useRequestAnimationFrame';
 export * from './useRequestPro';

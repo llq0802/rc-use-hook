@@ -55,7 +55,6 @@
     "copy-to-clipboard": "^3.3.3",
     "localforage": "^1.10.0",
     "lodash-es": "^4.17.21",
-    "recorder-core": "^1.3.25011100",
     "use-animate-number": "^1.0.5"
   },
   "devDependencies": {

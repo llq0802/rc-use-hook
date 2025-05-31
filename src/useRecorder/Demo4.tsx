@@ -1,6 +1,6 @@
 import { Button, Divider, Flex } from 'antd';
+import { useRecorder } from 'rc-use-hooks';
 import React, { useEffect, useRef } from 'react';
-import useRecorder from '.';
 
 const AudioVisualizer: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null!);

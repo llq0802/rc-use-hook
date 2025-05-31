@@ -100,36 +100,130 @@ class FFT {
   }
 }
 
-// 频谱图选项接口
+/**
+ * 频率直方图视图配置选项接口
+ */
 interface FrequencyHistogramViewOptions {
+  /** 可选：canvas 绘制区域的宽度，默认为 canvas 元素的 clientWidth */
   width?: number;
+
+  /** 可选：canvas 绘制区域的高度，默认为 canvas 元素的 clientHeight */
   height?: number;
+
+  /** 必填：用于绘制的 canvas 元素 */
   compatibleCanvas: HTMLCanvasElement;
+
+  /** 可选：缩放比例，通常用于高分辨率屏幕，默认为 window.devicePixelRatio */
   scale?: number;
+
+  /** 可选：每秒帧数，控制绘图频率，默认为系统自动计算 */
   fps?: number;
+
+  /** 可选：直方图柱子的数量，默认为 32 */
   lineCount?: number;
+
+  /**
+   * 可选：柱子线条宽度占比。
+   *
+   * 为所有柱子占用整个视图宽度的比例，剩下的空白区域均匀插入柱子中间；
+   * 默认值也基本相当于一根柱子占 0.6，一根空白占 0.4；
+   * 设为 1 不留空白，当视图不足容下所有柱子时也不留空白。
+   */
   widthRatio?: number;
+
+  /**
+   * 可选：柱子间空白固定基础宽度。
+   *
+   * 当视图不足容下所有柱子时将不会留空白；
+   * 允许为负数，让柱子发生重叠。
+   */
   spaceWidth?: number;
+
+  /**
+   * 可选：柱子保留基础高度。
+   *
+   */
   minHeight?: number;
+
+  /**
+   * 可选：绘制位置，取值范围 -1 到 1。
+   *
+   * -1 表示最底部，0 表示中间，1 表示最顶部；
+   * 小数表示百分比。
+   */
   position?: number;
+
+  /**
+   * 可选：是否启用镜像效果。
+   *
+   * 如果启用，视图宽度会分成左右两块；
+   * 右边这块进行绘制，左边这块进行镜像（以中间这根柱子的中心进行镜像）。
+   */
   mirrorEnable?: boolean;
+
+  /**
+   * 可选：是否启用柱子顶上的峰值小横条。
+   *
+   */
   stripeEnable?: boolean;
+
+  /** 可选：峰值小横条基础高度 */
   stripeHeight?: number;
+
+  /** 可选：峰值小横条和柱子保持的基础距离 */
   stripeMargin?: number;
+
+  /** 可选：柱子从最顶上下降到最底部最长时间（单位：毫秒） */
   fallDuration?: number;
+
+  /** 可选：峰值小横条从最顶上下降到底部最长时间（单位：毫秒） */
   stripeFallDuration?: number;
+
+  /**
+   * 可选：柱子颜色配置数组。
+   *
+   * 格式为 [位置, CSS 颜色, ...]；
+   * 位置取值范围 0.0-1.0 之间。
+   */
   linear?: (number | string)[];
+
+  /**
+   * 可选：峰值小横条渐变颜色配置。
+   *
+   * 设置为 null 表示禁用峰值小横条渐变。
+   */
   stripeLinear?: (number | string)[] | null;
+
+  /** 可选：柱子阴影基础大小，设为 0 不显示阴影。如果柱子数量太多时请勿开启 */
   shadowBlur?: number;
+
+  /** 可选：柱子阴影颜色 */
   shadowColor?: string;
+
+  /**
+   * 可选：峰值小横条阴影基础大小。
+   *
+   * 设为 0 不显示阴影；
+   * -1 表示使用柱子的阴影大小；
+   * 如果柱子数量太多时请勿开启。
+   */
   stripeShadowBlur?: number;
+
+  /** 可选：峰值小横条阴影颜色 */
   stripeShadowColor?: string;
+
+  /** 可选：是否要绘制所有频率 */
   fullFreq?: boolean;
+
+  /**
+   * 可选：绘制回调函数。
+   *
+   * 在每次绘制时触发，参数为当前的频率数据和采样率。
+   */
   onDraw?: (frequencyData: Float64Array, sampleRate: number) => void;
 }
-
 // 频谱图实现
-class FrequencyHistogramView {
+export class FrequencyHistogramView {
   private set: FrequencyHistogramViewOptions;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
@@ -524,5 +618,3 @@ class FrequencyHistogramView {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }
-
-export default FrequencyHistogramView;

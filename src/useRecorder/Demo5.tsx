@@ -1,7 +1,6 @@
 import { Button, Divider, Flex } from 'antd';
+import { FrequencyHistogramView, useRecorder } from 'rc-use-hooks';
 import React, { useEffect, useRef } from 'react';
-import useRecorder from '.';
-import FrequencyHistogramView from './extensions/histogram-view';
 
 const Demo1 = () => {
   const ref = useRef<HTMLCanvasElement>(null!);
@@ -12,6 +11,9 @@ const Demo1 = () => {
       compatibleCanvas: ref.current,
       width: 400,
       height: 100,
+      mirrorEnable: true,
+      position: 0, //绘制位置，取值-1到1，-1为最底下，0为中间，1为最顶上，小数为百分比
+      stripeEnable: false,
     });
   }, []);
 

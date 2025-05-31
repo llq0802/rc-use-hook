@@ -1,53 +1,170 @@
 import { useCountDown } from 'ahooks';
 import { useEffect, useRef, useState } from 'react';
 
+/**
+ * 录音 Hook 配置选项接口
+ */
 export type UseRecorderOptions = {
-  timeout?: number;
-  fftSize?: number;
   /**
-   *  'mp3' | 'ogg' | 'webm' | 'wav' | 'aac
-   */
-  audioType?: 'mp3' | 'ogg' | 'webm' | 'wav' | string;
-  /**
-   * @example
-   *  {
-   *     autoGainControl: false, // 关闭自动增益控制
-   *     channelCount: 2, // 设置音频通道数
-   *     echoCancellation: false, // 关闭回声消除
-   *     noiseSuppression: true, // 开启噪音抑制
-   *     sampleRate: 44100, // 设置音频采样率 48000
-   *     sampleSize: 16, // 设置音频样本大小
-   *   }
+   * 可选：录音超时时间（单位：毫秒）。
    *
+   * 如果设置了该值，录音会在指定时间后自动停止。
+   */
+  timeout?: number;
+
+  /**
+   * 可选：FFT（快速傅里叶变换）大小。
+   *
+   * 控制音频频谱分析的精度，默认为 2048。
+   */
+  fftSize?: number;
+
+  /**
+   * 可选：输出音频文件的格式。
+   *
+   * 支持 'mp3' | 'ogg' | 'webm' | 'wav' | 'aac' 等格式。
+   */
+  audioType?: 'mp3' | 'ogg' | 'webm' | 'wav' | 'aac' | string;
+
+  /**
+   * 可选：音频轨道约束配置。
+   *
+   * 用于设置音频采集参数，如采样率、通道数等。
+   *
+   * 示例：
+   * ```ts
+   * {
+   *   autoGainControl: false, // 关闭自动增益控制
+   *   channelCount: 2,        // 设置音频通道数
+   *   echoCancellation: false, // 关闭回声消除
+   *   noiseSuppression: true, // 开启噪音抑制
+   *   sampleRate: 44100,      // 设置音频采样率
+   *   sampleSize: 16          // 设置音频样本大小
+   * }
+   * ```
    */
   audioOptions?: true | MediaTrackConstraints;
+
+  /**
+   * 可选：录音开始回调函数。
+   *
+   * 在录音开始时触发。
+   */
   onStart?: () => void;
+
+  /**
+   * 可选：录音结束回调函数。
+   *
+   * 在录音结束或手动停止时触发。
+   *
+   * 参数：
+   * - blob: 录音生成的 Blob 对象
+   * - duration: 录音持续时间（单位：毫秒）
+   */
   onEnd?: (blob: Blob, duration: number, ...args: any[]) => void;
+
+  /**
+   * 可选：录音过程回调函数。
+   *
+   * 每帧音频数据处理时触发，可用于实时可视化或分析。
+   *
+   *
+   * 参数：
+   * - pcmData: 当前音频 PCM 数据数组
+   * - powerLevel: 当前音频能量等级
+   * - sampleRate: 音频采样率
+   */
   onProcess?: (
     pcmData: number[],
     powerLevel: number,
     sampleRate: number,
   ) => void;
+
+  /**
+   * 可选：录音超时回调函数。
+   *
+   * 在录音达到指定 `timeout` 时间后触发。
+   */
   onTimeOut?: () => void;
+
+  /**
+   * 可选：错误回调函数。
+   *
+   * 在录音过程中发生错误时触发。
+   *
+   * 参数：
+   * - err: 错误对象或字符串
+   */
   onError?: (err: any) => void;
 };
 
+/**
+ * useRecorder 返回值接口
+ */
 export type UseRecorderReturn = {
-  isOpening: boolean;
-  isRecording: boolean;
-  error: string | null;
-  blobUrl: string | null;
-  base64Url: string | null;
-  size: number | null;
-  countdown: number;
-  duration: number;
-  start: () => void;
-  cancel: () => void;
-  stop: () => void;
   /**
-   * Uint8Array 数据
+   * 表示是否正在请求麦克风权限或打开设备。
+   */
+  isOpening: boolean;
+
+  /**
+   * 表示当前是否正在录音。
+   */
+  isRecording: boolean;
+
+  /**
+   * 当前错误信息，如果存在的话。
+   */
+  error: string | null;
+
+  /**
+   * 录音生成的 Blob URL 地址，可用于播放录音。
+   */
+  blobUrl: string | null;
+
+  /**
+   * 录音生成的 Base64 URL 地址，可用于下载或传输。
+   */
+  base64Url: string | null;
+
+  /**
+   * 录音文件的大小（字节数）。
+   */
+  size: number | null;
+
+  /**
+   * 倒计时数值，仅在倒计时时有效。
+   */
+  countdown: number;
+
+  /**
+   * 当前录音的持续时间（单位：秒）。
+   */
+  duration: number;
+
+  /**
+   * 开始录音的方法。
+   */
+  start: () => void;
+
+  /**
+   * 取消当前录音的方法。
+   */
+  cancel: () => void;
+
+  /**
+   * 停止录音的方法。
+   */
+  stop: () => void;
+
+  /**
+   * 当前录音的原始音频数据（Uint8Array 转换后的数组）。
    */
   audioData: number[];
+
+  /**
+   * 当前使用的媒体流对象（MediaStream）。
+   */
   stream: MediaStream | undefined;
 };
 
