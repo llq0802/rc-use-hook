@@ -41,6 +41,7 @@ import { useRequestPro } from 'rc-use-hooks';
 - initData: TData | undefined;
 - initLoading: boolean;
 - noInitLoading: boolean;
+- status: StatusEnum;
 
 ## 类型定义
 
@@ -141,5 +142,21 @@ export type UseRequestProReturn<TData> = ReturnType<typeof useRequest> & {
    *
    */
   hasData: boolean;
+  /**
+   * 请求的状态
+   */
+  status: StatusEnum;
 };
+
+/**请求状态 */
+export enum StatusEnum {
+  /**请求未初始 */
+  Init = 'init',
+  /**请求成功 */
+  Success = 'success',
+  /**请求失败 */
+  Error = 'error',
+  /**请求中 */
+  Loading = 'loading',
+}
 ```

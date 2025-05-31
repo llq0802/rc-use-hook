@@ -145,7 +145,6 @@ export default function useRequestPro<TData, TParams extends any[]>(
     formatResult,
     onInitSuccess,
     onNoInitSuccess,
-    cacheKey,
     ...rest
   } = opts;
 
@@ -191,7 +190,6 @@ export default function useRequestPro<TData, TParams extends any[]>(
         setStatus(StatusEnum.Error);
         rest.onError?.(err, params);
       },
-      cacheKey,
     },
   );
 
