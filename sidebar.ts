@@ -16,6 +16,10 @@ export default {
           link: '/hooks/use-Show',
         },
         {
+          title: 'useScale',
+          link: '/hooks/use-Scale',
+        },
+        {
           title: 'useDefer',
           link: '/hooks/use-Defer',
         },
@@ -30,6 +34,10 @@ export default {
         {
           title: 'useAudio',
           link: '/hooks/use-Audio',
+        },
+        {
+          title: 'useRecorder',
+          link: '/hooks/use-Recorder',
         },
         {
           title: 'useWorker',
